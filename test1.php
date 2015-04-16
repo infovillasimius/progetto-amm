@@ -2,7 +2,8 @@
 <html>
 	<head>
 		<title>Esercizio 1</title>
-                <link href="nuovo.css" rel="stylesheet" type="text/css" media="screen" />
+		<meta charset="utf-8"/>
+		<link href="nuovo.css" rel="stylesheet" type="text/css" media="screen" />
 	</head>
 	<body>
 		<h2>Esercizio 1 - PHP</h2>
@@ -39,10 +40,10 @@
 		  	<label for="a">A</label>	
 		  	<input type="text" name="a" id="a" value="<?= $a ?>"/>
 		  	<select name="operatore">
-		  		<option value="+" <?= $op == "+" ?  'selected="true"' : "" ?> >Addizione</option>
-		  		<option value="-" <?= $op == "-" ?  'selected="true"' : "" ?> >Sottrazione</option>
-		  		<option value="*" <?= $op == "*" ?  'selected="true"' : "" ?> >Moltiplicazione</option>
-		  		<option value="/" <?= $op == "/" ?  'selected="true"' : "" ?> >Divisione</option>
+		  		<option value="+" <?= $op == "+" ?  'selected="selected"' : "" ?> >Addizione</option>
+		  		<option value="-" <?= $op == "-" ?  'selected="selected"' : "" ?> >Sottrazione</option>
+		  		<option value="*" <?= $op == "*" ?  'selected="selected"' : "" ?> >Moltiplicazione</option>
+		  		<option value="/" <?= $op == "/" ?  'selected="selected"' : "" ?> >Divisione</option>
 		  	</select>
 		  	<label for="b">B</label>	
 		 	<input type="text" name="b" id="b" value="<?= $b ?>"/>	
