@@ -7,11 +7,18 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title></title>
+        <title>Prima pagina PHP</title>
+        <link href="nuovo.css" rel="stylesheet" type="text/css" media="screen" />
     </head>
     <body>
         <?php
-        // put your code here
+         echo "Hallo world";
         ?>
+         <div id="pagina">
+        		<div id="div1"></div>
+        		<div id="div2"></div>
+        		<div id="div3"></div>
+        		<div id="div4"></div>
+        </div>
     </body>
 </html>

@@ -5,6 +5,8 @@
                 <link href="nuovo.css" rel="stylesheet" type="text/css" media="screen" />
 	</head>
 	<body>
+		<h2>Eserzicio 1 - PHP</h2>
+		<h4>Form che esegue le quattro operazioni elementari</h4>
 		<?php		  	
                     
                     if(isset($_REQUEST["a"]) && isset($_REQUEST["b"])){
