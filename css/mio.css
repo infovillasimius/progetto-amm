@@ -1,0 +1,276 @@
+
+/* 
+    Created on : 27-apr-2015, 0.41.51
+    Author     : antonello
+*/
+
+div.input-form input {
+    width: 200px;
+}
+
+div.input-form textArea {
+   width: 200px;
+}
+
+div.input-form label{
+    display: inline-block;
+    width: 170px;
+    font-family: "calibri", sans-serif;
+    font-size: 12px;
+    text-align: right;
+}
+
+select{
+    font-family: "calibri", sans-serif;
+    font-size: 12px;
+}
+
+div.input-form {
+    position: relative;
+}
+
+div.right{
+    float: right;
+}
+div.left{
+    float: left;
+}
+
+
+h3 {  
+    text-align: center;
+    font-family: "calibri", sans-serif;
+    font-size: 14px;
+}
+
+div.input-form button {
+    color: blueviolet;
+    position: absolute;
+    top: 385px;
+    right: 400px;
+    width: 100px;
+}
+
+button:hover{
+    background-color: #99ccff;
+}
+
+div.footer{
+    width: 980px;
+    text-align: center;
+    font-family: "calibri", sans-serif;
+    font-size: 10px;
+    color: white;
+    border: 10px;
+    border-color: #95100C;
+    border-style: solid;
+    background-color: #95100C;
+    background-image: url('../images/logoUnica.png');
+    background-repeat: no-repeat;
+    background-position: top left;
+}
+
+div.clear{
+    clear: both;
+    height: 1px;
+    width: 1000px;
+}
+
+div.menu{
+    clear: both;
+    
+}
+
+div.leftBar{
+    float: left;
+    width: 10%;
+}
+div.page{
+    margin-left: auto;
+    margin-right: auto;
+    width: 1000px;
+}
+
+div.content{
+    
+    padding-top: 0px;
+    margin-left: 10%;
+    margin-right: 10%;
+    width:90%;
+    background-color: #FFFFFF;
+    
+}
+
+div.login{
+    padding-top:100px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    height: 341px;
+    text-shadow: 2px 2px 5px red;
+}
+
+div.login input {
+    width: 200px;
+}
+
+div.login button {
+    color: blueviolet;
+    position: relative;
+    left: 300px;
+    width: 100px;
+}
+
+div.login h2{
+    font-family: "calibri", sans-serif;
+    font-size: 16px;
+    text-align: center;
+}
+
+div.login label, div.nuovoOp label{
+    display: inline-block;
+    width: 190px;
+    font-family: "calibri", sans-serif;
+    font-size: 14px;
+    text-align: right;
+}
+
+
+div.header{
+    background-image: url('../images/logo.jpg');
+    background-repeat: no-repeat;
+    background-position: right top;
+    height: 110px;
+    color: #95100C;
+}
+div.header h2, div.header h4{
+    display: none;
+}
+
+div.headerLeft{
+    background-image: url('../images/suap.png');
+    background-repeat: no-repeat;
+    background-position: left top;
+    height: 110px;
+    width: 600px;
+    float: left;
+}
+
+div.benvenuto{
+    height: 300px;
+    font-family: "calibri", sans-serif;
+    font-size: 14px;
+}
+
+div.errore{
+    font-family: "calibri", sans-serif;
+    font-size: 14px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    height: 300px;
+    text-shadow: 2px 2px 5px red;
+}
+
+div.errorMenu, div.menuLeft{
+    font-family: "calibri", sans-serif;
+    font-size: 14px;
+    border-right: 1px solid #95100C;
+    border-top: 1px solid #95100C;
+    
+    height: 440px;
+
+}
+
+div.menuLeft p, div.menuLeft ul, div.menuLeft li,div.menuLeft h5 {
+    display: inline;
+    list-style-type: none;	
+    padding-left: 0px;		
+    font-family: "calibri", sans-serif;
+    font-size: 12px;
+}
+
+div.nuovoOp{
+    font-family: "calibri", sans-serif;
+    font-size: 14px;
+    margin-left: 100px;
+    margin-rigth: 100px;
+    width: 600px;
+    height: 400px;
+    color: black;
+}
+div.nuovoOp h4{
+    text-align: center;     
+}
+
+div.erroreInput ul{
+    display: block;
+    font-family: "calibri", sans-serif;
+    font-size: 12px;
+    padding-left: 15px;	
+    list-style-type: circle;
+}
+
+div.erroreInput{
+    margin-top:30px;
+    padding: 12px;
+    border: 1px solid #95100C;
+    background-color: #ccffcc;
+    width:70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div.erroreInput p{
+    text-shadow: 2px 2px 3px red;
+}
+
+div.okNuovoOp{
+    margin-top:30px;
+    padding: 12px;
+    border: 1px solid #95100C;
+    background-color: #ccffcc;
+    width:70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div.okNuovoOp p{
+    font-family: "calibri", sans-serif;
+    font-size: 12px;
+    padding-left: 40px;
+}
+
+div.okNuovoOp h4 {
+    font-family: "calibri", sans-serif;
+    
+    text-align: center;
+}
+
+table tr td {
+    border‐collapse:collapse;
+    border: 1px solid #95100C;
+    width:150px;
+    margin-left: auto;
+    margin-right: auto;    
+    font-family: "calibri", sans-serif;
+    font-size: 12px;
+}
+
+div.listaOp{
+    width:70%;
+    margin-left: auto;
+    margin-right: auto; 
+}
+
+tr.b{
+    background-color: #ccffcc;
+}
+
+th{
+    font-family: "calibri", sans-serif;
+    font-size: 14px;
+}
+td.center{
+    text-align: center;
+}
