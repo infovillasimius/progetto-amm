@@ -1,21 +1,18 @@
 
 <div class="menuLeft">
     <br/>
-    <a href="index.php">Home</a>
+    <p><a href="index.php">Home</a></p>
     <br/><br/>
     <h5>Pratiche:</h5>
-    
+
     <br/>
-    <ul>
-        <li><a href="index.php?page=protocollo&cmd=nuovaP">Nuova</a></li>
-        <br/>
-        <li>Elenco Totale</li>
-        <br/>
-        <li>Elenco Assegn.</li>
-        <br/>
-        <li>Aggiorna</li>
-    </ul>
+    <p>
+        <a href="index.php?page=protocollo&cmd=nuovaP">Nuova</a><br/>
+        <a href="index.php?page=protocollo&cmd=elencoP">Elenco Totale</a><br/>
+        <a href="index.php?page=operatore&cmd=elencoP">Elenco Assegn.</a><br/>
+        <a href="index.php?page=operatore&cmd=aggiornaP">Aggiorna</a>
+    </p>
     <br/>
     <br/>
-    <a href="index.php?page=logout">Logout</a>
+    <p><a href="index.php?page=logout">Logout</a></p>
 </div>

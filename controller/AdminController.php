@@ -21,24 +21,15 @@ class AdminController {
                 case "nuovoOp":
                     self::mostraNuovoOp($pagina);
                     break;
+                
                 case "modificaOp":
                     self::mostraModificaOp($pagina);
                     break;
-                case "elencoP":
-                    self::mostraElencoP($pagina);
-                    break;
-                case "nuovaP":
-                    self::mostraNuovaP($pagina);
-                    break;
-                case "aggiornaP":
-                    self::mostraAggiornP($pagina);
-                    break;
-                case "firmaP":
-                    self::mostraFirmaP($pagina);
-                    break;
+                
                 case "salvaOp":
                     self::mostraNuovoOp($pagina);
                     break;
+                
                 default :
                     OperatoreController::mostraBenvenuto($pagina);
                     break;

@@ -17,6 +17,7 @@ class Struttura {
     private $title="S.U.A.P. Unione Comuni del Sarrabus";
     private $title2;
     private $msg;
+    private $jsFile;
 
     /**
      * Imposta il nome del file per l'header
@@ -160,12 +161,38 @@ class Struttura {
         return $this->title." - ".$this->title2;
     }
     
+    /**
+     * Imposta il messaggio da visualizzare
+     * @param string $msg
+     */
     public function setMsg($msg) {
         $this->msg=$msg;
     }
     
+    /**
+     * Restituisce il messaggio da visualizzare
+     * @return string
+     */
     public function getMsg() {
         return $this->msg;
+    }
+    
+    /**
+     * Imposta il nome del file contenente lo script
+     * @param string $filename
+     * @return boolean True se impostato correttamente
+     */
+    public function setJsFile($filename) {
+        $this->jsFile = $filename;
+        return $this->jsFile != null;
+    }
+    
+    /**
+     * Restituisce il nome del file contenente lo script da caricare
+     * @return string
+     */
+    public function getJsFile() {
+        return $this->jsFile;
     }
 
 }

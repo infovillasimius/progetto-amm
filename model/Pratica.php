@@ -123,18 +123,18 @@ class Pratica {
     }
 
     /**
-     * Imposta il nome del richiedente
-     * @param String $nome
+     * Imposta il richiedente
+     * @param int $id
      * @return boolean true se impostato correttamente
      */
-    public function setRichiedente($nome) {
-        $this->richiedente = $nome;
+    public function setRichiedente($id) {
+        $this->richiedente = filter_var($id, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
         return $this->richiedente != null;
     }
 
     /**
      * Restituisce il richiedente
-     * @return string
+     * @return int
      */
     public function getRichiedente() {
         return $this->richiedente;
@@ -424,12 +424,12 @@ class Pratica {
     }
 
     /**
-     * Imposta il nome del procuratore
-     * @param String $nome
+     * Imposta il procuratore
+     * @param int $id
      * @return boolean true se impostato correttamente
      */
-    public function setProcuratore($nome) {
-        $this->procuratore = $nome;
+    public function setProcuratore($id) {
+        $this->procuratore = filter_var($id, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
         return $this->procuratore != null;
     }
 

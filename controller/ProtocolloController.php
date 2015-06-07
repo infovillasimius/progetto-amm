@@ -37,6 +37,7 @@ class ProtocolloController {
         $pagina->setTitle("Nuova pratica");
         $pagina->setHeaderFile("./view/header.php");
         $pagina->setContentFile("./view/contentPratica.php");
+        $pagina->setJsFile("./js/contentPratica.js");
         $ruolo=$operatore->getFunzione();
         OperatoreController::setruolo($pagina,$ruolo);
         $operatori = OperatoreFactory::getListaOp();

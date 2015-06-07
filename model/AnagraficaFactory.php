@@ -25,7 +25,7 @@ class AnagraficaFactory {
             $mysqli->close();
         }else {
             $row = $result->fetch_object();
-            $anagrafica->setNome($row->nome, $row->cognome);
+            $anagrafica->setNominativo($row->nome, $row->cognome);
             $anagrafica->setContatto($row->contatto);
             $mysqli->close();
             return $anagrafica;
@@ -100,7 +100,7 @@ class AnagraficaFactory {
         $result=$stmt->execute();
         
         if(!$result){
-            // errore nella esecuzione della query (es. sintassi)
+            // errore nella esecuzione della query 
             error_log("Errore nella esecuzione della query
             $mysqli->errno : $mysqli->error", 0);
             

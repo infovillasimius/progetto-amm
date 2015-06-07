@@ -43,7 +43,7 @@ h3 {
     font-size: 14px;
 }
 
-div.input-form button {
+div.input-form #salva {
     color: blueviolet;
     position: absolute;
     top: 385px;
@@ -55,8 +55,13 @@ button:hover{
     background-color: #99ccff;
 }
 
+ p.buttons{
+    text-align: center;
+}
+
 div.footer{
     width: 980px;
+    height: 70px;
     text-align: center;
     font-family: "calibri", sans-serif;
     font-size: 10px;
@@ -144,6 +149,10 @@ div.header{
     color: #95100C;
 }
 div.header h2, div.header h4{
+    display: none;
+}
+
+div.none{
     display: none;
 }
 

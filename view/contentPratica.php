@@ -5,6 +5,7 @@
         <div class="left">
             <label for="statoPratica">Stato pratica</label>
             <select id="statoPratica" name="statoPratica">
+                <option value="0">Seleziona stato pratica</option>
                 <option value="1" <?= $pratica->getStatoPratica() == "1" ? 'selected="selected"' : "" ?> >Caricata su Sardegna Suap</option>
                 <option value="2" <?= $pratica->getStatoPratica() == "2" ? 'selected="selected"' : "" ?> >Protocollata</option>
                 <option value="3" <?= $pratica->getStatoPratica() == "3" ? 'selected="selected"' : "" ?> >Assegnata a operatore</option>
@@ -25,6 +26,7 @@
             <br/>
             <label for="tipoPratica">Tipo pratica</label>
             <select id="tipoPratica" name="tipoPratica">
+                <option value="0">Seleziona tipo pratica</option>
                 <option value="1" <?= $pratica->getTipoPratica() == "1" ? 'selected="selected"' : "" ?> >Immediato avvio - 0 gg</option>
                 <option value="2" <?= $pratica->getTipoPratica() == "2" ? 'selected="selected"' : "" ?> >Immediato avvio - 20 gg</option>
                 <option value="3" <?= $pratica->getTipoPratica() == "3" ? 'selected="selected"' : "" ?> >Conferenza di Servizi</option>
@@ -45,12 +47,14 @@
             <input type="text" id="dataProtocollo" name="dataProtocollo" value="<?php $pratica->getDataProtocollo(); ?>"/>
             <br/>
             <label for="richiedente">Richiedente</label>
-            <input type="text" id="richiedente" name="richiedente" value="<?php $pratica->getRichiedente(); ?>"/>
+            <input type="hidden" id="richiedenteId" name="richiedenteId" value="<?php $pratica->getRichiedente(); ?>"/>
+            <input type="text" id="richiedente" name="richiedente" value=""/>
             <br/>
-            <label for="richiedente">Procuratore</label>
-            <input type="text" id="procuratore" name="procuratore" value="<?php $pratica->getProcuratore(); ?>"/>
+            <label for="procuratore">Procuratore</label>
+            <input type="hidden" id="procuratoreId" name="procuratoreId" value="<?php $pratica->getProcuratore(); ?>"/>
+            <input type="text" id="procuratore" name="procuratore" value=""/>
             <br/>
-            <label for="richiedente">Contatto</label>
+            <label for="contatto">Contatto</label>
             <input type="text" id="contatto" name="contatto" value="<?php $pratica->getContatto(); ?>"/>
             <br/>
             <label for="oggetto">Oggetto</label>
@@ -113,9 +117,32 @@
             <textarea id="motivoAttesa" name="motivoAttesa" ><?php $pratica->getMotivoAttesa(); ?></textarea>
             <br/>
         </div>
-
         <button type="submit" id="salva" value="pratica">Salva</button>
         <br/>
     </form>
+        
+        <div class="none">
+            <h3>Scelta anagrafica</h3>
+            <form id="anagrafica" method="post" action="index.php">
+                <label for="nomeAn">Nome</label>
+                <input type="text" id="nomeAn" name="nomeAn" value=""/>
+                <br/>
+                <label for="cognomeAn">Cognome</label>
+                <input type="text" id="cognomeAn" name="cognomeAn" value=""/>
+                <br/>
+                <label for="contattoAn">Contatto</label>
+                <input type="text" id="contattoAn" name="contattoAn" value=""/>
+                <br/><br/>
+                <input type="hidden" id="idAn" name="idAn" value=""/>
+                <p class="buttons">
+                    <button type="submit" id="cerca" >Cerca</button>
+                    <button type="submit" id="salvaAn" >Salva</button>
+                    <button type="submit" id="chiudi" >Chiudi</button>
+                    
+                </p>
+            </form>
+        </div>
+    
+        
     <p><?php echo $pagina->getMsg(); ?></p>
 </div>
