@@ -16,7 +16,7 @@ $(document).ready(function () {
 
     });
 
-    $("#salvaAn").click(function () {
+    $("#salvaAn").click(function (event) {
         event.preventDefault();
         idAn = $("#idAn").val();
         if (idAn == "") {
@@ -32,7 +32,7 @@ $(document).ready(function () {
         }
     });
 
-    $("#cerca").click(function () {
+    $("#cerca").click(function (event) {
         event.preventDefault();
         var nomeAn = $("#nomeAn:text").val();
 
@@ -84,7 +84,7 @@ $(document).ready(function () {
         $("#contatto").val($("#contattoAn").val());
     }
 
-    $("#chiudi").click(function () {
+    $("#chiudi").click(function (event) {
         event.preventDefault();
 
         $("div.none").hide("slow");
