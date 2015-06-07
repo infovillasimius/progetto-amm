@@ -35,7 +35,7 @@ include_once './model/OperatoreFactory.php';
         <label for="passwordOp">Password</label>
         <input type="password" id="passwordOp" name="passwordOp" value="<?= $nuovoOp->getPassword() ?>"/>
         <button type="submit" id="salvaOp">Salva</button>
-        <input type="hidden" name="update" value="<?= $update ?>"/>
+        <input type="hidden" name="update" value="<?= isset($update)?$update:null ?>"/>
         <input type="hidden" name="id" value="<?= $nuovoOp->getId() ?>"/>
         <input type="hidden" name="idAn" value="<?= $nuovoOp->getIdAn() ?>"/>
     </form>
