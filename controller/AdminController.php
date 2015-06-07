@@ -100,7 +100,7 @@ class AdminController {
                // $messaggio .= '<li>ciao2</li>';
             }
             $messaggio .='</ul></div>';
-
+            
             if ($errori > 0) {
                 $pagina->setMsg($messaggio);
             } else if (!$update) {
