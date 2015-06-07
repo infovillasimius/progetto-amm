@@ -117,4 +117,5 @@
         <button type="submit" id="salva" value="pratica">Salva</button>
         <br/>
     </form>
+    <p><?php echo $pagina->getMsg(); ?></p>
 </div>

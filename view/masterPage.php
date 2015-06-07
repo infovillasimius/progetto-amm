@@ -7,7 +7,7 @@
     <head>
         <meta charset="UTF-8">
         <title><?php echo $pagina->getTitle() ?> </title>
-        <link rel="stylesheet" type="text/css" media="screen" href="./css/mio.css"/>
+        <link rel="stylesheet" type="text/css" media="screen" href="./css/normal.css"/>
     </head>
     <body>
         <div class="page">

@@ -1,16 +1,15 @@
 <div class="menuLeft">
     <br/>
-    <a href="index.php">Home</a>
+    <p><a href="index.php">Home</a></p>
     <br/><br/>
     <h5>Pratiche:</h5>
     
     <br/>
-    <ul>
-        <li>Elenco</li>
-        <br/>
-        <li>Aggiorna</li>
-    </ul>
+    <p>
+        <a href="index.php?page=operatore&cmd=elencoP">Elenco</a><br/>   
+        <a href="index.php?page=operatore&cmd=aggiornaP">Aggiorna</a><br/>
+    </p>
+    
     <br/>
-    <br/>
-    <a href="index.php?page=logout">Logout</a>
+    <p><a href="index.php?page=logout">Logout</a></p>
 </div>

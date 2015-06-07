@@ -40,7 +40,7 @@ class AdminController {
                     self::mostraNuovoOp($pagina);
                     break;
                 default :
-                    self::mostraBenvenuto($pagina);
+                    OperatoreController::mostraBenvenuto($pagina);
                     break;
             }
         }
@@ -164,13 +164,7 @@ class AdminController {
         include "./view/masterPage.php";
     }
 
-    public function mostraAggiornP($pagina) {
-        $pagina->setTitle("Aggiorna pratica");
-        $pagina->setHeaderFile("./view/header.php");
-        $pagina->setLeftBarFile("./view/amministratore/menuAmministratore.php");
-        $pagina->setContentFile("./view/amministratore/aggiornaP.php");
-        include "./view/masterPage.php";
-    }
+    
 
     public function mostraFirmaP($pagina) {
         $pagina->setTitle("Mostra pratiche alla firma");
@@ -180,15 +174,6 @@ class AdminController {
         include "./view/masterPage.php";
     }
     
-    protected function mostraBenvenuto($pagina) {
-        $operatore=$_SESSION["op"];
-        $pagina->setHeaderFile("./view/header.php");
-        $pagina->setContentFile("./view/benvenuto.php");
-        $pagina->setTitle("Benvenuto");   
-        $pagina->setLeftBarFile("./view/amministratore/menuAmministratore.php");
-        $pagina->setMsg('<div class="erroreInput"><p>Errore, cmd non esistente... faresti meglio a usare i menu!!! </p></div>');
-        include "./view/masterPage.php";
-    }
-           
+      
 
 }

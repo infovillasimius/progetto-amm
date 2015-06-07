@@ -169,7 +169,7 @@ div.errore{
     margin-right: auto;
     width: 70%;
     height: 300px;
-    text-shadow: 2px 2px 5px red;
+    text-shadow: 2px 2px 5px #777777;
 }
 
 div.errorMenu, div.menuLeft{
@@ -194,7 +194,7 @@ div.nuovoOp{
     font-family: "calibri", sans-serif;
     font-size: 14px;
     margin-left: 100px;
-    margin-rigth: 100px;
+    margin-right: 100px;
     width: 600px;
     height: 400px;
     color: black;
@@ -222,7 +222,8 @@ div.erroreInput{
 }
 
 div.erroreInput p{
-    text-shadow: 2px 2px 3px red;
+    text-shadow: 2px 2px 3px #777777;
+    font-weight: bold;
 }
 
 div.okNuovoOp{
@@ -248,7 +249,7 @@ div.okNuovoOp h4 {
 }
 
 table tr td {
-    border‐collapse:collapse;
+    border-collapse: collapse;
     border: 1px solid #95100C;
     width:150px;
     margin-left: auto;
