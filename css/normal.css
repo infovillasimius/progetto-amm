@@ -284,3 +284,14 @@ th{
 td.center{
     text-align: center;
 }
+
+#result{
+    font-family: "calibri", sans-serif;
+    font-size: 12px;
+    background-color: #ccffcc;
+    border: 1px solid #95100C;
+    padding: 5px;
+    float: right;
+    width: 50%;
+    display: none;
+}

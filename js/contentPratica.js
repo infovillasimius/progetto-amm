@@ -19,7 +19,7 @@ $(document).ready(function () {
     $("#salvaAn").click(function (event) {
         event.preventDefault();
         idAn = $("#idAn").val();
-        if (idAn == "") {
+        if (idAn === "") {
             alert("Errore: nessuna anagrafica selezionata");
         } else {
             if (rich === true) {
@@ -39,7 +39,7 @@ $(document).ready(function () {
         var cognomeAn = $("#cognomeAn:text").val();
         var contattoAn = $("#contattoAn:text").val();
 
-        if (nomeAn != "" && cognomeAn != "" && contattoAn != "") {
+        if (nomeAn !== "" && cognomeAn !== "" ) {
             $.ajax({
                 url: "index.php",
                 data: {
@@ -52,10 +52,11 @@ $(document).ready(function () {
                 type: "POST",
                 dataType: 'json',
                 success: function (data, state) {
-
-                    $("#nomeAn").val(data.nomeAn);
-                    $("#cognomeAn").val(data.cognomeAn);
-                    $("#contattoAn").val(data.contattoAn);
+                    $("#result").text("Trovato: "+ data.nomeAn + " "+ data.cognomeAn + " " + data.contattoAn)
+                    $("#result").show("slow");
+//                    $("#nomeAn").val(data.nomeAn);
+//                    $("#cognomeAn").val(data.cognomeAn);
+//                    $("#contattoAn").val(data.contattoAn);
                     $("#idAn").val(data.idAn);
 
                 },
