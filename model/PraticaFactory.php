@@ -8,6 +8,8 @@ class PraticaFactory {
         if (!isset($mysqli)) {
             return false;
             
+            
+            
         }
     }
     

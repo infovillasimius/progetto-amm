@@ -35,7 +35,7 @@ class OperatoreFactory {
             $operatore->setPassword($row->password);
             $operatore->setId($row->id);
             $operatore->setIdAn($row->id_anagrafica);
-            
+
             $mysqli->close();
 
             return $operatore;
@@ -166,37 +166,45 @@ class OperatoreFactory {
         $usernameOp = $nuovoOp->getUsername();
         $passwordOp = $nuovoOp->getPassword();
 
-        $anagrafica = AnagraficaFactory::getAnagraficaByName($nomeOp, $cognomeOp);
-
-        if ($anagrafica < 1) {
-            $anagrafica = AnagraficaFactory::setAnagrafica($nomeOp, $cognomeOp, $contattoOp);
-        }
-
-        if ($anagrafica < 1) {
-            return false;
-        }
-
         $mysqli = ConnectionFactory::connetti();
 
         if (!isset($mysqli)) {
             return false;
         }
+
+        $anagrafica = AnagraficaFactory::getAnagraficaByName($nomeOp, $cognomeOp, $mysqli);
+
+        // Start transaction
+        $mysqli->autocommit(false);
+
+        if ($anagrafica < 1) {
+            $anagrafica = AnagraficaFactory::setAnagrafica($nomeOp, $cognomeOp, $contattoOp, $mysqli);
+        }
+
+        if ($anagrafica < 1) {
+            $mysqli->autocommit(true);
+            return false;
+        }
+
         $stmt = $mysqli->stmt_init();
         $query = "INSERT INTO operatore VALUES(default,?,?,?,?)";
-//        $result = $mysqli->query($query);
+
         $stmt->prepare($query);
         $stmt->bind_param("issi", $funzioneOp, $usernameOp, $passwordOp, $anagrafica);
         $result = $stmt->execute();
 
         if (!$result) {
-            // errore nella esecuzione della query (es. sintassi)
+            // errore nella esecuzione della query 
             error_log("Errore nella esecuzione della query
             $mysqli->errno : $mysqli->error", 0);
             $errore = $mysqli->errno;
+            $mysqli->rollback();
+            $mysqli->autocommit(true);
             $mysqli->close();
             return $errore;
         } else {
-
+            $mysqli->commit();
+            $mysqli->autocommit(true);
             $mysqli->close();
             return 0;
         }
@@ -263,20 +271,24 @@ class OperatoreFactory {
         $usernameOp = $nuovoOp->getUsername();
         $passwordOp = $nuovoOp->getPassword();
 
-        $anagrafica = AnagraficaFactory::updateAnagrafica($idAn, $nomeOp, $cognomeOp, $contattoOp);
-        
-        if ($anagrafica < 1) {
-            return false;
-        }
-
         $mysqli = ConnectionFactory::connetti();
-
         if (!isset($mysqli)) {
             return false;
         }
+
+        // Start transaction
+        $mysqli->autocommit(false);
+
+        $anagrafica = AnagraficaFactory::updateAnagrafica($idAn, $nomeOp, $cognomeOp, $contattoOp, $mysqli);
+
+        if ($anagrafica < 1) {         
+            $mysqli->autocommit(true);
+            $mysqli->close();
+            return false;
+        }
+      
         $stmt = $mysqli->stmt_init();
-        
-        
+
         $query = "UPDATE operatore SET funzione=?, username=?,password=? where id=?";
         $stmt->prepare($query);
         $stmt->bind_param("issi", $funzioneOp, $usernameOp, $passwordOp, $id);
@@ -287,9 +299,14 @@ class OperatoreFactory {
             error_log("Errore nella esecuzione della query
             $mysqli->errno : $mysqli->error", 0);
             $errore = $mysqli->errno;
+            $mysqli->rollback();
+            $mysqli->autocommit(true);
+            $stmt->close();
             $mysqli->close();
             return $errore;
         } else {
+            $mysqli->commit();
+            $mysqli->autocommit(true);
             $stmt->close();
             $mysqli->close();
             return 0;

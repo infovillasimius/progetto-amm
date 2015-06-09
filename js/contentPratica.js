@@ -27,6 +27,11 @@ $(document).ready(function () {
             } else {
                 changeProc();
             }
+            $("#nomeAn").val("");
+            $("#cognomeAn").val("");
+            $("#contattoAn").val("");
+            $("#idAn").val("");
+            $("#result").hide("slow");
             $("div.none").hide("slow");
             $("div.right").show("slow");
         }
@@ -35,11 +40,10 @@ $(document).ready(function () {
     $("#cerca").click(function (event) {
         event.preventDefault();
         var nomeAn = $("#nomeAn:text").val();
-
         var cognomeAn = $("#cognomeAn:text").val();
         var contattoAn = $("#contattoAn:text").val();
 
-        if (nomeAn !== "" && cognomeAn !== "" ) {
+        if (nomeAn !== "" && cognomeAn !== "") {
             $.ajax({
                 url: "index.php",
                 data: {
@@ -52,11 +56,8 @@ $(document).ready(function () {
                 type: "POST",
                 dataType: 'json',
                 success: function (data, state) {
-                    $("#result").text("Trovato: "+ data.nomeAn + " "+ data.cognomeAn + " " + data.contattoAn)
+                    $("#result").text("Trovato: " + data.nomeAn + " " + data.cognomeAn + "\n " + data.contattoAn)
                     $("#result").show("slow");
-//                    $("#nomeAn").val(data.nomeAn);
-//                    $("#cognomeAn").val(data.cognomeAn);
-//                    $("#contattoAn").val(data.contattoAn);
                     $("#idAn").val(data.idAn);
 
                 },
@@ -65,7 +66,7 @@ $(document).ready(function () {
                 }
             });
         } else {
-            alert("Compilare tutti i campi");
+            alert("Compilare i campi [nome] e [cognome]");
         }
 
     });

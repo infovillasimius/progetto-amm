@@ -96,9 +96,9 @@ class OperatoreController {
         $cognome = isset($_REQUEST["cognome"])?$_REQUEST["cognome"]:null;
         $contatto = isset($_REQUEST["contatto"])?$_REQUEST["contatto"]:"";
         
-        $idAnagrafica = AnagraficaFactory::getAnagraficaByName($nome, $cognome);
+        $idAnagrafica = AnagraficaFactory::getAnagraficaByName($nome, $cognome,null);
         if ($idAnagrafica < 1) {
-            $idAnagrafica = AnagraficaFactory::setAnagrafica($nome, $cognome, $contatto);
+            $idAnagrafica = AnagraficaFactory::setAnagrafica($nome, $cognome, $contatto,null);
         }
         if ($idAnagrafica < 1) {
             echo 'Errore';

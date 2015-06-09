@@ -137,11 +137,11 @@
                 <p class="buttons">
                     <button type="submit" id="cerca" >Cerca</button>
                     <button type="submit" id="salvaAn" >Salva</button>
-                    <button type="submit" id="chiudi" >Chiudi</button>
-                    
+                    <button type="submit" id="chiudi" >Chiudi</button>   
                 </p>
+                <p id="result"></p> 
             </form>
-            <p id="result"></p>
+            
         </div>
     
         
