@@ -1,7 +1,7 @@
 <div class="input-form">
     <h3>Dati della pratica</h3>
     <form method="post" action="index.php?page=operatore&cmd=salvaP">
-   
+
         <div class="left">
             <label for="statoPratica">Stato pratica</label>
             <select id="statoPratica" name="statoPratica">
@@ -22,7 +22,7 @@
                 <option value="14" <?= $pratica->getStatoPratica() == "14" ? 'selected="selected"' : "" ?> >Chiusa -> Esito Positivo</option>
                 <option value="15" <?= $pratica->getStatoPratica() == "15" ? 'selected="selected"' : "" ?> >Chiusa -> Archiviata</option>
             </select>
-            
+
             <br/>
             <label for="tipoPratica">Tipo pratica</label>
             <select id="tipoPratica" name="tipoPratica">
@@ -33,117 +33,118 @@
             </select>
             <br/>
             <br/>
-        
+
             <label for="numeroPratica">Numero pratica</label>
-            <input type="text" id="numeroPratica" name="numeroPratica" value="<?php $pratica->getNumeroPratica(); ?>"/>
+            <input type="text" id="numeroPratica" name="numeroPratica" value="<?= $pratica->getNumeroPratica(); ?>"/>
             <br/>
             <label for="dataCaricamento">Caricata in data</label>
-            <input type="text" id="dataCaricamento" name="dataCaricamento" value="<?php $pratica->getDataCaricamento(); ?>"/>
+            <input type="text" id="dataCaricamento" name="dataCaricamento" value="<?= $pratica->getDataCaricamento(); ?>"/>
             <br/>
             <label for="numeroProtocollo">Protocollo</label>
-            <input type="text" id="numeroProtocollo" name="numeroProtocollo" value="<?php $pratica->getNumeroProtocollo(); ?>"/>
+            <input type="text" id="numeroProtocollo" name="numeroProtocollo" value="<?= $pratica->getNumeroProtocollo(); ?>"/>
             <br/>
             <label for="dataProtocollo">Data protocollo</label>
-            <input type="text" id="dataProtocollo" name="dataProtocollo" value="<?php $pratica->getDataProtocollo(); ?>"/>
+            <input type="text" id="dataProtocollo" name="dataProtocollo" value="<?= $pratica->getDataProtocollo(); ?>"/>
             <br/>
             <label for="richiedente">Richiedente</label>
-            <input type="hidden" id="richiedenteId" name="richiedenteId" value="<?php $pratica->getRichiedente(); ?>"/>
-            <input type="text" id="richiedente" name="richiedente" value=""/>
+            <input type="hidden" id="richiedenteId" name="richiedenteId" value="<?= $pratica->getRichiedenteId(); ?>"/>
+            <input type="text" id="richiedente" name="richiedente" value="<?= $pratica->getRichiedente(); ?>"/>
             <br/>
             <label for="procuratore">Procuratore</label>
-            <input type="hidden" id="procuratoreId" name="procuratoreId" value="<?php $pratica->getProcuratore(); ?>"/>
-            <input type="text" id="procuratore" name="procuratore" value=""/>
+            <input type="hidden" id="procuratoreId" name="procuratoreId" value="<?= $pratica->getProcuratoreId(); ?>"/>
+            <input type="text" id="procuratore" name="procuratore" value="<?= $pratica->getProcuratore(); ?>"/>
             <br/>
             <label for="contatto">Contatto</label>
-            <input type="text" id="contatto" name="contatto" value="<?php $pratica->getContatto(); ?>"/>
+            <input type="text" id="contatto" name="contatto" value="<?= $pratica->getContatto(); ?>"/>
             <br/>
             <label for="oggetto">Oggetto</label>
-            <textarea id="oggetto" name="oggetto" ><?php $pratica->getOggetto(); ?></textarea>
+            <textarea id="oggetto" name="oggetto" ><?= $pratica->getOggetto(); ?></textarea>
             <br/>
             <label for="ubicazione">Ubicazione</label>
-            <input type="text" id="ubicazione" name="ubicazione" value="<?php $pratica->getUbicazione(); ?>"/>
+            <input type="text" id="ubicazione" name="ubicazione" value="<?= $pratica->getUbicazione(); ?>"/>
             <br/> 
             <label for="importoDiritti">Importo diritti SUAP</label>
-            <input type="text" id="importoDiritti" name="importoDiritti" value="<?php $pratica->getImportoDiritti(); ?>"/>
-            
+            <input type="text" id="importoDiritti" name="importoDiritti" value="<?= $pratica->getImportoDiritti(); ?>"/>
+
         </div>
         <br/>
         <div class="right">
             <label for="incaricato">Operatore incaricato</label>
             <select id="incaricato" name="incaricato">
                 <option value="0" >Selezionare operatore</option>
-                <?php           
-                    for($x=0;$x<$rows;$x++){
-                        if($operatori[$x]->getFunzione()<=OperatoreFactory::protocollo()){
-                            echo '<option value="'.$operatori[$x]->getId().'" '.
-                                    ($pratica->getIncaricato()==$operatori[$x]->getId()?'selected="selected"' : " ").
-                                    '>'.$operatori[$x]->getNominativo().'</option>';
-                        }
+                <?php
+                for ($x = 0; $x < $rows; $x++) {
+                    if ($operatori[$x]->getFunzione() <= OperatoreFactory::protocollo()) {
+                        echo '<option value="' . $operatori[$x]->getId() . '" ' .
+                        ($pratica->getIncaricato() == $operatori[$x]->getId() ? 'selected="selected"' : " ") .
+                        '>' . $operatori[$x]->getNominativo() . '</option>';
                     }
+                }
                 ?>
             </select>
             <br/>
             <label for="dataAvvioProcedimento">Data avvio procedimento</label>
-            <input type="text" id="dataAvvioProcedimento" name="dataAvvioProcedimento" value="<?php $pratica->getDataAvvioProcedimento(); ?>"/>
+            <input type="text" id="dataAvvioProcedimento" name="dataAvvioProcedimento" value="<?= $pratica->getDataAvvioProcedimento(); ?>"/>
             <br/>
             <label for="dataInvioRicevuta">Data invio ricevuta</label>
-            <input type="text" id="dataInvioRicevuta" name="dataInvioRicevuta" value="<?php $pratica->getDataInvioRicevuta(); ?>"/>
+            <input type="text" id="dataInvioRicevuta" name="dataInvioRicevuta" value="<?= $pratica->getDataInvioRicevuta(); ?>"/>
             <br/>
             <label for="dataInvioVerifiche">Data invio verifiche</label>
-            <input type="text" id="dataInvioVerifiche" name="dataInvioVerifiche" value="<?php $pratica->getDataInvioVerifiche(); ?>"/>
+            <input type="text" id="dataInvioVerifiche" name="dataInvioVerifiche" value="<?= $pratica->getDataInvioVerifiche(); ?>"/>
             <br/>
             <label for="dataConferenzaServizi">Data Conferenza Servizi</label>
-            <input type="text" id="dataConferenzaServizi" name="dataConferenzaServizi" value="<?php $pratica->getDataConferenzaServizi(); ?>"/>
+            <input type="text" id="dataConferenzaServizi" name="dataConferenzaServizi" value="<?= $pratica->getDataConferenzaServizi(); ?>"/>
             <br/>
             <label for="dataProvvedimento">Data Provvedimento</label>
-            <input type="text" id="dataProvvedimento" name="dataProvvedimento" value="<?php $pratica->getDataProvvedimento(); ?>"/>
+            <input type="text" id="dataProvvedimento" name="dataProvvedimento" value="<?= $pratica->getDataProvvedimento(); ?>"/>
             <br/>
             <label for="numeroProtocolloProvvedimento">Protocollo provvedimento</label>
-            <input type="text" id="numeroProtocolloProvvedimento" name="numeroProtocolloProvvedimento" value="<?php $pratica->getNumeroProtocolloProvvedimento(); ?>"/>
+            <input type="text" id="numeroProtocolloProvvedimento" name="numeroProtocolloProvvedimento" value="<?= $pratica->getNumeroProtocolloProvvedimento(); ?>"/>
             <br/><br/>
             <label for="flagAllaFirma">Alla firma</label>
-            <input type="checkbox" id="flagAllaFirma" name="flagAllaFirma" <?= $pratica->getFlagAllaFirma() ? 'checked="checked"' : "" ?> value="true"/>
+            <input type="checkbox" id="flagAllaFirma" name="flagAllaFirma" <?= $pratica->getFlagAllaFirma() ? 'checked="checked"' : "" ?> />
             <br/>
             <label for="flagFirmata">Firmata</label>
-            <input type="checkbox" id="flagFirmata" name="flagFirmata" <?= $pratica->getFlagFirmata() ? 'checked="checked"' : "" ?> value="true"/>
+            <input type="checkbox" id="flagFirmata" name="flagFirmata" <?= $pratica->getFlagFirmata() ? 'checked="checked"' : "" ?> />
             <br/>
             <label for="flagSoprintendenza">Coinvolge Soprintendenza</label>
-            <input type="checkbox" id="flagSoprintendenza" name="flagSoprintendenza" <?= $pratica->getFlagSoprintendenza() ? 'checked="checked"' : "" ?> value="true"/>
+            <input type="checkbox" id="flagSoprintendenza" name="flagSoprintendenza" <?= $pratica->getFlagSoprintendenza() ? 'checked="checked"' : "" ?> />
             <br/>
             <label for="flagInAttesa">In attesa</label>
-            <input type="checkbox" id="flagInAttesa" name="flagInAttesa" <?= $pratica->getFlagInAttesa() ? 'checked="checked"' : "" ?> value="true"/>
+            <input type="checkbox" id="flagInAttesa" name="flagInAttesa" <?= $pratica->getFlagInAttesa() ? 'checked="checked"' : "" ?> />
             <br/>
             <label for="motivoAttesa">Motivo dell'attesa</label>
-            <textarea id="motivoAttesa" name="motivoAttesa" ><?php $pratica->getMotivoAttesa(); ?></textarea>
+            <textarea id="motivoAttesa" name="motivoAttesa" ><?= $pratica->getMotivoAttesa(); ?></textarea>
             <br/>
         </div>
+        <input type="hidden" id="idPratica" name="idPratica" value="<?= $pratica->getID() ?>" />
         <button type="submit" id="salva" value="pratica">Salva</button>
         <br/>
     </form>
-        
-        <div class="none">
-            <h3>Scelta anagrafica</h3>
-            <form id="anagrafica" method="post" action="index.php">
-                <label for="nomeAn">Nome</label>
-                <input type="text" id="nomeAn" name="nomeAn" value=""/>
-                <br/>
-                <label for="cognomeAn">Cognome</label>
-                <input type="text" id="cognomeAn" name="cognomeAn" value=""/>
-                <br/>
-                <label for="contattoAn">Contatto</label>
-                <input type="text" id="contattoAn" name="contattoAn" value=""/>
-                <br/><br/>
-                <input type="hidden" id="idAn" name="idAn" value=""/>
-                <p class="buttons">
-                    <button type="submit" id="cerca" >Cerca</button>
-                    <button type="submit" id="salvaAn" >Salva</button>
-                    <button type="submit" id="chiudi" >Chiudi</button>   
-                </p>
-                <p id="result"></p> 
-            </form>
-            
-        </div>
-    
-        
+
+    <div class="none">
+        <h3>Scelta/Inserimento anagrafica</h3>
+        <form id="anagrafica" method="post" action="index.php">
+            <label for="nomeAn">Nome</label>
+            <input type="text" id="nomeAn" name="nomeAn" value=""/>
+            <br/>
+            <label for="cognomeAn">Cognome</label>
+            <input type="text" id="cognomeAn" name="cognomeAn" value=""/>
+            <br/>
+            <label for="contattoAn">Contatto</label>
+            <input type="text" id="contattoAn" name="contattoAn" value=""/>
+            <br/><br/>
+            <input type="hidden" id="idAn" name="idAn" value=""/>
+            <p class="buttons">
+                <button type="submit" id="cerca" >Cerca</button>
+                <button type="submit" id="salvaAn" >Salva</button>
+                <button type="submit" id="chiudi" >Chiudi</button>   
+            </p>
+            <p id="result"></p> 
+        </form>
+
+    </div>
+
+
     <p><?php echo $pagina->getMsg(); ?></p>
 </div>

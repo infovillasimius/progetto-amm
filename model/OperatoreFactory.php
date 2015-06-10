@@ -200,11 +200,13 @@ class OperatoreFactory {
             $errore = $mysqli->errno;
             $mysqli->rollback();
             $mysqli->autocommit(true);
+            $stmt->close();
             $mysqli->close();
             return $errore;
         } else {
             $mysqli->commit();
             $mysqli->autocommit(true);
+            $stmt->close();
             $mysqli->close();
             return 0;
         }

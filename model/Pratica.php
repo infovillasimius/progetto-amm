@@ -7,6 +7,7 @@
  */
 class Pratica {
 
+    private $id;
     private $contatto;
     private $dataAvvioProcedimento;
     private $dataCaricamento;
@@ -27,10 +28,30 @@ class Pratica {
     private $numeroProtocolloProvvedimento;
     private $oggetto;
     private $procuratore;
+    private $procuratoreId;
     private $richiedente;
+    private $richiedenteId;
     private $statoPratica;
     private $tipoPratica;
     private $ubicazione;
+
+    /**
+     * Imposta id della pratica
+     * @param int $id
+     * @return boolean true se impostato correttamente
+     */
+    public function setId($id) {
+        $this->id = filter_var($id, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
+        return $this->id != null;
+    }
+
+    /**
+     * Restituisce id pratica
+     * @return int
+     */
+    public function getId() {
+        return $this->id;
+    }
 
     /**
      * Imposta numeroPratica
@@ -85,7 +106,7 @@ class Pratica {
     public function getFlagAllaFirma() {
         return $this->flagAllaFirma;
     }
-    
+
     /**
      * Sette il flag " Firmata dal Responsabile"
      * @param boolean $flag
@@ -127,17 +148,17 @@ class Pratica {
      * @param int $id
      * @return boolean true se impostato correttamente
      */
-    public function setRichiedente($id) {
-        $this->richiedente = filter_var($id, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
-        return $this->richiedente != null;
+    public function setRichiedenteId($id) {
+        $this->richiedenteId = filter_var($id, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
+        return $this->richiedenteId != null;
     }
 
     /**
      * Restituisce il richiedente
      * @return int
      */
-    public function getRichiedente() {
-        return $this->richiedente;
+    public function getRichiedenteId() {
+        return $this->richiedenteId;
     }
 
     /**
@@ -235,17 +256,18 @@ class Pratica {
      * @param String $input 
      * @return int (unix timestamp)
      */
-    private function dataControl($input) {
-        $input = trim($input);
-        $date_format = 'd.m.Y';
-        $input = filter_var($input, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/^[0-9]{2}[\-\/.]{1}[0-9]{2}[\-\/.]{1}[0-9]{4}/')));
-        $input = str_replace('/', '.', $input);
-        $input = str_replace('-', '.', $input);
-        $time = strtotime($input);
-        if (date($date_format, $time) == $input) {
-            return $time;
-        }
-        return null;
+    protected function dataControl($input) {
+        //$input = trim($input);
+        //$date_format = 'd.m.Y';
+        //$input = filter_var($input, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/^[0-9]{2}[\-\/.]{1}[0-9]{2}[\-\/.]{1}[0-9]{4}/')));
+        //$input = str_replace('/', '.', $input);
+        //$input = str_replace('-', '.', $input);
+        //$time = strtotime($input);
+//        if (date($date_format, $time) == $input) {
+//            return $time;
+//        }
+//        return null;
+        return $input;
     }
 
     /**
@@ -284,8 +306,12 @@ class Pratica {
      * @param String $data
      * @return boolean true se impostato correttamente
      */
-    public function setDataCaricamento($data) {
-        $this->dataCaricamento = dataControl($data);
+    public function setDataCaricamento(&$data) {
+        if ($data==null){
+            return null;
+        }
+        echo $data;
+        $this->dataCaricamento = dataControl($data);;
         return $this->dataCaricamento != null;
     }
 
@@ -294,10 +320,10 @@ class Pratica {
      * @return string 
      */
     public function getDataCaricamento() {
-        if (isset($this->dataCaricamento)) {
-            return dataToString($this->dataCaricamento);
-        }
-        return "";
+//        if (isset($this->dataCaricamento)) {
+//            return dataToString($this->dataCaricamento);
+//        }
+        return $this->dataCaricamento;
     }
 
     /**
@@ -428,17 +454,17 @@ class Pratica {
      * @param int $id
      * @return boolean true se impostato correttamente
      */
-    public function setProcuratore($id) {
-        $this->procuratore = filter_var($id, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
-        return $this->procuratore != null;
+    public function setProcuratoreId($id) {
+        $this->procuratoreId = filter_var($id, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
+        return $this->procuratoreId != null;
     }
 
     /**
-     * Restituisce il procuratore
-     * @return string
+     * Restituisce id procuratore
+     * @return int
      */
-    public function getProcuratore() {
-        return $this->procuratore;
+    public function getProcuratoreId() {
+        return $this->procuratoreId;
     }
 
     /**
@@ -507,10 +533,48 @@ class Pratica {
 
     /**
      * Restituisce importo diritti SUAP
-     * @return int
+     * @return float
      */
     public function getImportoDiritti() {
         return $this->importoDiritti;
     }
+    
+    /**
+     * Restituisce nominativo richiedente
+     * @return string
+     */
+    public function getRichiedente() {
+        return $this->richiedente;
+    }
+    
+    /**
+     * Imposta nominativo richiedente
+     * @param string $nominativo
+     * @return boolean
+     */
+    public function setRichiedente($nominativo) {
+        $this->richiedente=$nominativo;
+        return $this->richiedente!=null;
+    }
+    
+    /**
+     * Restituisce nominativo procuratore
+     * @return string
+     */
+    public function getProcuratore() {
+        return $this->procuratore;
+    }
+    
+    /**
+     * Imposta nominativo Procuratore
+     * @param string $nominativo
+     * @return boolean
+     */
+    public function setProcuratore($nominativo) {
+        $this->procuratore=$nominativo;
+        return $this->richiedente!=null;
+    }
+    
+    
 
 }

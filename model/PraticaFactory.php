@@ -1,5 +1,6 @@
 <?php
 
+include_once './model/Pratica.php';
 
 class PraticaFactory {
 
@@ -7,17 +8,74 @@ class PraticaFactory {
         $mysqli = ConnectionFactory::connetti();
         if (!isset($mysqli)) {
             return false;
-            
-            
-            
+        }
+
+        //$id = $pratica->getId();
+        $contatto = $pratica->getContatto();
+        $dataAvvioProcedimento = $pratica->getDataAvvioProcedimento();
+        $dataCaricamento = $pratica->getDataCaricamento();
+        $dataConferenzaServizi = $pratica->getDataConferenzaServizi();
+        $dataInvioRicevuta = $pratica->getDataInvioRicevuta();
+        $dataInvioVerifiche = $pratica->getDataInvioVerifiche();
+        $dataProtocollo = $pratica->getDataProtocollo();
+        $dataProvvedimento = $pratica->getDataProvvedimento();
+        $flagAllaFirma = $pratica->getFlagAllaFirma();
+        $flagFirmata = $pratica->getFlagFirmata();
+        $flagInAttesa = $pratica->getFlagInAttesa();
+        $flagSoprintendenza = $pratica->getFlagSoprintendenza();
+        $importoDiritti = $pratica->getImportoDiritti();
+        $incaricato = $pratica->getIncaricato();
+        $motivoAttesa = $pratica->getMotivoAttesa();
+        $numeroPratica = $pratica->getNumeroPratica();
+        $numeroProtocollo = $pratica->getNumeroProtocollo();
+        $numeroProtocolloProvvedimento = $pratica->getNumeroProtocolloProvvedimento();
+        $oggetto = $pratica->getOggetto();
+        //$procuratore = $pratica->getProcuratore();
+        $procuratoreId = $pratica->getProcuratoreId();
+        //$richiedente = $pratica->getRichiedente();
+        $richiedenteId = $pratica->getRichiedenteId();
+        $statoPratica = $pratica->getStatoPratica();
+        $tipoPratica = $pratica->getTipoPratica();
+        $ubicazione = $pratica->getUbicazione();
+
+        $stmt = $mysqli->stmt_init();
+        $query = "INSERT INTO pratica (id, contatto, dataAvvioProcedimento, dataCaricamento, dataConferenzaServizi, "
+                . "dataInvioRicevuta, dataInvioVerifiche, dataProtocollo, dataProvvedimento, flagAllaFirma, "
+                . "flagFirmata, flagInAttesa, flagSoprintendenza, importoDiritti, incaricato, motivoAttesa, "
+                . "numeroPratica, numeroProtocollo, numeroProtocolloProvvedimento, oggetto, procuratore, "
+                . "richiedente, statoPratica, tipoPratica, ubicazione) VALUES (default, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
+
+        $stmt->prepare($query);
+        $stmt->bind_param("ssssssssiiiidisiiisiiiis", $contatto, $dataAvvioProcedimento,
+                $dataCaricamento, $dataConferenzaServizi, $dataInvioRicevuta, $dataInvioVerifiche, 
+                $dataProtocollo, $dataProvvedimento, $flagAllaFirma, $flagFirmata, $flagInAttesa, 
+                $flagSoprintendenza, $importoDiritti, $incaricato, $motivoAttesa, $numeroPratica, 
+                $numeroProtocollo, $numeroProtocolloProvvedimento, $oggetto, $procuratoreId, 
+                $richiedenteId, $statoPratica, $tipoPratica, $ubicazione);
+        
+        $result = $stmt->execute();
+
+        if (!$result) {
+            // errore nella esecuzione della query 
+            error_log("Errore nella esecuzione della query
+            $mysqli->errno : $mysqli->error", 0);
+            $errore = $mysqli->errno;
+            $stmt->close();
+            $mysqli->close();
+            return $errore;
+        } else {
+            $mysqli->commit();
+            $mysqli->autocommit(true);
+            $mysqli->close();
+            return 0;
         }
     }
-    
+
     public static function getPraticaById($id) {
         
     }
-    
-    public static function elencoP($ricerca,$offset,$numero,$ordinamento) {
+
+    public static function elencoP($ricerca, $offset, $numero, $ordinamento) {
         $mysqli = ConnectionFactory::connetti();
         if (!isset($mysqli)) {
             return null;
@@ -48,7 +106,7 @@ class PraticaFactory {
             return $operatori;
         }
     }
-    
+
     public static function updateP($pratica) {
         
     }

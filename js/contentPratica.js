@@ -5,7 +5,6 @@ $(document).ready(function () {
         event.preventDefault();
         $("div.right").hide("slow");
         $("div.none").show("slow");
-
     });
 
     $("#procuratore").focusin(function (event) {
@@ -13,7 +12,6 @@ $(document).ready(function () {
         event.preventDefault();
         $("div.right").hide("slow");
         $("div.none").show("slow");
-
     });
 
     $("#salvaAn").click(function (event) {
@@ -62,7 +60,7 @@ $(document).ready(function () {
 
                 },
                 error: function (data, status, errorThrown) {
-
+                    alert("Errore di ricezione dati dal server");
                 }
             });
         } else {
@@ -70,10 +68,6 @@ $(document).ready(function () {
         }
 
     });
-
-
-
-
 
     function changeRich() {
         $("#richiedente").val($("#nomeAn").val() + " " + $("#cognomeAn").val());
