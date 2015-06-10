@@ -6,6 +6,7 @@ include_once './model/Anagrafica.php';
 include_once './model/Operatore.php';
 include_once './model/OperatoreFactory.php';
 include_once './model/AnagraficaFactory.php';
+include_once './model/PraticaFactory.php';
 
 class OperatoreController {
 
