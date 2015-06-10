@@ -87,7 +87,7 @@ class OperatoreController {
     }
 
     public function mostraAggiornaP($pagina) {
-        
+
         $operatore = $_SESSION["op"];
         $pagina->setHeaderFile("./view/header.php");
         $pagina->setContentFile("./view/contentPratica.php");
@@ -97,11 +97,11 @@ class OperatoreController {
         $operatori = OperatoreFactory::getListaOp();
         $rows = count($operatori);
         $pratica = new Pratica();
-        
+
 
 
         if ($_REQUEST["cmd"] == "salvaP") {
-            
+
             $contatto = isset($_REQUEST["contatto"]) ? ($_REQUEST["contatto"]) : null;
             $dataAvvioProcedimento = isset($_REQUEST["dataAvvioProcedimento"]) ? ($_REQUEST["dataAvvioProcedimento"]) : null;
             $dataCaricamento = isset($_REQUEST["dataCaricamento"]) ? ($_REQUEST["dataCaricamento"]) : null;
@@ -129,16 +129,16 @@ class OperatoreController {
             $tipoPratica = isset($_REQUEST["tipoPratica"]) ? ($_REQUEST["tipoPratica"]) : null;
             $ubicazione = isset($_REQUEST["ubicazione"]) ? ($_REQUEST["ubicazione"]) : null;
 
-            
-            
-            $pratica->setContatto($contatto);  
-//            $pratica->setDataAvvioProcedimento($dataAvvioProcedimento);
+
+
+            $pratica->setContatto($contatto);
+            $pratica->setDataAvvioProcedimento($dataAvvioProcedimento);
             $pratica->setDataCaricamento($dataCaricamento);
-//            $pratica->setDataConferenzaServizi($dataConferenzaServizi);
-//            $pratica->setDataInvioRicevuta($dataInvioRicevuta);
-//            $pratica->setDataInvioVerifiche($dataInvioVerifiche);
-//            $pratica->setDataProtocollo($dataProtocollo);
-//            $pratica->setDataProvvedimento($dataProvvedimento);
+            $pratica->setDataConferenzaServizi($dataConferenzaServizi);
+            $pratica->setDataInvioRicevuta($dataInvioRicevuta);
+            $pratica->setDataInvioVerifiche($dataInvioVerifiche);
+            $pratica->setDataProtocollo($dataProtocollo);
+            $pratica->setDataProvvedimento($dataProvvedimento);
             $pratica->setFlagAllaFirma($flagAllaFirma);
             $pratica->setFlagFirmata($flagFirmata);
             $pratica->setFlagInAttesa($flagInAttesa);
@@ -158,10 +158,16 @@ class OperatoreController {
             $pratica->setTipoPratica($tipoPratica);
             $pratica->setUbicazione($ubicazione);
 
-            
+
 
             if ($_REQUEST["idPratica"] == "") {
                 $pagina->setTitle("Salvataggio pratica");
+                $errore = PraticaFactory::salvaP($pratica);
+                if ($errore == 0) {
+                    $pagina->setContentFile("./view/operatore/aggiornaP.php");
+                } else {
+                    $pagina->setContentFile("./view/contentPratica.php");
+                }
             } else {
                 $pagina->setTitle("Aggiorna pratica");
             }
