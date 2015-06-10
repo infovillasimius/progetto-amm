@@ -256,18 +256,17 @@ class Pratica {
      * @param String $input 
      * @return int (unix timestamp)
      */
-    protected function dataControl($input) {
-        //$input = trim($input);
-        //$date_format = 'd.m.Y';
-        //$input = filter_var($input, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/^[0-9]{2}[\-\/.]{1}[0-9]{2}[\-\/.]{1}[0-9]{4}/')));
-        //$input = str_replace('/', '.', $input);
-        //$input = str_replace('-', '.', $input);
-        //$time = strtotime($input);
-//        if (date($date_format, $time) == $input) {
-//            return $time;
-//        }
-//        return null;
-        return $input;
+    private function dataControl($input) {
+        $input = trim($input);
+        $date_format = 'd.m.Y';
+        $input = filter_var($input, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/^[0-9]{2}[\-\/.]{1}[0-9]{2}[\-\/.]{1}[0-9]{4}/')));
+        $input = str_replace('/', '.', $input);
+        $input = str_replace('-', '.', $input);
+        $time = strtotime($input);
+        if (date($date_format, $time) == $input) {
+            return $time;
+        }
+        return null;
     }
 
     /**
@@ -286,7 +285,7 @@ class Pratica {
      * @return boolean true se impostato correttamente
      */
     public function setDataAvvioProcedimento($data) {
-        $this->dataAvvioProcedimento = dataControl($data);
+        $this->dataAvvioProcedimento = self::dataControl($data);
         return $this->dataAvvioProcedimento != null;
     }
 
@@ -296,7 +295,7 @@ class Pratica {
      */
     public function getDataAvvioProcedimento() {
         if (isset($this->dataAvvioProcedimento)) {
-            return dataToString($this->dataAvvioProcedimento);
+            return self::dataToString($this->dataAvvioProcedimento);
         }
         return "";
     }
@@ -306,12 +305,8 @@ class Pratica {
      * @param String $data
      * @return boolean true se impostato correttamente
      */
-    public function setDataCaricamento(&$data) {
-        if ($data==null){
-            return null;
-        }
-        echo $data;
-        $this->dataCaricamento = dataControl($data);;
+    public function setDataCaricamento($data) {
+        $this->dataCaricamento = self::dataControl($data);
         return $this->dataCaricamento != null;
     }
 
@@ -320,10 +315,10 @@ class Pratica {
      * @return string 
      */
     public function getDataCaricamento() {
-//        if (isset($this->dataCaricamento)) {
-//            return dataToString($this->dataCaricamento);
-//        }
-        return $this->dataCaricamento;
+        if (isset($this->dataCaricamento)) {
+            return self::dataToString($this->dataCaricamento);
+        }
+        return "";
     }
 
     /**
@@ -332,7 +327,7 @@ class Pratica {
      * @return boolean true se impostato correttamente
      */
     public function setDataConferenzaServizi($data) {
-        $this->dataConferenzaServizi = dataControl($data);
+        $this->dataConferenzaServizi = self::dataControl($data);
         return $this->dataConferenzaServizi != null;
     }
 
@@ -342,7 +337,7 @@ class Pratica {
      */
     public function getDataConferenzaServizi() {
         if (isset($this->dataConferenzaServizi)) {
-            return dataToString($this->dataConferenzaServizi);
+            return self::dataToString($this->dataConferenzaServizi);
         }
         return "";
     }
@@ -353,7 +348,7 @@ class Pratica {
      * @return boolean true se impostato correttamente
      */
     public function setDataInvioRicevuta($data) {
-        $this->dataInvioRicevuta = dataControl($data);
+        $this->dataInvioRicevuta = self::dataControl($data);
         return $this->dataInvioRicevuta != null;
     }
 
@@ -363,7 +358,7 @@ class Pratica {
      */
     public function getDataInvioRicevuta() {
         if (isset($this->dataInvioRicevuta)) {
-            return dataToString($this->dataInvioRicevuta);
+            return self::dataToString($this->dataInvioRicevuta);
         }
         return "";
     }
@@ -374,7 +369,7 @@ class Pratica {
      * @return boolean true se impostato correttamente
      */
     public function setDataInvioVerifiche($data) {
-        $this->dataInvioVerifiche = dataControl($data);
+        $this->dataInvioVerifiche = self::dataControl($data);
         return $this->dataInvioVerifiche != null;
     }
 
@@ -384,7 +379,7 @@ class Pratica {
      */
     public function getDataInvioVerifiche() {
         if (isset($this->dataInvioVerifiche)) {
-            return dataToString($this->dataInvioVerifiche);
+            return self::dataToString($this->dataInvioVerifiche);
         }
         return "";
     }
@@ -395,7 +390,7 @@ class Pratica {
      * @return boolean true se impostato correttamente
      */
     public function setDataProtocollo($data) {
-        $this->dataProtocollo = dataControl($data);
+        $this->dataProtocollo = self::dataControl($data);
         return $this->dataProtocollo != null;
     }
 
@@ -405,7 +400,7 @@ class Pratica {
      */
     public function getDataProtocollo() {
         if (isset($this->dataProtocollo)) {
-            return dataToString($this->dataProtocollo);
+            return self::dataToString($this->dataProtocollo);
         }
         return "";
     }
@@ -416,7 +411,7 @@ class Pratica {
      * @return boolean true se impostato correttamente
      */
     public function setDataProvvedimento($data) {
-        $this->dataProvvedimento = dataControl($data);
+        $this->dataProvvedimento = self::dataControl($data);
         return $this->dataProvvedimento != null;
     }
 
@@ -426,7 +421,7 @@ class Pratica {
      */
     public function getDataProvvedimento() {
         if (isset($this->dataProvvedimento)) {
-            return dataToString($this->dataProvvedimento);
+            return self::dataToString($this->dataProvvedimento);
         }
         return "";
     }
