@@ -57,6 +57,8 @@ $(document).ready(function () {
                     $("#result").text("Trovato: " + data.nomeAn + " " + data.cognomeAn + "\n " + data.contattoAn)
                     $("#result").show("slow");
                     $("#idAn").val(data.idAn);
+                    contatto = data.contatto;
+                    idAn = data.idAn;
 
                 },
                 error: function (data, status, errorThrown) {
@@ -71,13 +73,13 @@ $(document).ready(function () {
 
     function changeRich() {
         $("#richiedente").val($("#nomeAn").val() + " " + $("#cognomeAn").val());
-        $("#richiedenteId").val($("idAn").val());
+        $("#richiedenteId").attr("value", idAn);
     }
 
     function changeProc() {
         $("#procuratore").val($("#nomeAn").val() + " " + $("#cognomeAn").val());
-        $("#procuratoreId").val($("idAn").val());
-        $("#contatto").val($("#contattoAn").val());
+        $("#procuratoreId").attr("value", idAn);
+        $("#contatto").attr("value", contatto);
     }
 
     $("#chiudi").click(function (event) {
@@ -86,6 +88,30 @@ $(document).ready(function () {
         $("div.none").hide("slow");
         $("div.right").show("slow");
 
+    });
+
+    $("#salva").click(function (event) {
+        incaricato = $("#incaricato").val();
+        numeroPratica = $("#numeroPratica").val();
+        numeroProtocollo = $("#numeroProtocollo").val();
+        procuratoreId = $("#procuratoreId").val();
+        richiedenteId = $("#richiedenteId").val();
+        statoPratica = $("#statoPratica").val();
+        tipoPratica = $("#tipoPratica").val();
+        if (incaricato < 1 || numeroPratica == "" || numeroProtocollo == "" ||
+                procuratoreId == "" || richiedenteId == "" ||
+                statoPratica == "" || tipoPratica == "") {
+            event.preventDefault();
+            $("#incaricato").addClass("error");
+            $("#numeroPratica").addClass("error");
+            $("#numeroProtocollo").addClass("error");
+            $("#procuratore").addClass("error");
+            $("#richiedente").addClass("error");
+            $("#statoPratica").addClass("error");
+            $("#tipoPratica").addClass("error");
+            alert("Errore: occorre compilare almeno i campi evidenziati");
+            
+        }
     });
 
 

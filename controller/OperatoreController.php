@@ -124,7 +124,7 @@ class OperatoreController {
             $oggetto = isset($_REQUEST["oggetto"]) ? ($_REQUEST["oggetto"]) : null;
             $procuratore = isset($_REQUEST["procuratore"]) ? ($_REQUEST["procuratore"]) : null;
             $procuratoreId = isset($_REQUEST["procuratoreId"]) ? ($_REQUEST["procuratoreId"]) : null;
-            $richiedente = isset($_REQUEST["richiedente"]) ? ($_REQUEST["richiedenteId"]) : null;
+            $richiedente = isset($_REQUEST["richiedente"]) ? ($_REQUEST["richiedente"]) : null;
             $richiedenteId = isset($_REQUEST["richiedenteId"]) ? ($_REQUEST["richiedenteId"]) : null;
             $statoPratica = isset($_REQUEST["statoPratica"]) ? ($_REQUEST["statoPratica"]) : null;
             $tipoPratica = isset($_REQUEST["tipoPratica"]) ? ($_REQUEST["tipoPratica"]) : null;

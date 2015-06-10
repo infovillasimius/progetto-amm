@@ -8,6 +8,11 @@ div.input-form input {
     width: 200px;
 }
 
+input.error, select.error{
+    background-color: #F4CDED;
+}
+
+
 div.input-form textArea {
    width: 200px;
 }
