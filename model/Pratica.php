@@ -275,7 +275,7 @@ class Pratica {
      * @return string
      */
     private function dataToString($time, $r) {
-        if (isset($r)) {
+        if ($r) {
             $date_format = 'd.m.Y';
         } else {
             $date_format = 'Y.m.d';
@@ -294,7 +294,8 @@ class Pratica {
     }
 
     /**
-     * Restituisce data di avvio procedimento in formato gg.mm.aaaa
+     * Restituisce data di avvio procedimento 
+     * @param boolean $r se true in formato gg.mm.aaaa altrimenti aaa.mm.gg
      * @return string 
      */
     public function getDataAvvioProcedimento($r) {
@@ -315,7 +316,8 @@ class Pratica {
     }
 
     /**
-     * Restituisce data di caricamento del procedimento in formato gg.mm.aaaa
+     * Restituisce data di caricamento del procedimento 
+     * @param boolean $r se true in formato gg.mm.aaaa altrimenti aaa.mm.gg
      * @return string 
      */
     public function getDataCaricamento($r) {
@@ -336,7 +338,8 @@ class Pratica {
     }
 
     /**
-     * Restituisce data Conferenza Servizi in formato gg.mm.aaaa
+     * Restituisce data Conferenza Servizi 
+     * @param boolean $r se true in formato gg.mm.aaaa altrimenti aaa.mm.gg
      * @return string 
      */
     public function getDataConferenzaServizi($r) {
@@ -357,7 +360,8 @@ class Pratica {
     }
 
     /**
-     * Restituisce data Invio Ricevuta in formato gg.mm.aaaa
+     * Restituisce data Invio Ricevuta 
+     * @param boolean $r se true in formato gg.mm.aaaa altrimenti aaa.mm.gg
      * @return string 
      */
     public function getDataInvioRicevuta($r) {
@@ -378,7 +382,8 @@ class Pratica {
     }
 
     /**
-     * Restituisce data Invio Verifiche in formato gg.mm.aaaa
+     * Restituisce data Invio Verifiche
+     * @param boolean $r se true in formato gg.mm.aaaa altrimenti aaa.mm.gg
      * @return string 
      */
     public function getDataInvioVerifiche($r) {
@@ -399,7 +404,8 @@ class Pratica {
     }
 
     /**
-     * Restituisce data Protocollo in formato gg.mm.aaaa
+     * Restituisce data Protocollo
+     * @param boolean $r se true in formato gg.mm.aaaa altrimenti aaa.mm.gg
      * @return string 
      */
     public function getDataProtocollo($r) {
@@ -420,7 +426,8 @@ class Pratica {
     }
 
     /**
-     * Restituisce data Provvedimento in formato gg.mm.aaaa
+     * Restituisce data Provvedimento 
+     * @param boolean $r se true in formato gg.mm.aaaa altrimenti aaa.mm.gg
      * @return string 
      */
     public function getDataProvvedimento($r) {

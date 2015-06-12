@@ -10,7 +10,6 @@ class PraticaFactory {
             return false;
         }
 
-        //$id = $pratica->getId();
         $contatto = $pratica->getContatto();
         $dataAvvioProcedimento = $pratica->getDataAvvioProcedimento(false);
         $dataCaricamento = $pratica->getDataCaricamento(false);
@@ -38,33 +37,6 @@ class PraticaFactory {
         $tipoPratica = $pratica->getTipoPratica();
         $ubicazione = $pratica->getUbicazione();
 
-//        echo "1 " . $contatto .
-//        "<br/> 2 " . $dataAvvioProcedimento .
-//        "<br/> 3 " . $dataCaricamento .
-//        "<br/> 4 " . $dataConferenzaServizi .
-//        "<br/> 5 " . $dataInvioRicevuta .
-//        "<br/> 6 " . $dataInvioVerifiche .
-//        "<br/> 7 " . $dataProtocollo .
-//        "<br/> 8 " . $dataProvvedimento .
-//        "<br/> 9 " . $flagAllaFirma .
-//        "<br/> 10 " . $flagFirmata .
-//        "<br/> 11 " . $flagInAttesa .
-//        "<br/> 12 " . $flagSoprintendenza .
-//        "<br/> 13 " . $importoDiritti .
-//        "<br/> 14 " . $incaricato .
-//        "<br/> 15 " . $motivoAttesa .
-//        "<br/> 16 " . $numeroPratica .        
-//        "<br/> 17 " . $numeroProtocollo .
-//        "<br/> 18 " . $numeroProtocolloProvvedimento .
-//        "<br/> 19 " . $oggetto .
-//        "<br/> 20 " . $procuratoreId .
-//        "<br/> 21 " . $richiedenteId .
-//        "<br/> 22 " . $statoPratica .
-//        "<br/> 23 " . $tipoPratica .
-//        "<br/> 24 " . $ubicazione.
-//        "<br/> 25 " . $richiedente.
-//        "<br/> 26 " . $procuratore;
-
         $stmt = $mysqli->stmt_init();
         $query = "INSERT INTO pratica (id, contatto, dataAvvioProcedimento, dataCaricamento, dataConferenzaServizi, "
                 . "dataInvioRicevuta, dataInvioVerifiche, dataProtocollo, dataProvvedimento, flagAllaFirma, "
@@ -84,7 +56,7 @@ class PraticaFactory {
             $errore = $mysqli->errno;
             $stmt->close();
             $mysqli->close();
-            echo $errore;
+            
             return $errore;
         } else {
             $stmt->close();
@@ -104,8 +76,7 @@ class PraticaFactory {
         $stmt->bind_param("i", $idPratica);
         
         $result = $stmt->execute();
-        $stmt->bind_result($id,$contatto, $dataAvvioProcedimento, $dataCaricamento, $dataConferenzaServizi, $dataInvioRicevuta, $dataInvioVerifiche, $dataProtocollo, $dataProvvedimento, $flagAllaFirma, $flagFirmata, $flagInAttesa, $flagSoprintendenza, $importoDiritti, $incaricato, $motivoAttesa, $numeroPratica, $numeroProtocollo, $numeroProtocolloProvvedimento, $oggetto, $procuratoreId, $richiedenteId, $statoPratica, $tipoPratica, $ubicazione,$idRichiedente,$nomeRichiedente,$cognomeRichiedente,$contattoRichiedente,$idProcuratore,$nomeProcuratore,$cognomeProcuratore,$contattoProcuratore);
-        
+        $stmt->bind_result($id,$contatto, $dataAvvioProcedimento, $dataCaricamento, $dataConferenzaServizi, $dataInvioRicevuta, $dataInvioVerifiche, $dataProtocollo, $dataProvvedimento, $flagAllaFirma, $flagFirmata, $flagInAttesa, $flagSoprintendenza, $importoDiritti, $incaricato, $motivoAttesa, $numeroPratica, $numeroProtocollo, $numeroProtocolloProvvedimento, $oggetto, $procuratoreId, $richiedenteId, $statoPratica, $tipoPratica, $ubicazione,$idRichiedente,$nomeRichiedente,$cognomeRichiedente,$contattoRichiedente,$idProcuratore,$nomeProcuratore,$cognomeProcuratore,$contattoProcuratore);        
         
         if ($mysqli->errno > 0) {
             // errore nella esecuzione della query
