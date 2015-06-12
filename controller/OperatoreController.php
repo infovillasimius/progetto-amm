@@ -91,7 +91,7 @@ class OperatoreController {
 
         $operatore = $_SESSION["op"];
         $pagina->setHeaderFile("./view/header.php");
-        $pagina->setContentFile("./view/elencaP.php");
+        $pagina->setContentFile("./view/operatore/elencaP.php");
         
 
         OperatoreController::setruolo($pagina);
