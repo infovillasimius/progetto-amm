@@ -88,19 +88,32 @@ class OperatoreController {
     }
 
     public function mostraAggiornaP($pagina) {
+        $idUpdate = isset($_REQUEST['id']) ? $_REQUEST['id'] : null;
+        $idPratica = isset($_REQUEST["idPratica"]) ? $_REQUEST["idPratica"] : null;
 
+        echo $idUpdate;
+        
         $operatore = $_SESSION["op"];
         $pagina->setHeaderFile("./view/header.php");
         $pagina->setContentFile("./view/operatore/elencaP.php");
-        
+
 
         OperatoreController::setruolo($pagina);
         $operatori = OperatoreFactory::getListaOp();
         $rows = count($operatori);
-        $pratica = new Pratica();
+        if (!isset($idUpdate)) {
+            $pratica = new Pratica();
+        } else {
+            $pratica=  PraticaFactory::getPraticaById($idUpdate);
+            echo $pratica;
+            if(!isset($pratica)){
+                $pratica = new Pratica();
+            }
+        }
 
         if ($_REQUEST["cmd"] == "salvaP") {
-            $pagina->setJsFile("./js/contentPratica.js");$pagina->setJsFile("./js/contentPratica.js");
+            $pagina->setJsFile("./js/contentPratica.js");
+            $pagina->setJsFile("./js/contentPratica.js");
             $contatto = isset($_REQUEST["contatto"]) ? ($_REQUEST["contatto"]) : null;
             $dataAvvioProcedimento = isset($_REQUEST["dataAvvioProcedimento"]) ? ($_REQUEST["dataAvvioProcedimento"]) : null;
             $dataCaricamento = isset($_REQUEST["dataCaricamento"]) ? ($_REQUEST["dataCaricamento"]) : null;
@@ -173,20 +186,20 @@ class OperatoreController {
 
 
 
-            if ($_REQUEST["idPratica"] == "" && $err === 0) {
+            if (!isset($idPratica) && $err === 0) {
                 $pagina->setTitle("Salvataggio pratica");
                 $errore = PraticaFactory::salvaP($pratica);
             } elseif ($err === 0) {
                 $pagina->setTitle("Aggiorna pratica");
                 $errore = PraticaFactory::aggiornaP($pratica);
             } else {
-                $pagina->setTitle("Aggiorna pratica");
+                $pagina->setTitle("Errore");
             }
-            if ($errore === 0 && $err===0) {
+            if ($errore === 0 && $err === 0) {
                 $pagina->setContentFile("./view/operatore/aggiornaP.php");
-            } elseif ($errore===1062) {
+            } elseif ($errore === 1062) {
                 $pagina->setContentFile("./view/contentPratica.php");
-                $pagina->setMsg("Errore, pratica N. ". $pratica->getNumeroPratica() . " già presente!");
+                $pagina->setMsg("Errore, pratica N. " . $pratica->getNumeroPratica() . " già presente!");
             } else {
                 $pagina->setContentFile("./view/contentPratica.php");
             }

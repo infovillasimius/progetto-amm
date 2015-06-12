@@ -140,24 +140,6 @@ class AdminController {
         include "./view/masterPage.php";
     }
 
-    public function mostraElencoP($pagina) {
-        $pagina->setTitle("Elenco Pratiche");
-        $pagina->setHeaderFile("./view/header.php");
-        $pagina->setLeftBarFile("./view/amministratore/menuAmministratore.php");
-        $pagina->setContentFile("./view/amministratore/elencoP.php");
-        include "./view/masterPage.php";
-    }
-
-    public function mostraNuovaP($pagina) {
-        $pagina->setTitle("Nuova pratica");
-        $pagina->setHeaderFile("./view/header.php");
-        $pagina->setLeftBarFile("./view/amministratore/menuAmministratore.php");
-        $pagina->setContentFile("./view/amministratore/nuovaP.php");
-        include "./view/masterPage.php";
-    }
-
-    
-
     public function mostraFirmaP($pagina) {
         $pagina->setTitle("Mostra pratiche alla firma");
         $pagina->setHeaderFile("./view/header.php");

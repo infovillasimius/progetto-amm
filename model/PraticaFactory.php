@@ -70,6 +70,7 @@ class PraticaFactory {
         if (!isset($mysqli)) {
             return null;
         }
+        echo 'ciao';
         $stmt = $mysqli->stmt_init();
         $query="SELECT * FROM pratica JOIN anagrafica ON richiedente=anagrafica.id JOIN anagrafica an2 ON procuratore=an2.id WHERE pratica.id=?";
         $stmt->prepare($query);
