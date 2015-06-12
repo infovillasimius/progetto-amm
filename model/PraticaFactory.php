@@ -12,13 +12,13 @@ class PraticaFactory {
 
         //$id = $pratica->getId();
         $contatto = $pratica->getContatto();
-        $dataAvvioProcedimento = $pratica->getDataAvvioProcedimento();
-        $dataCaricamento = $pratica->getDataCaricamento();
-        $dataConferenzaServizi = $pratica->getDataConferenzaServizi();
-        $dataInvioRicevuta = $pratica->getDataInvioRicevuta();
-        $dataInvioVerifiche = $pratica->getDataInvioVerifiche();
-        $dataProtocollo = $pratica->getDataProtocollo();
-        $dataProvvedimento = $pratica->getDataProvvedimento();
+        $dataAvvioProcedimento = $pratica->getDataAvvioProcedimento(false);
+        $dataCaricamento = $pratica->getDataCaricamento(false);
+        $dataConferenzaServizi = $pratica->getDataConferenzaServizi(false);
+        $dataInvioRicevuta = $pratica->getDataInvioRicevuta(false);
+        $dataInvioVerifiche = $pratica->getDataInvioVerifiche(false);
+        $dataProtocollo = $pratica->getDataProtocollo(false);
+        $dataProvvedimento = $pratica->getDataProvvedimento(false);
         $flagAllaFirma = $pratica->getFlagAllaFirma();
         $flagFirmata = $pratica->getFlagFirmata();
         $flagInAttesa = $pratica->getFlagInAttesa();
@@ -189,13 +189,13 @@ class PraticaFactory {
 
         $id = $pratica->getId();
         $contatto = $pratica->getContatto();
-        $dataAvvioProcedimento = $pratica->getDataAvvioProcedimento();
-        $dataCaricamento = $pratica->getDataCaricamento();
-        $dataConferenzaServizi = $pratica->getDataConferenzaServizi();
-        $dataInvioRicevuta = $pratica->getDataInvioRicevuta();
-        $dataInvioVerifiche = $pratica->getDataInvioVerifiche();
-        $dataProtocollo = $pratica->getDataProtocollo();
-        $dataProvvedimento = $pratica->getDataProvvedimento();
+        $dataAvvioProcedimento = $pratica->getDataAvvioProcedimento(false);
+        $dataCaricamento = $pratica->getDataCaricamento(false);
+        $dataConferenzaServizi = $pratica->getDataConferenzaServizi(false);
+        $dataInvioRicevuta = $pratica->getDataInvioRicevuta(false);
+        $dataInvioVerifiche = $pratica->getDataInvioVerifiche(false);
+        $dataProtocollo = $pratica->getDataProtocollo(false);
+        $dataProvvedimento = $pratica->getDataProvvedimento(false);
         $flagAllaFirma = $pratica->getFlagAllaFirma();
         $flagFirmata = $pratica->getFlagFirmata();
         $flagInAttesa = $pratica->getFlagInAttesa();
