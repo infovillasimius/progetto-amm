@@ -117,7 +117,7 @@
             <textarea id="motivoAttesa" name="motivoAttesa" ><?= $pratica->getMotivoAttesa(); ?></textarea>
             <br/>
         </div>
-        <input type="hidden" id="idPratica" name="idPratica" value="<?= $pratica->getID() ?>" />
+        <input type="hidden" id="idPratica" name="idPratica" value="<?= $pratica->getId() ?>" />
         <button type="submit" id="salva" value="pratica">Salva</button>
         <br/>
     </form>
@@ -145,5 +145,6 @@
 
     </div>
     <p id="msg" class="msg"><?php echo $pagina->getMsg(); ?></p>
+    
 </div>
 

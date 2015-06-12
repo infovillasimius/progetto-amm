@@ -91,29 +91,30 @@ class OperatoreController {
         $idUpdate = isset($_REQUEST['id']) ? $_REQUEST['id'] : null;
         $idPratica = isset($_REQUEST["idPratica"]) ? $_REQUEST["idPratica"] : null;
 
-        echo $idUpdate;
-        
         $operatore = $_SESSION["op"];
         $pagina->setHeaderFile("./view/header.php");
         $pagina->setContentFile("./view/operatore/elencaP.php");
+        
 
-
+        
         OperatoreController::setruolo($pagina);
         $operatori = OperatoreFactory::getListaOp();
         $rows = count($operatori);
+
         if (!isset($idUpdate)) {
             $pratica = new Pratica();
         } else {
-            $pratica=  PraticaFactory::getPraticaById($idUpdate);
-            echo $pratica->getIncaricato();
-            if(!isset($pratica)){
+            $pratica = PraticaFactory::getPraticaById($idUpdate);
+            $pagina->setContentFile("./view/contentPratica.php");
+            
+            if (!isset($pratica)) {
                 $pratica = new Pratica();
             }
         }
 
         if ($_REQUEST["cmd"] == "salvaP") {
             $pagina->setJsFile("./js/contentPratica.js");
-            $pagina->setJsFile("./js/contentPratica.js");
+
             $contatto = isset($_REQUEST["contatto"]) ? ($_REQUEST["contatto"]) : null;
             $dataAvvioProcedimento = isset($_REQUEST["dataAvvioProcedimento"]) ? ($_REQUEST["dataAvvioProcedimento"]) : null;
             $dataCaricamento = isset($_REQUEST["dataCaricamento"]) ? ($_REQUEST["dataCaricamento"]) : null;
@@ -184,9 +185,7 @@ class OperatoreController {
             }
             $pratica->setUbicazione($ubicazione);
 
-
-
-            if (!isset($idPratica) && $err === 0) {
+            if ($idPratica == "" && $err === 0) {
                 $pagina->setTitle("Salvataggio pratica");
                 $errore = PraticaFactory::salvaP($pratica);
             } elseif ($err === 0) {

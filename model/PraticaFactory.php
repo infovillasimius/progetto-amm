@@ -70,7 +70,7 @@ class PraticaFactory {
         if (!isset($mysqli)) {
             return null;
         }
-        echo 'ciao';
+        
         $stmt = $mysqli->stmt_init();
         $query="SELECT * FROM pratica JOIN anagrafica ON richiedente=anagrafica.id JOIN anagrafica an2 ON procuratore=an2.id WHERE pratica.id=?";
         $stmt->prepare($query);
@@ -88,6 +88,7 @@ class PraticaFactory {
         } else{
             $stmt->fetch();
             $pratica=new Pratica();
+            $pratica->setId($id);
             $pratica->setContatto($contatto);
             $pratica->setDataAvvioProcedimento($dataAvvioProcedimento);
             $pratica->setDataCaricamento($dataCaricamento);
@@ -192,10 +193,13 @@ class PraticaFactory {
                 . "dataInvioRicevuta=?, dataInvioVerifiche=?, dataProtocollo=?, dataProvvedimento=?, flagAllaFirma=?, "
                 . "flagFirmata=?, flagInAttesa=?, flagSoprintendenza=?, importoDiritti=?, incaricato=?, motivoAttesa=?, "
                 . "numeroPratica=?, numeroProtocollo=?, numeroProtocolloProvvedimento=?, oggetto=?, procuratore=?, "
-                . "richiedente=?, statoPratica=?, tipoPratica=?, ubicazione=?) WHERE id=? ";
+                . "richiedente=?, statoPratica=?, tipoPratica=?, ubicazione=? WHERE id=? ";
 
         $stmt->prepare($query);
-        $stmt->bind_param("ssssssssiiiidisiiisiiiisi", $contatto, $dataAvvioProcedimento, $dataCaricamento, $dataConferenzaServizi, $dataInvioRicevuta, $dataInvioVerifiche, $dataProtocollo, $dataProvvedimento, $flagAllaFirma, $flagFirmata, $flagInAttesa, $flagSoprintendenza, $importoDiritti, $incaricato, $motivoAttesa, $numeroPratica, $numeroProtocollo, $numeroProtocolloProvvedimento, $oggetto, $procuratoreId, $richiedenteId, $statoPratica, $tipoPratica, $ubicazione,$id);
+        $stmt->bind_param("ssssssssiiiidisiiisiiiisi", $contatto, $dataAvvioProcedimento, $dataCaricamento, $dataConferenzaServizi, 
+                $dataInvioRicevuta, $dataInvioVerifiche, $dataProtocollo, $dataProvvedimento, $flagAllaFirma, $flagFirmata, 
+                $flagInAttesa, $flagSoprintendenza, $importoDiritti, $incaricato, $motivoAttesa, $numeroPratica, $numeroProtocollo, 
+                $numeroProtocolloProvvedimento, $oggetto, $procuratoreId, $richiedenteId, $statoPratica, $tipoPratica, $ubicazione,$id);
 
         $result = $stmt->execute();
 
