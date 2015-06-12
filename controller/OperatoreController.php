@@ -105,7 +105,7 @@ class OperatoreController {
             $pratica = new Pratica();
         } else {
             $pratica=  PraticaFactory::getPraticaById($idUpdate);
-            echo $pratica;
+            echo $pratica->getIncaricato();
             if(!isset($pratica)){
                 $pratica = new Pratica();
             }
