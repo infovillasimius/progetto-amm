@@ -38,13 +38,13 @@
             <input type="text" id="numeroPratica" name="numeroPratica" value="<?= $pratica->getNumeroPratica(); ?>"/>
             <br/>
             <label for="dataCaricamento">Caricata in data</label>
-            <input type="text" id="dataCaricamento" name="dataCaricamento" value="<?= $pratica->getDataCaricamento(); ?>"/>
+            <input type="text" id="dataCaricamento" name="dataCaricamento" value="<?= $pratica->getDataCaricamento(1); ?>"/>
             <br/>
             <label for="numeroProtocollo">Protocollo</label>
             <input type="text" id="numeroProtocollo" name="numeroProtocollo" value="<?= $pratica->getNumeroProtocollo(); ?>"/>
             <br/>
             <label for="dataProtocollo">Data protocollo</label>
-            <input type="text" id="dataProtocollo" name="dataProtocollo" value="<?= $pratica->getDataProtocollo(); ?>"/>
+            <input type="text" id="dataProtocollo" name="dataProtocollo" value="<?= $pratica->getDataProtocollo(1); ?>"/>
             <br/>
             <label for="richiedente">Richiedente</label>
             <input type="hidden" id="richiedenteId" name="richiedenteId" value="<?= $pratica->getRichiedenteId(); ?>"/>
@@ -84,19 +84,19 @@
             </select>
             <br/>
             <label for="dataAvvioProcedimento">Data avvio procedimento</label>
-            <input type="text" id="dataAvvioProcedimento" name="dataAvvioProcedimento" value="<?= $pratica->getDataAvvioProcedimento(); ?>"/>
+            <input type="text" id="dataAvvioProcedimento" name="dataAvvioProcedimento" value="<?= $pratica->getDataAvvioProcedimento(1); ?>"/>
             <br/>
             <label for="dataInvioRicevuta">Data invio ricevuta</label>
-            <input type="text" id="dataInvioRicevuta" name="dataInvioRicevuta" value="<?= $pratica->getDataInvioRicevuta(); ?>"/>
+            <input type="text" id="dataInvioRicevuta" name="dataInvioRicevuta" value="<?= $pratica->getDataInvioRicevuta(1); ?>"/>
             <br/>
             <label for="dataInvioVerifiche">Data invio verifiche</label>
-            <input type="text" id="dataInvioVerifiche" name="dataInvioVerifiche" value="<?= $pratica->getDataInvioVerifiche(); ?>"/>
+            <input type="text" id="dataInvioVerifiche" name="dataInvioVerifiche" value="<?= $pratica->getDataInvioVerifiche(1); ?>"/>
             <br/>
             <label for="dataConferenzaServizi">Data Conferenza Servizi</label>
-            <input type="text" id="dataConferenzaServizi" name="dataConferenzaServizi" value="<?= $pratica->getDataConferenzaServizi(); ?>"/>
+            <input type="text" id="dataConferenzaServizi" name="dataConferenzaServizi" value="<?= $pratica->getDataConferenzaServizi(1); ?>"/>
             <br/>
             <label for="dataProvvedimento">Data Provvedimento</label>
-            <input type="text" id="dataProvvedimento" name="dataProvvedimento" value="<?= $pratica->getDataProvvedimento(); ?>"/>
+            <input type="text" id="dataProvvedimento" name="dataProvvedimento" value="<?= $pratica->getDataProvvedimento(1); ?>"/>
             <br/>
             <label for="numeroProtocolloProvvedimento">Protocollo provvedimento</label>
             <input type="text" id="numeroProtocolloProvvedimento" name="numeroProtocolloProvvedimento" value="<?= $pratica->getNumeroProtocolloProvvedimento(); ?>"/>

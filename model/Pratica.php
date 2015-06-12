@@ -274,8 +274,12 @@ class Pratica {
      * @param int $time unix timestamp  
      * @return string
      */
-    private function dataToString($time) {
-        $date_format = 'd.m.Y';
+    private function dataToString($time, $r) {
+        if (isset($r)) {
+            $date_format = 'd.m.Y';
+        } else {
+            $date_format = 'Y.m.d';
+        }
         return date($date_format, $time);
     }
 
@@ -293,9 +297,9 @@ class Pratica {
      * Restituisce data di avvio procedimento in formato gg.mm.aaaa
      * @return string 
      */
-    public function getDataAvvioProcedimento() {
+    public function getDataAvvioProcedimento($r) {
         if (isset($this->dataAvvioProcedimento)) {
-            return self::dataToString($this->dataAvvioProcedimento);
+            return self::dataToString($this->dataAvvioProcedimento, $r);
         }
         return "";
     }
@@ -314,9 +318,9 @@ class Pratica {
      * Restituisce data di caricamento del procedimento in formato gg.mm.aaaa
      * @return string 
      */
-    public function getDataCaricamento() {
+    public function getDataCaricamento($r) {
         if (isset($this->dataCaricamento)) {
-            return self::dataToString($this->dataCaricamento);
+            return self::dataToString($this->dataCaricamento,$r);
         }
         return "";
     }
@@ -335,9 +339,9 @@ class Pratica {
      * Restituisce data Conferenza Servizi in formato gg.mm.aaaa
      * @return string 
      */
-    public function getDataConferenzaServizi() {
+    public function getDataConferenzaServizi($r) {
         if (isset($this->dataConferenzaServizi)) {
-            return self::dataToString($this->dataConferenzaServizi);
+            return self::dataToString($this->dataConferenzaServizi,$r);
         }
         return "";
     }
@@ -356,9 +360,9 @@ class Pratica {
      * Restituisce data Invio Ricevuta in formato gg.mm.aaaa
      * @return string 
      */
-    public function getDataInvioRicevuta() {
+    public function getDataInvioRicevuta($r) {
         if (isset($this->dataInvioRicevuta)) {
-            return self::dataToString($this->dataInvioRicevuta);
+            return self::dataToString($this->dataInvioRicevuta,$r);
         }
         return "";
     }
@@ -377,9 +381,9 @@ class Pratica {
      * Restituisce data Invio Verifiche in formato gg.mm.aaaa
      * @return string 
      */
-    public function getDataInvioVerifiche() {
+    public function getDataInvioVerifiche($r) {
         if (isset($this->dataInvioVerifiche)) {
-            return self::dataToString($this->dataInvioVerifiche);
+            return self::dataToString($this->dataInvioVerifiche,$r);
         }
         return "";
     }
@@ -398,9 +402,9 @@ class Pratica {
      * Restituisce data Protocollo in formato gg.mm.aaaa
      * @return string 
      */
-    public function getDataProtocollo() {
+    public function getDataProtocollo($r) {
         if (isset($this->dataProtocollo)) {
-            return self::dataToString($this->dataProtocollo);
+            return self::dataToString($this->dataProtocollo,$r);
         }
         return "";
     }
@@ -419,9 +423,9 @@ class Pratica {
      * Restituisce data Provvedimento in formato gg.mm.aaaa
      * @return string 
      */
-    public function getDataProvvedimento() {
+    public function getDataProvvedimento($r) {
         if (isset($this->dataProvvedimento)) {
-            return self::dataToString($this->dataProvvedimento);
+            return self::dataToString($this->dataProvvedimento,$r);
         }
         return "";
     }
@@ -533,7 +537,7 @@ class Pratica {
     public function getImportoDiritti() {
         return $this->importoDiritti;
     }
-    
+
     /**
      * Restituisce nominativo richiedente
      * @return string
@@ -541,17 +545,17 @@ class Pratica {
     public function getRichiedente() {
         return $this->richiedente;
     }
-    
+
     /**
      * Imposta nominativo richiedente
      * @param string $nominativo
      * @return boolean
      */
     public function setRichiedente($nominativo) {
-        $this->richiedente=$nominativo;
-        return $this->richiedente!=null;
+        $this->richiedente = $nominativo;
+        return $this->richiedente != null;
     }
-    
+
     /**
      * Restituisce nominativo procuratore
      * @return string
@@ -559,17 +563,15 @@ class Pratica {
     public function getProcuratore() {
         return $this->procuratore;
     }
-    
+
     /**
      * Imposta nominativo Procuratore
      * @param string $nominativo
      * @return boolean
      */
     public function setProcuratore($nominativo) {
-        $this->procuratore=$nominativo;
-        return $this->richiedente!=null;
+        $this->procuratore = $nominativo;
+        return $this->richiedente != null;
     }
-    
-    
 
 }
