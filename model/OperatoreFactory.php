@@ -226,6 +226,7 @@ class OperatoreFactory {
             error_log("Errore nella esecuzione della query
             $mysqli->errno : $mysqli->error", 0);
             $mysqli->close();
+            return null;
         } else {
             $operatori = array();
             while ($row = $result->fetch_object()) {

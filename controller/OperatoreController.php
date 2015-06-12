@@ -91,18 +91,16 @@ class OperatoreController {
 
         $operatore = $_SESSION["op"];
         $pagina->setHeaderFile("./view/header.php");
-        $pagina->setContentFile("./view/contentPratica.php");
-        $pagina->setJsFile("./js/contentPratica.js");
+        $pagina->setContentFile("./view/elencaP.php");
+        
 
         OperatoreController::setruolo($pagina);
         $operatori = OperatoreFactory::getListaOp();
         $rows = count($operatori);
         $pratica = new Pratica();
 
-
-
         if ($_REQUEST["cmd"] == "salvaP") {
-
+            $pagina->setJsFile("./js/contentPratica.js");$pagina->setJsFile("./js/contentPratica.js");
             $contatto = isset($_REQUEST["contatto"]) ? ($_REQUEST["contatto"]) : null;
             $dataAvvioProcedimento = isset($_REQUEST["dataAvvioProcedimento"]) ? ($_REQUEST["dataAvvioProcedimento"]) : null;
             $dataCaricamento = isset($_REQUEST["dataCaricamento"]) ? ($_REQUEST["dataCaricamento"]) : null;
@@ -130,7 +128,7 @@ class OperatoreController {
             $tipoPratica = isset($_REQUEST["tipoPratica"]) ? ($_REQUEST["tipoPratica"]) : null;
             $ubicazione = isset($_REQUEST["ubicazione"]) ? ($_REQUEST["ubicazione"]) : null;
 
-
+            $err = 0;
 
             $pratica->setContatto($contatto);
             $pratica->setDataAvvioProcedimento($dataAvvioProcedimento);
@@ -145,32 +143,52 @@ class OperatoreController {
             $pratica->setFlagInAttesa($flagInAttesa);
             $pratica->setFlagSoprintendenza($flagSoprintendenza);
             $pratica->setImportoDiritti($importoDiritti);
-            $pratica->setIncaricato($incaricato);
+            if (!$pratica->setIncaricato($incaricato)) {
+                $err++;
+            }
             $pratica->setMotivoAttesa($motivoAttesa);
-            $pratica->setNumeroPratica($numeroPratica);
-            $pratica->setNumeroProtocollo($numeroProtocollo);
+            if (!$pratica->setNumeroPratica($numeroPratica)) {
+                $err++;
+            }
+            if (!$pratica->setNumeroProtocollo($numeroProtocollo)) {
+                $err++;
+            }
             $pratica->setNumeroProtocolloProvvedimento($numeroProtocolloProvvedimento);
             $pratica->setOggetto($oggetto);
             $pratica->setProcuratore($procuratore);
-            $pratica->setProcuratoreId($procuratoreId);
+            if (!$pratica->setProcuratoreId($procuratoreId)) {
+                $err++;
+            }
             $pratica->setRichiedente($richiedente);
-            $pratica->setRichiedenteId($richiedenteId);
-            $pratica->setStatoPratica($statoPratica);
-            $pratica->setTipoPratica($tipoPratica);
+            if (!$pratica->setRichiedenteId($richiedenteId)) {
+                $err++;
+            }
+            if (!$pratica->setStatoPratica($statoPratica)) {
+                $err++;
+            }
+            if (!$pratica->setTipoPratica($tipoPratica)) {
+                $err++;
+            }
             $pratica->setUbicazione($ubicazione);
 
 
 
-            if ($_REQUEST["idPratica"] == "") {
+            if ($_REQUEST["idPratica"] == "" && $err === 0) {
                 $pagina->setTitle("Salvataggio pratica");
                 $errore = PraticaFactory::salvaP($pratica);
-                if ($errore == 0) {
-                    $pagina->setContentFile("./view/operatore/aggiornaP.php");
-                } else {
-                    $pagina->setContentFile("./view/contentPratica.php");
-                }
+            } elseif ($err === 0) {
+                $pagina->setTitle("Aggiorna pratica");
+                $errore = PraticaFactory::aggiornaP($pratica);
             } else {
                 $pagina->setTitle("Aggiorna pratica");
+            }
+            if ($errore === 0 && $err===0) {
+                $pagina->setContentFile("./view/operatore/aggiornaP.php");
+            } elseif ($errore===1062) {
+                $pagina->setContentFile("./view/contentPratica.php");
+                $pagina->setMsg("Errore, pratica N. ". $pratica->getNumeroPratica() . " già presente!");
+            } else {
+                $pagina->setContentFile("./view/contentPratica.php");
             }
         }
         //$pagina->setContentFile("./view/operatore/aggiornaP.php");

@@ -56,6 +56,20 @@ div.input-form #salva {
     width: 100px;
 }
 
+p.msg{
+    position: absolute;
+    top: 375px;
+    left: 50px;
+    font-family: "calibri", sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    border: 1px;
+/*    padding: 5px;*/
+/*    border-color: #95100C;
+    border-style: solid;*/
+    background-color: #ccffcc;
+}
+
 button:hover{
     background-color: #99ccff;
 }

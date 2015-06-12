@@ -144,7 +144,6 @@
         </form>
 
     </div>
-
-
-    <p><?php echo $pagina->getMsg(); ?></p>
+    <p id="msg" class="msg"><?php echo $pagina->getMsg(); ?></p>
 </div>
+

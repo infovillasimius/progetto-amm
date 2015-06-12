@@ -57,7 +57,7 @@ $(document).ready(function () {
                     $("#result").text("Trovato: " + data.nomeAn + " " + data.cognomeAn + "\n " + data.contattoAn)
                     $("#result").show("slow");
                     $("#idAn").val(data.idAn);
-                    contatto = data.contatto;
+                    contatto = data.contattoAn;
                     idAn = data.idAn;
 
                 },
@@ -80,6 +80,7 @@ $(document).ready(function () {
         $("#procuratore").val($("#nomeAn").val() + " " + $("#cognomeAn").val());
         $("#procuratoreId").attr("value", idAn);
         $("#contatto").attr("value", contatto);
+        $("#contatto").val(contatto);
     }
 
     $("#chiudi").click(function (event) {
@@ -98,19 +99,23 @@ $(document).ready(function () {
         richiedenteId = $("#richiedenteId").val();
         statoPratica = $("#statoPratica").val();
         tipoPratica = $("#tipoPratica").val();
-        if (incaricato < 1 || numeroPratica == "" || numeroProtocollo == "" ||
-                procuratoreId == "" || richiedenteId == "" ||
-                statoPratica == "" || tipoPratica == "") {
+        if (incaricato=="" || incaricato < 1 || numeroPratica == "" || numeroProtocollo == "" ||
+                procuratoreId == "" || richiedenteId == "" || statoPratica<1 || 
+                statoPratica == "" || tipoPratica == "" || tipoPratica<1) {
             event.preventDefault();
-            $("#incaricato").addClass("error");
-            $("#numeroPratica").addClass("error");
-            $("#numeroProtocollo").addClass("error");
-            $("#procuratore").addClass("error");
-            $("#richiedente").addClass("error");
-            $("#statoPratica").addClass("error");
-            $("#tipoPratica").addClass("error");
+            if (incaricato < 1 || incaricato=="") {
+                $("#incaricato").addClass("error");
+            }
+            if (numeroPratica == "") {
+                $("#numeroPratica").addClass("error");
+            }
+            if(numeroProtocollo ==""){$("#numeroProtocollo").addClass("error");}
+            if(procuratoreId == ""){$("#procuratore").addClass("error");}
+            if(richiedenteId == ""){$("#richiedente").addClass("error");}
+            if(statoPratica == "" || statoPratica <1){$("#statoPratica").addClass("error");}
+            if(tipoPratica == "" || tipoPratica<1){$("#tipoPratica").addClass("error");}
             alert("Errore: occorre compilare almeno i campi evidenziati");
-            
+
         }
     });
 
