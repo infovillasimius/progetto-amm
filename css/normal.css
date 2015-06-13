@@ -207,9 +207,7 @@ div.errorMenu, div.menuLeft{
     font-size: 14px;
     border-right: 1px solid #95100C;
     border-top: 1px solid #95100C;
-    
     height: 440px;
-
 }
 
 div.menuLeft p, div.menuLeft ul, div.menuLeft li,div.menuLeft h5 {
@@ -278,7 +276,7 @@ div.okNuovoOp h4 {
     text-align: center;
 }
 
-table tr td {
+table.listaOp tr td {
     border-collapse: collapse;
     border: 1px solid #95100C;
     width:150px;
@@ -319,3 +317,40 @@ td.center{
     top: 250px;
     left: 500px;
 }
+div.elencoP{
+    padding-left: 10px;
+}
+
+div.elencoP label{   
+    font-family: "calibri", sans-serif;
+    font-size: 12px;
+}
+
+div.elencoP input{
+    width: 60px;
+}
+
+div.elencoP select{
+    width: 150px;
+}
+
+div.aggiornaP{
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+p.aggiornaP{
+    font-family: "calibri", sans-serif;
+    font-size: 12px;
+    background-color: #ccffcc;
+    border: 1px solid #95100C;
+    padding: 5px;
+}
+div.aggiornaP label{
+    
+    font-family: "calibri", sans-serif;
+    font-size: 14px;
+
+}
+

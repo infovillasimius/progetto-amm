@@ -1,8 +1,17 @@
-<?php
+<div class="aggiornaP">
+    <h3>Aggiornamento pratica</h3>
+    <br/>
+    <br/>
+    <form method="post" action="index.php?page=operatore&cmd=aggiornaP">
+        <label for="numeroP">Numero Pratica</label>
+        <input type="text" id="numeroP" name="numeroP" />
+        <button type="submit">Edit</button>
+    </form>
+    <?php
+    if ($pagina->getMsg() != "") {
+        echo '<p class="aggiornaP">' . $pagina->getMsg() . '</p>';
+    }
+    ?>
+</div>
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 

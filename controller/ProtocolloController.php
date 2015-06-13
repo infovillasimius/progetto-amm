@@ -36,6 +36,7 @@ class ProtocolloController {
     
     protected function mostraNuovaP($pagina) {
         $operatore=$_SESSION["op"];
+        $ruolo=$operatore->getFunzione();
         $pagina->setTitle("Nuova pratica");
         $pagina->setHeaderFile("./view/header.php");
         $pagina->setContentFile("./view/contentPratica.php");

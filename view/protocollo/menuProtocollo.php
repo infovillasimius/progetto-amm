@@ -8,8 +8,7 @@
     <br/>
     <p>
         <a href="index.php?page=protocollo&cmd=nuovaP">Nuova</a><br/>
-        <a href="index.php?page=protocollo&cmd=elencoP">Elenco Totale</a><br/>
-        <a href="index.php?page=operatore&cmd=elencoP">Elenco Assegn.</a><br/>
+        <a href="index.php?page=protocollo&cmd=elencoP">Elenco</a><br/>
         <a href="index.php?page=operatore&cmd=aggiornaP">Aggiorna</a>
     </p>
     <br/>

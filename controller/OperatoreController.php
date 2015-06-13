@@ -10,6 +10,12 @@ include_once './model/PraticaFactory.php';
 
 class OperatoreController {
 
+    /**
+     * Gestisce le richieste relative al livello operatore
+     * e, con maggiori funzionalità, le omologhe relative
+     * ai livelli di accesso superiori
+     * @param Array associativo $richieste
+     */
     public function lavoraRichieste(&$richieste) {
 
         $pagina = new Struttura();
@@ -87,28 +93,50 @@ class OperatoreController {
         }
     }
 
+    /**
+     * Gestisce le fasi di salvataggio/aggiornamento pratica
+     * @param Struttura $pagina
+     */
     public function mostraAggiornaP($pagina) {
-        $idUpdate = isset($_REQUEST['id']) ? $_REQUEST['id'] : null;
+//        $idUpdate = isset($_REQUEST['id']) ? $_REQUEST['id'] : null;
         $idPratica = isset($_REQUEST["idPratica"]) ? $_REQUEST["idPratica"] : null;
 
         $operatore = $_SESSION["op"];
         $pagina->setHeaderFile("./view/header.php");
-        $pagina->setContentFile("./view/operatore/elencaP.php");
-        
-
-        
+        $pagina->setContentFile("./view/operatore/aggiornaP.php");
+        $ruolo = $operatore->getFunzione();
         OperatoreController::setruolo($pagina);
         $operatori = OperatoreFactory::getListaOp();
         $rows = count($operatori);
+
+        if ($ruolo >= 2) {
+            $pagina->setJsFile("./js/contentPratica.js");
+        } else {
+            $pagina->setJsFile("./js/operatore.js");
+        }
+
+        if ($_REQUEST["cmd"] === "aggiornaP" && isset($_REQUEST["numeroP"])) {
+            
+            $numeroP = $_REQUEST["numeroP"];
+            echo $idUpdate;
+            $idUpdate = PraticaFactory::ricercaPerNumeroPratica($numeroP);
+            if($numeroP==""){
+                $pagina->setMsg("Errore, inserisci il numero di una pratica esistente <br/>oppure utilizza la voce di menu [Elenco].");
+            } elseif (!isset($idUpdate)){
+                $pagina->setMsg("Errore, pratica N. " . $numeroP . " non presente! <br/>Inserisci il numero di una pratica esistente <br/>oppure utilizza la voce di menu [Elenco].");
+            }
+        }
 
         if (!isset($idUpdate)) {
             $pratica = new Pratica();
         } else {
             $pratica = PraticaFactory::getPraticaById($idUpdate);
             $pagina->setContentFile("./view/contentPratica.php");
-            
+            $pagina->setTitle("Aggiorna pratica");
+
             if (!isset($pratica)) {
                 $pratica = new Pratica();
+                
             }
         }
 
@@ -150,42 +178,47 @@ class OperatoreController {
             $pratica->setDataConferenzaServizi($dataConferenzaServizi);
             $pratica->setDataInvioRicevuta($dataInvioRicevuta);
             $pratica->setDataInvioVerifiche($dataInvioVerifiche);
-            $pratica->setDataProtocollo($dataProtocollo);
+            if ($ruolo > 1) {
+                $pratica->setDataProtocollo($dataProtocollo);
+                $pratica->setFlagFirmata($flagFirmata);
+                $pratica->setProcuratore($procuratore);
+                if (!$pratica->setProcuratoreId($procuratoreId)) {
+                    $err++;
+                }
+                $pratica->setRichiedente($richiedente);
+                if (!$pratica->setRichiedenteId($richiedenteId)) {
+                    $err++;
+                }
+                if (!$pratica->setIncaricato($incaricato)) {
+                    $err++;
+                }
+                if (!$pratica->setNumeroPratica($numeroPratica)) {
+                    $err++;
+                }
+                if (!$pratica->setNumeroProtocollo($numeroProtocollo)) {
+                    $err++;
+                }
+                if (!$pratica->setStatoPratica($statoPratica)) {
+                    $err++;
+                }
+                if (!$pratica->setTipoPratica($tipoPratica)) {
+                    $err++;
+                }
+            }
+
             $pratica->setDataProvvedimento($dataProvvedimento);
             $pratica->setFlagAllaFirma($flagAllaFirma);
-            $pratica->setFlagFirmata($flagFirmata);
             $pratica->setFlagInAttesa($flagInAttesa);
             $pratica->setFlagSoprintendenza($flagSoprintendenza);
             $pratica->setImportoDiritti($importoDiritti);
-            if (!$pratica->setIncaricato($incaricato)) {
-                $err++;
-            }
             $pratica->setMotivoAttesa($motivoAttesa);
-            if (!$pratica->setNumeroPratica($numeroPratica)) {
-                $err++;
-            }
-            if (!$pratica->setNumeroProtocollo($numeroProtocollo)) {
-                $err++;
-            }
             $pratica->setNumeroProtocolloProvvedimento($numeroProtocolloProvvedimento);
             $pratica->setOggetto($oggetto);
-            $pratica->setProcuratore($procuratore);
-            if (!$pratica->setProcuratoreId($procuratoreId)) {
-                $err++;
-            }
-            $pratica->setRichiedente($richiedente);
-            if (!$pratica->setRichiedenteId($richiedenteId)) {
-                $err++;
-            }
-            if (!$pratica->setStatoPratica($statoPratica)) {
-                $err++;
-            }
-            if (!$pratica->setTipoPratica($tipoPratica)) {
-                $err++;
-            }
             $pratica->setUbicazione($ubicazione);
 
-            if ($idPratica == "" && $err === 0) {
+            //var_dump($pratica);
+
+            if ($idPratica == "" && $err == 0) {
                 $pagina->setTitle("Salvataggio pratica");
                 $errore = PraticaFactory::salvaP($pratica);
             } elseif ($err === 0) {
@@ -194,9 +227,10 @@ class OperatoreController {
             } else {
                 $pagina->setTitle("Errore");
             }
-            if ($errore === 0 && $err === 0) {
-                $pagina->setContentFile("./view/operatore/aggiornaP.php");
-            } elseif ($errore === 1062) {
+            if ($errore == 0 && $err == 0) {
+                $pagina->setContentFile("./view/operatore/okNuovaP.php");
+                
+            } elseif ($errore == 1062) {
                 $pagina->setContentFile("./view/contentPratica.php");
                 $pagina->setMsg("Errore, pratica N. " . $pratica->getNumeroPratica() . " già presente!");
             } else {
@@ -238,6 +272,20 @@ class OperatoreController {
         $json["cognomeAn"] = $anag->getCognome();
         $json["contattoAn"] = $anag->getContatto();
         echo json_encode($json);
+    }
+
+    public function mostraElencoP($pagina) {
+        $operatore = $_SESSION["op"];
+        $ruolo = $operatore->getFunzione();
+        $pratica = new Pratica();
+        $pagina->setHeaderFile("./view/header.php");
+        $pagina->setTitle("Elenco pratiche");
+        OperatoreController::setruolo($pagina);
+        $pagina->setMsg('');
+        $pagina->setContentFile("./view/operatore/elencoP.php");
+        $operatori = OperatoreFactory::getListaOp();
+        $rows = count($operatori);
+        include "./view/masterPage.php";
     }
 
 }

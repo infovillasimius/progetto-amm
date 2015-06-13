@@ -33,26 +33,25 @@
             </select>
             <br/>
             <br/>
-
             <label for="numeroPratica">Numero pratica</label>
-            <input type="text" id="numeroPratica" name="numeroPratica" value="<?= $pratica->getNumeroPratica(); ?>"/>
+            <input type="text" id="numeroPratica" name="numeroPratica" value="<?= $pratica->getNumeroPratica(); ?>" <?= $ruolo < 2 ? "readonly" : "" ?> />
             <br/>
             <label for="dataCaricamento">Caricata in data</label>
             <input type="text" id="dataCaricamento" name="dataCaricamento" value="<?= $pratica->getDataCaricamento(true); ?>"/>
             <br/>
             <label for="numeroProtocollo">Protocollo</label>
-            <input type="text" id="numeroProtocollo" name="numeroProtocollo" value="<?= $pratica->getNumeroProtocollo(); ?>"/>
+            <input type="text" id="numeroProtocollo" name="numeroProtocollo" value="<?= $pratica->getNumeroProtocollo(); ?>" <?= $ruolo < 2 ? "readonly" : "" ?> />
             <br/>
             <label for="dataProtocollo">Data protocollo</label>
-            <input type="text" id="dataProtocollo" name="dataProtocollo" value="<?= $pratica->getDataProtocollo(true); ?>"/>
+            <input type="text" id="dataProtocollo" name="dataProtocollo" value="<?= $pratica->getDataProtocollo(true); ?>" <?= $ruolo < 2 ? "readonly" : "" ?> />
             <br/>
             <label for="richiedente">Richiedente</label>
-            <input type="hidden" id="richiedenteId" name="richiedenteId" value="<?= $pratica->getRichiedenteId(); ?>"/>
-            <input type="text" id="richiedente" name="richiedente" value="<?= $pratica->getRichiedente(); ?>"/>
+            <input type="hidden" id="richiedenteId" name="richiedenteId" value="<?= $pratica->getRichiedenteId(); ?>" />
+            <input type="text" id="richiedente" name="richiedente" value="<?= $pratica->getRichiedente(); ?>" <?= $ruolo<2? "readonly":"" ?> />
             <br/>
             <label for="procuratore">Procuratore</label>
             <input type="hidden" id="procuratoreId" name="procuratoreId" value="<?= $pratica->getProcuratoreId(); ?>"/>
-            <input type="text" id="procuratore" name="procuratore" value="<?= $pratica->getProcuratore(); ?>"/>
+            <input type="text" id="procuratore" name="procuratore" value="<?= $pratica->getProcuratore(); ?>" <?= $ruolo<2? "readonly":"" ?> />
             <br/>
             <label for="contatto">Contatto</label>
             <input type="text" id="contatto" name="contatto" value="<?= $pratica->getContatto(); ?>"/>
@@ -70,7 +69,7 @@
         <br/>
         <div class="right">
             <label for="incaricato">Operatore incaricato</label>
-            <select id="incaricato" name="incaricato">
+            <select id="incaricato" name="incaricato" <?= $ruolo < 2 ? "disabled" : "" ?>>
                 <option value="0" >Selezionare operatore</option>
                 <?php
                 for ($x = 0; $x < $rows; $x++) {
@@ -105,7 +104,7 @@
             <input type="checkbox" id="flagAllaFirma" name="flagAllaFirma" <?= $pratica->getFlagAllaFirma() ? 'checked="checked"' : "" ?> />
             <br/>
             <label for="flagFirmata">Firmata</label>
-            <input type="checkbox" id="flagFirmata" name="flagFirmata" <?= $pratica->getFlagFirmata() ? 'checked="checked"' : "" ?> />
+            <input type="checkbox" id="flagFirmata" name="flagFirmata" <?= $pratica->getFlagFirmata() ? 'checked="checked"' : "" ?> <?= $ruolo<2? "disabled":"" ?> />
             <br/>
             <label for="flagSoprintendenza">Coinvolge Soprintendenza</label>
             <input type="checkbox" id="flagSoprintendenza" name="flagSoprintendenza" <?= $pratica->getFlagSoprintendenza() ? 'checked="checked"' : "" ?> />
@@ -118,6 +117,7 @@
             <br/>
         </div>
         <input type="hidden" id="idPratica" name="idPratica" value="<?= $pratica->getId() ?>" />
+        <input type="hidden" id="id" name="id" value="<?= $idUpdate ?>" />
         <button type="submit" id="salva" value="pratica">Salva</button>
         <br/>
     </form>
@@ -145,6 +145,5 @@
 
     </div>
     <p id="msg" class="msg"><?php echo $pagina->getMsg(); ?></p>
-    
 </div>
 

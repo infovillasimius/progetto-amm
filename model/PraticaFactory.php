@@ -56,7 +56,7 @@ class PraticaFactory {
             $errore = $mysqli->errno;
             $stmt->close();
             $mysqli->close();
-            
+
             return $errore;
         } else {
             $stmt->close();
@@ -70,27 +70,47 @@ class PraticaFactory {
         if (!isset($mysqli)) {
             return null;
         }
-        
+
         $stmt = $mysqli->stmt_init();
-        $query="SELECT * FROM pratica JOIN anagrafica ON richiedente=anagrafica.id JOIN anagrafica an2 ON procuratore=an2.id WHERE pratica.id=?";
+        $query = "SELECT pratica.id, pratica.contatto, date_format(dataAvvioProcedimento,'%d/%m/%Y') dataAvvioProcedimento,"
+                . "date_format(dataCaricamento,'%d/%m/%Y') dataCaricamento, "
+                . "date_format(dataConferenzaServizi,'%d/%m/%Y') dataConferenzaServizi, "
+                . "date_format(dataInvioRicevuta,'%d/%m/%Y') dataInvioRicevuta, "
+                . "date_format(dataInvioVerifiche,'%d/%m/%Y') dataInvioVerifiche, "
+                . "date_format(dataProtocollo,'%d/%m/%Y') dataProtocollo, "
+                . "date_format(dataProvvedimento,'%d/%m/%Y') dataProvvedimento, flagAllaFirma, flagFirmata, "
+                . "flagInAttesa, flagSoprintendenza, importoDiritti, incaricato, motivoAttesa, numeroPratica, "
+                . "numeroProtocollo, numeroProtocolloProvvedimento, oggetto, procuratore, richiedente, "
+                . "statoPratica, tipoPratica, ubicazione, anagrafica.nome, anagrafica.cognome, "
+                . "anagrafica.contatto, an2.nome, an2.cognome, an2.contatto "
+                . "FROM pratica JOIN anagrafica ON richiedente=anagrafica.id JOIN anagrafica an2 ON procuratore=an2.id WHERE pratica.id=?";
         $stmt->prepare($query);
         $stmt->bind_param("i", $idPratica);
-        
+
         $result = $stmt->execute();
-        $stmt->bind_result($id,$contatto, $dataAvvioProcedimento, $dataCaricamento, $dataConferenzaServizi, $dataInvioRicevuta, $dataInvioVerifiche, $dataProtocollo, $dataProvvedimento, $flagAllaFirma, $flagFirmata, $flagInAttesa, $flagSoprintendenza, $importoDiritti, $incaricato, $motivoAttesa, $numeroPratica, $numeroProtocollo, $numeroProtocolloProvvedimento, $oggetto, $procuratoreId, $richiedenteId, $statoPratica, $tipoPratica, $ubicazione,$idRichiedente,$nomeRichiedente,$cognomeRichiedente,$contattoRichiedente,$idProcuratore,$nomeProcuratore,$cognomeProcuratore,$contattoProcuratore);        
-        
+        $stmt->bind_result($id, $contatto, $dataAvvioProcedimento, $dataCaricamento, $dataConferenzaServizi, 
+                $dataInvioRicevuta, $dataInvioVerifiche, $dataProtocollo, $dataProvvedimento, $flagAllaFirma, 
+                $flagFirmata, $flagInAttesa, $flagSoprintendenza, $importoDiritti, $incaricato, $motivoAttesa, 
+                $numeroPratica, $numeroProtocollo, $numeroProtocolloProvvedimento, $oggetto, $procuratoreId, 
+                $richiedenteId, $statoPratica, $tipoPratica, $ubicazione, $nomeRichiedente, $cognomeRichiedente, 
+                $contattoRichiedente, $nomeProcuratore, $cognomeProcuratore, $contattoProcuratore);
+
         if ($mysqli->errno > 0) {
             // errore nella esecuzione della query
             error_log("Errore nella esecuzione della query
             $mysqli->errno : $mysqli->error", 0);
-            $errore=$mysqli->errno;
+            $errore = $mysqli->errno;
+            $stmt->close();
             $mysqli->close();
-        } else{
+            return null;
+            
+        } else {
+
             $stmt->fetch();
-            $pratica=new Pratica();
+            $pratica = new Pratica();
             $pratica->setId($id);
             $pratica->setContatto($contatto);
-            $pratica->setDataAvvioProcedimento($dataAvvioProcedimento);
+            $pratica->setDataAvvioProcedimento($dataAvvioProcedimento);           
             $pratica->setDataCaricamento($dataCaricamento);
             $pratica->setDataConferenzaServizi($dataConferenzaServizi);
             $pratica->setDataInvioRicevuta($dataInvioRicevuta);
@@ -115,6 +135,8 @@ class PraticaFactory {
             $pratica->setStatoPratica($statoPratica);
             $pratica->setTipoPratica($tipoPratica);
             $pratica->setUbicazione($ubicazione);
+            $stmt->close();
+            $mysqli->close();
             return $pratica;
         }
     }
@@ -124,8 +146,8 @@ class PraticaFactory {
         if (!isset($mysqli)) {
             return null;
         }
-        
-        $numeroParametriRicerca=count($ricerca);
+
+        $numeroParametriRicerca = count($ricerca);
 
         $query = "SELECT operatore.id, anagrafica.nome, anagrafica.cognome, anagrafica.contatto, operatore.funzione, operatore.username, operatore.password, operatore.id_anagrafica FROM anagrafica inner join operatore on anagrafica.id=operatore.id_anagrafica";
         $result = $mysqli->query($query);
@@ -159,7 +181,7 @@ class PraticaFactory {
         if (!isset($mysqli)) {
             return false;
         }
-
+        
         $id = $pratica->getId();
         $contatto = $pratica->getContatto();
         $dataAvvioProcedimento = $pratica->getDataAvvioProcedimento(false);
@@ -179,15 +201,13 @@ class PraticaFactory {
         $numeroPratica = $pratica->getNumeroPratica();
         $numeroProtocollo = $pratica->getNumeroProtocollo();
         $numeroProtocolloProvvedimento = $pratica->getNumeroProtocolloProvvedimento();
-        $oggetto = $pratica->getOggetto();
-        //$procuratore = $pratica->getProcuratore();
+        $oggetto = $pratica->getOggetto();        
         $procuratoreId = $pratica->getProcuratoreId();
-        //$richiedente = $pratica->getRichiedente();
         $richiedenteId = $pratica->getRichiedenteId();
         $statoPratica = $pratica->getStatoPratica();
         $tipoPratica = $pratica->getTipoPratica();
         $ubicazione = $pratica->getUbicazione();
-        
+
         $stmt = $mysqli->stmt_init();
         $query = "UPDATE pratica SET contatto=?, dataAvvioProcedimento=?, dataCaricamento=?, dataConferenzaServizi=?, "
                 . "dataInvioRicevuta=?, dataInvioVerifiche=?, dataProtocollo=?, dataProvvedimento=?, flagAllaFirma=?, "
@@ -196,13 +216,10 @@ class PraticaFactory {
                 . "richiedente=?, statoPratica=?, tipoPratica=?, ubicazione=? WHERE id=? ";
 
         $stmt->prepare($query);
-        $stmt->bind_param("ssssssssiiiidisiiisiiiisi", $contatto, $dataAvvioProcedimento, $dataCaricamento, $dataConferenzaServizi, 
-                $dataInvioRicevuta, $dataInvioVerifiche, $dataProtocollo, $dataProvvedimento, $flagAllaFirma, $flagFirmata, 
-                $flagInAttesa, $flagSoprintendenza, $importoDiritti, $incaricato, $motivoAttesa, $numeroPratica, $numeroProtocollo, 
-                $numeroProtocolloProvvedimento, $oggetto, $procuratoreId, $richiedenteId, $statoPratica, $tipoPratica, $ubicazione,$id);
+        $stmt->bind_param("ssssssssiiiidisiiisiiiisi", $contatto, $dataAvvioProcedimento, $dataCaricamento, $dataConferenzaServizi, $dataInvioRicevuta, $dataInvioVerifiche, $dataProtocollo, $dataProvvedimento, $flagAllaFirma, $flagFirmata, $flagInAttesa, $flagSoprintendenza, $importoDiritti, $incaricato, $motivoAttesa, $numeroPratica, $numeroProtocollo, $numeroProtocolloProvvedimento, $oggetto, $procuratoreId, $richiedenteId, $statoPratica, $tipoPratica, $ubicazione, $id);
 
         $result = $stmt->execute();
-
+        
         if (!$result) {
             // errore nella esecuzione della query 
             error_log("Errore nella esecuzione della query
@@ -217,6 +234,37 @@ class PraticaFactory {
             $mysqli->close();
             return 0;
         }
+    }
+    
+    public static function ricercaPerNumeroPratica($numeroP) {
+        $mysqli = ConnectionFactory::connetti();
+        if (!isset($mysqli)) {
+            return null;
+        }
+        
+        $stmt = $mysqli->stmt_init();
+        $query = "SELECT id FROM pratica WHERE numeroPratica=?";
+        $stmt->prepare($query);
+        $stmt->bind_param("i", $numeroP);
+
+        $result = $stmt->execute();
+        $stmt->bind_result($id);
+
+        if ($mysqli->errno > 0) {
+            // errore nella esecuzione della query
+            error_log("Errore nella esecuzione della query
+            $mysqli->errno : $mysqli->error", 0);
+            $errore = $mysqli->errno;
+            $stmt->close();
+            $mysqli->close();
+            return null;
+        } else {
+            $stmt->fetch();
+            $stmt->close();
+            $mysqli->close();
+            return $id;
+        }
+    
     }
 
 }

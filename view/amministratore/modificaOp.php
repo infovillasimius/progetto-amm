@@ -1,7 +1,7 @@
 
 <div class="listaOp">
     <h3>Lista operatori</h3>
-    <table>
+    <table class="listaOp">
         <tr>
             <th>Nome</th>
             <th>Username</th>
