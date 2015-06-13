@@ -118,7 +118,7 @@ class OperatoreController {
         if ($_REQUEST["cmd"] === "aggiornaP" && isset($_REQUEST["numeroP"])) {
             
             $numeroP = $_REQUEST["numeroP"];
-            echo $idUpdate;
+            
             $idUpdate = PraticaFactory::ricercaPerNumeroPratica($numeroP);
             if($numeroP==""){
                 $pagina->setMsg("Errore, inserisci il numero di una pratica esistente <br/>oppure utilizza la voce di menu [Elenco].");
