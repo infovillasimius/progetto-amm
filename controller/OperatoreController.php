@@ -45,7 +45,7 @@ class OperatoreController {
                 case "cercaAn":
                     self::cercaAn();
                     break;
-                
+
                 case "cercaP":
                     self::cercaP();
                     break;
@@ -102,7 +102,7 @@ class OperatoreController {
      * @param Struttura $pagina
      */
     public function mostraAggiornaP($pagina) {
-//        $idUpdate = isset($_REQUEST['id']) ? $_REQUEST['id'] : null;
+        $idUpdate = isset($_REQUEST['id']) ? $_REQUEST['id'] : null;
         $idPratica = isset($_REQUEST["idPratica"]) ? $_REQUEST["idPratica"] : null;
 
         $operatore = $_SESSION["op"];
@@ -120,15 +120,21 @@ class OperatoreController {
         }
 
         if ($_REQUEST["cmd"] === "aggiornaP" && isset($_REQUEST["numeroP"])) {
-            
+
             $numeroP = $_REQUEST["numeroP"];
-            
+
             $idUpdate = PraticaFactory::ricercaPerNumeroPratica($numeroP);
-            if($numeroP==""){
+            if ($numeroP == "") {
                 $pagina->setMsg("Errore, inserisci il numero di una pratica esistente <br/>oppure utilizza la voce di menu [Elenco].");
-            } elseif (!isset($idUpdate)){
+            } elseif (!isset($idUpdate)) {
                 $pagina->setMsg("Errore, pratica N. " . $numeroP . " non presente! <br/>Inserisci il numero di una pratica esistente <br/>oppure utilizza la voce di menu [Elenco].");
-            }
+            } elseif ($ruolo<2 ) {
+                $pratica = PraticaFactory::getPraticaById($idUpdate);
+                if($pratica->getIncaricato()!=$operatore->getId()){
+                    unset($pratica);
+                    unset($idUpdate);
+                }
+        }
         }
 
         if (!isset($idUpdate)) {
@@ -140,7 +146,6 @@ class OperatoreController {
 
             if (!isset($pratica)) {
                 $pratica = new Pratica();
-                
             }
         }
 
@@ -233,7 +238,6 @@ class OperatoreController {
             }
             if ($errore == 0 && $err == 0) {
                 $pagina->setContentFile("./view/operatore/okNuovaP.php");
-                
             } elseif ($errore == 1062) {
                 $pagina->setContentFile("./view/contentPratica.php");
                 $pagina->setMsg("Errore, pratica N. " . $pratica->getNumeroPratica() . " già presente!");
@@ -241,7 +245,7 @@ class OperatoreController {
                 $pagina->setContentFile("./view/contentPratica.php");
             }
         }
-        
+
         include "./view/masterPage.php";
     }
 
@@ -278,7 +282,12 @@ class OperatoreController {
         echo json_encode($json);
     }
 
+    /**
+     * 
+     * @param \Struttura $pagina
+     */
     public function mostraElencoP($pagina) {
+        $pagina->setJsFile("./js/ricerca.js");
         $operatore = $_SESSION["op"];
         $ruolo = $operatore->getFunzione();
         $pratica = new Pratica();
@@ -291,33 +300,57 @@ class OperatoreController {
         $rows = count($operatori);
         include "./view/masterPage.php";
     }
-    
+
+    /**
+     * Restituisce un testo html , contenente le pratiche cercate, che si integra nella tabella di ricerca attrverso js
+     */
     public function cercaP() {
-
-        $nome = isset($_REQUEST["nome"]) ? $_REQUEST["nome"] : null;
-        $cognome = isset($_REQUEST["cognome"]) ? $_REQUEST["cognome"] : null;
-        $contatto = isset($_REQUEST["contatto"]) ? $_REQUEST["contatto"] : "";
-
-        $idAnagrafica = AnagraficaFactory::getAnagraficaByName($nome, $cognome, null);
-        if ($idAnagrafica < 1) {
-            $idAnagrafica = AnagraficaFactory::setAnagrafica($nome, $cognome, $contatto, null);
+        $operatore=$_SESSION["op"];
+        $ruolo=$operatore->getFunzione();
+        
+        $ricerca=array();
+        
+        $ricerca["numeroPratica"] = isset($_REQUEST["numeroPratica"]) ? $_REQUEST["numeroPratica"] : null;
+        $ricerca["statoPratica"] = isset($_REQUEST["statoPratica"]) ? $_REQUEST["statoPratica"] : null;
+        $ricerca["tipoPratica"] = isset($_REQUEST["tipoPratica"]) ? $_REQUEST["tipoPratica"] : null;
+        $ricerca["incaricato"] = isset($_REQUEST["tipoPratica"]) ? $_REQUEST["tipoPratica"] : null;
+        $ricerca["flagAllaFirma"] = isset($_REQUEST["flagAllaFirma"]) ? $_REQUEST["flagAllaFirma"] : null;
+        $ricerca["flagFirmata"] = isset($_REQUEST["flagFirmata"]) ? $_REQUEST["flagFirmata"] : null;
+        $ricerca["flagInAttesa"] = isset($_REQUEST["flagInAttesa"]) ? $_REQUEST["flagInAttesa"] : null;
+        $ricerca["flagSoprintendenza"] = isset($_REQUEST["flagSoprintendenza"]) ? $_REQUEST["flagSoprintendenza"] : null;
+        $offset= isset($_REQUEST["offset"]) ? $_REQUEST["offset"] : 0;
+        $numero = isset($_REQUEST["numero"]) ? $_REQUEST["numero"] : 15;
+        
+        
+        if($ruolo<2){
+            $ricerca["incaricato"]=$operatore->getId();
         }
-        if ($idAnagrafica < 1) {
-            echo 'Errore';
-            exit();
+        
+        
+        $pratiche=  PraticaFactory::elencoP($ricerca, $offset, $numero, $ordinamento);
+        $x=  count($pratiche);
+        $data=array();
+        for($i=0;i<$x;$i++){
+            $data[$i] = "<tr class=". ($i%2==0?"a":"b")."\"><td><a href=\"index.php?page=operatore&cmd=aggiornaP&numeroP="
+                    .$pratiche[$i]->getNumeroPratica()."\">".$pratiche[$i]->getNumeroPratica()."</a></td>"
+                    . "<td>".$pratiche[$i]->getDataCaricamento(true)."</td>"
+                    . "<td>".$pratiche[$i]->getRichiedente()."</td>"
+                    . "<td>".  PraticaFactory::tipoPratica($pratiche[$i]->getTipoPratica()) ."</td>"
+                    . "<td>".  PraticaFactory::statoPratica($pratiche[$i]->getStatoPratica()) ."</td>"
+                    . "<td>". OperatoreFactory::getOperatore($pratiche[$i]->getIncaricato())->getNominativo() ."</td>"
+                    . "</tr>";
         }
-
-        $anag = AnagraficaFactory::getAnagrafica($idAnagrafica);
-
-        header('Cache-Control: no-cache, must-revalidate');
-        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-        header('Content-type: application/json');
-        $json = array();
-        $json["idAn"] = $idAnagrafica;
-        $json["nomeAn"] = $anag->getNome();
-        $json["cognomeAn"] = $anag->getCognome();
-        $json["contattoAn"] = $anag->getContatto();
-        echo json_encode($json);
+        var_dump($data);
+//        header('Cache-Control: no-cache, must-revalidate');
+//        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+//        header('Content-type: application/json');
+//        $json = array();
+//        $json["testo"] = $data;
+//        echo json_encode($json);
+        
+        
     }
-
+        
 }
+
+

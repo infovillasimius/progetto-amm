@@ -75,6 +75,12 @@
             </td>
         </tr>
     </table>
+    <br/>
+    <table class="result" >
+        <tr class="h">
+            <th>Numero</th><th>Data Pratica</th><th>Richiedente</th><th>Tipo pratica</th><th>Stato pratica</th><th>Incaricato</th>
+        </tr>  
+    </table>   
 
 </div>
 

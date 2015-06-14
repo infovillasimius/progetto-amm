@@ -5,7 +5,7 @@
     <form method="post" action="index.php?page=operatore&amp;cmd=aggiornaP">
         <label for="numeroP">Numero Pratica</label>
         <input type="text" id="numeroP" name="numeroP" />
-        <button type="submit">Edit</button>
+        <button type="submit">Apri</button>
     </form>
     <?php
     if ($pagina->getMsg() != "") {

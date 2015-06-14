@@ -354,3 +354,26 @@ div.aggiornaP label{
 
 }
 
+table.result {
+    border-collapse: collapse;
+    border: 1px solid #95100C; 
+    font-family: "calibri", sans-serif;
+    font-size: 12px;
+    width: 100%;
+}
+
+table.result tr td{
+    border-collapse: collapse;
+    border: 1px solid #95100C; 
+    font-family: "calibri", sans-serif;
+    font-size: 12px;
+    
+}
+
+table.result th{
+    border-collapse: collapse;
+    border: 1px solid #95100C; 
+    font-family: "calibri", sans-serif;
+    font-size: 12px;
+    
+}
