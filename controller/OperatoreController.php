@@ -45,6 +45,10 @@ class OperatoreController {
                 case "cercaAn":
                     self::cercaAn();
                     break;
+                
+                case "cercaP":
+                    self::cercaP();
+                    break;
 
                 default :
                     OperatoreController::mostraBenvenuto($pagina);
@@ -237,7 +241,7 @@ class OperatoreController {
                 $pagina->setContentFile("./view/contentPratica.php");
             }
         }
-        //$pagina->setContentFile("./view/operatore/aggiornaP.php");
+        
         include "./view/masterPage.php";
     }
 
@@ -286,6 +290,34 @@ class OperatoreController {
         $operatori = OperatoreFactory::getListaOp();
         $rows = count($operatori);
         include "./view/masterPage.php";
+    }
+    
+    public function cercaP() {
+
+        $nome = isset($_REQUEST["nome"]) ? $_REQUEST["nome"] : null;
+        $cognome = isset($_REQUEST["cognome"]) ? $_REQUEST["cognome"] : null;
+        $contatto = isset($_REQUEST["contatto"]) ? $_REQUEST["contatto"] : "";
+
+        $idAnagrafica = AnagraficaFactory::getAnagraficaByName($nome, $cognome, null);
+        if ($idAnagrafica < 1) {
+            $idAnagrafica = AnagraficaFactory::setAnagrafica($nome, $cognome, $contatto, null);
+        }
+        if ($idAnagrafica < 1) {
+            echo 'Errore';
+            exit();
+        }
+
+        $anag = AnagraficaFactory::getAnagrafica($idAnagrafica);
+
+        header('Cache-Control: no-cache, must-revalidate');
+        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+        header('Content-type: application/json');
+        $json = array();
+        $json["idAn"] = $idAnagrafica;
+        $json["nomeAn"] = $anag->getNome();
+        $json["cognomeAn"] = $anag->getCognome();
+        $json["contattoAn"] = $anag->getContatto();
+        echo json_encode($json);
     }
 
 }

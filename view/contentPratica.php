@@ -1,6 +1,6 @@
 <div class="input-form">
     <h3>Dati della pratica</h3>
-    <form method="post" action="index.php?page=operatore&cmd=salvaP">
+    <form method="post" action="index.php?page=operatore&amp;cmd=salvaP">
 
         <div class="left">
             <label for="statoPratica">Stato pratica</label>

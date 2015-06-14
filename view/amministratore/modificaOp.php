@@ -14,7 +14,7 @@
             echo "<td>".$operatori[$x]->getNominativo() . "</td>"
                . "<td>".$operatori[$x]->getUsername(). "</td>"
                . "<td>".  OperatoreFactory::ruolo($operatori[$x]->getFunzione())."</td>"
-               . '<td class="center"><form method="post" action="index.php?page=admin&cmd=modificaOp">'
+               . '<td class="center"><form method="post" action="index.php?page=admin&amp;cmd=modificaOp">'
                . '<button type="submit">Edit</button><input type="hidden" name="id" value="'.$operatori[$x]->getId().'" /></form></td>';
             echo "</tr>";
             

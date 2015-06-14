@@ -9,7 +9,12 @@
         <title><?php echo $pagina->getTitle() ?> </title>
         <link rel="stylesheet" type="text/css" media="screen" href="./css/normal.css"/>
         <script src="./js/jquery.js"></script>
-        <script src="<?php echo $pagina->getJsFile() ?>"></script>
+        <?php 
+            if ($pagina->getJsFile()!=""){
+                echo '<script src="'. $pagina->getJsFile() .'"></script>';
+            }
+        ?>
+        
     </head>
     <body>
         <div class="page">
@@ -48,5 +53,3 @@
             
     </body>
 </html>
-
-

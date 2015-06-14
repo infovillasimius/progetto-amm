@@ -6,8 +6,8 @@
     
     <br/>
     <p>
-        <a href="index.php?page=operatore&cmd=elencoP">Elenco</a><br/>   
-        <a href="index.php?page=operatore&cmd=aggiornaP">Aggiorna</a><br/>
+        <a href="index.php?page=operatore&amp;cmd=elencoP">Elenco</a><br/>   
+        <a href="index.php?page=operatore&amp;cmd=aggiornaP">Aggiorna</a><br/>
     </p>
     
     <br/>

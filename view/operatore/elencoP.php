@@ -1,14 +1,17 @@
 <div class="elencoP">
     <h3>Elenco Pratiche - Ricerca</h3>
     <table class="elencoP">
-        <th><label for="numeroP">Numero Pratica</label></th>
-        <th><label for="statoPratica">Stato pratica</label></th>
-        <th><label for="tipoPratica">Tipo pratica</label></th>
-        <th><label for="incaricato">Incaricato</label></th>
-        <th><label for="flagAllaFirma">Alla firma</label></th>
-        <th><label for="flagFirmata">Firmata</label></th>
-        <th><label for="flagSoprintendenza">MIBAC</label></th>
-        <th><label for="flagInAttesa">In attesa</label></th>
+        <tr>
+            <th><label for="numeroP">Numero Pratica</label></th>
+            <th><label for="statoPratica">Stato pratica</label></th>
+            <th><label for="tipoPratica">Tipo pratica</label></th>
+            <th><label for="incaricato">Incaricato</label></th>
+            <th><label for="flagAllaFirma">Alla firma</label></th>
+            <th><label for="flagFirmata">Firmata</label></th>
+            <th><label for="flagSoprintendenza">MIBAC</label></th>
+            <th><label for="flagInAttesa">In attesa</label></th>
+        </tr>
+
         <tr>
             <td>
                 <input type="text" id="numeroP" name="numeroP" />

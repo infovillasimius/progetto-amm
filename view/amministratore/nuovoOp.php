@@ -3,7 +3,7 @@ include_once './model/OperatoreFactory.php';
 ?>
 <div class="nuovoOp">
     <h3>Inserimento / modifica Operatore</h3>
-    <form method="post" action="index.php?page=admin&cmd=salvaOp">
+    <form method="post" action="index.php?page=admin&amp;cmd=salvaOp">
         <label for="nomeOp">Nome</label>
         <input type="text" id="nomeOp" name="nomeOp" value="<?= $nuovoOp->getNome() ?>"/>
         <br/>

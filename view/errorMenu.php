@@ -4,10 +4,10 @@
     <?php
     if (isset($_SESSION["op"])) {
 
-        echo '<a href="index.php?page=logout">Logout</a>';
+        echo '<a href="index.php?amp;page=logout">Logout</a>';
     } else {
 
-        echo '<a href="index.php?page=login">Login</a>';
+        echo '<a href="index.php?amp;page=login">Login</a>';
     }
     ?>   
 </div>
