@@ -143,7 +143,7 @@ class PraticaFactory {
      * @param string $ordinamento
      * @return \Pratica
      */
-    public static function elencoP($ricerca, $offset, $numero, $ordinamento) {
+    public static function elencoP($ricerca, $offset, $numero) {
         $mysqli = ConnectionFactory::connetti();
         if (!isset($mysqli)) {
             return null;

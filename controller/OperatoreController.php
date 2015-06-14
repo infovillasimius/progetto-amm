@@ -327,7 +327,7 @@ class OperatoreController {
         }
         
         
-        $pratiche=  PraticaFactory::elencoP($ricerca, $offset, $numero, $ordinamento);
+        $pratiche=  PraticaFactory::elencoP($ricerca, $offset, $numero);
         $x=  count($pratiche);
         $data=array();
         for($i=0;i<$x;$i++){
