@@ -330,7 +330,7 @@ class OperatoreController {
         $pratiche=  PraticaFactory::elencoP($ricerca, $offset, $numero);
         $x=  count($pratiche);
         $data=array();
-        for($i=0;i<$x;$i++){
+        for($i=0;$i<$x;$i++){
             $data[$i] = "<tr class=". ($i%2==0?"a":"b")."\"><td><a href=\"index.php?page=operatore&cmd=aggiornaP&numeroP="
                     .$pratiche[$i]->getNumeroPratica()."\">".$pratiche[$i]->getNumeroPratica()."</a></td>"
                     . "<td>".$pratiche[$i]->getDataCaricamento(true)."</td>"
