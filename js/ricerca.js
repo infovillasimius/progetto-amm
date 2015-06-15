@@ -9,7 +9,7 @@ $(document).ready(function (event) {
     flagSoprintendenza = -1;
     flagInAttesa = -1;
     offset = 0;
-    numero = 13;
+    numero = 15;
     numeroPratiche = 0;
     numRow = 0;
 
@@ -22,7 +22,7 @@ $(document).ready(function (event) {
         $('table.result tr.b').each(function () {
             $(this).remove();
         });
-
+        offset=0;
         numeroPratica = $("#numeroP:text").val();
         statoPratica = $('select#statoPratica option:selected').attr('value');
         tipoPratica = $('select#tipoPratica option:selected').attr('value');
@@ -138,6 +138,7 @@ function interroga() {
             $("table.result tbody:last").append(data.testo);
             numeroPratiche = data.numeroPratiche;
             numRow = data.numRow;
+            $("#pagine").text("Pratiche visualizzate: "+numRow+" di "+numeroPratiche+" totali");
 
         },
         error: function (data, status, errorThrown) {

@@ -12,7 +12,6 @@
             <th><label for="flagSoprintendenza">MIBAC</label></th>
             <th><label for="flagInAttesa">In attesa</label></th>
         </tr>
-
         <tr>
             <td>
                 <input type="text" id="numeroP" name="numeroP" />
@@ -80,18 +79,20 @@
             
         </tr>
     </table>
-    <br/>
+    
     <table class="result" >
         <tr class="h">
             <th>Numero</th><th>Data Pratica</th><th>Richiedente</th><th>Tipo pratica</th><th>Stato pratica</th><th>Incaricato</th>
         </tr>  
     </table>
-    <br/>
+    <p id="buttons">
     <button type="reset" id="reset">Reset</button>
     <button type="submit" id="change">Modo 1</button>
     <button type="submit" id="change2">Modo 2</button>
     <button type="submit" id="indietro">Indietro</button>
     <button type="submit" id="avanti">Avanti</button>
+    </p>
+    <p id="pagine"></p>
     </form>
 </div>
 

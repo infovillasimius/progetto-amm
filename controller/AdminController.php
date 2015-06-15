@@ -39,8 +39,7 @@ class AdminController {
     }
 
     public function mostraNuovoOp($pagina) {
-
-
+        
         $pagina->setHeaderFile("./view/header.php");
         $pagina->setLeftBarFile("./view/amministratore/menuAmministratore.php");
         $pagina->setContentFile("./view/amministratore/nuovoOp.php");
@@ -99,6 +98,8 @@ class AdminController {
                     $pagina->setMsg('<div class="erroreInput"><p>Errore, Operatore già presente</p></div>');
                 }
             } else {
+                $nuovoOp->setId($id);
+                $nuovoOp->setIdAn($idAn);
                 $updateOp = OperatoreFactory::updateOp($nuovoOp);
 
                 if ($updateOp === 0) {
@@ -107,7 +108,6 @@ class AdminController {
                 } elseif ($updateOp === 1062) {
                     $pagina->setMsg('<div class="erroreInput"><p>Errore, Operatore già presente</p></div>');
                 } else {
-                    echo $updateOp;
                     $pagina->setMsg('<div class="erroreInput"><p>Errore, non è possibile aggiornare</p></div>');
                 }
             }

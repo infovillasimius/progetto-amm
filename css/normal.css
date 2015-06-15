@@ -79,7 +79,7 @@ button:hover{
 }
 
 div.footer{
-    width: 980px;
+    width: 995px;
     height: 70px;
     text-align: center;
     font-family: "calibri", sans-serif;
@@ -318,7 +318,8 @@ td.center{
     left: 500px;
 }
 div.elencoP{
-    padding-left: 10px;
+    position: relative;
+    left: 10px;
 }
 
 div.elencoP label{   
@@ -377,4 +378,19 @@ table.result th{
     font-family: "calibri", sans-serif;
     font-size: 12px;
     
+}
+
+#buttons{
+    position: absolute;
+    top: 380px;
+    font-family: "calibri", sans-serif;
+    font-size: 12px;
+}
+
+#pagine{
+    position: absolute;
+    top: 380px;
+    right: 0px;
+    font-family: "calibri", sans-serif;
+    font-size: 12px;
 }
