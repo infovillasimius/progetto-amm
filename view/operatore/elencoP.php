@@ -88,8 +88,8 @@
     <button type="reset" id="reset">Reset</button>
     <button type="submit" id="change">Modo 1</button>
     <button type="submit" id="change2">Modo 2</button>
-    <button type="submit" id="Avanti">Avanti</button>
-    <button type="submit" id="Indietro">Indietro</button>
+    <button type="submit" id="avanti">Avanti</button>
+    <button type="submit" id="indietro">Indietro</button>
     </form>
 </div>
 
