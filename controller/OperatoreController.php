@@ -128,13 +128,13 @@ class OperatoreController {
                 $pagina->setMsg("Errore, inserisci il numero di una pratica esistente <br/>oppure utilizza la voce di menu [Elenco].");
             } elseif (!isset($idUpdate)) {
                 $pagina->setMsg("Errore, pratica N. " . $numeroP . " non presente! <br/>Inserisci il numero di una pratica esistente <br/>oppure utilizza la voce di menu [Elenco].");
-            } elseif ($ruolo<2 ) {
+            } elseif ($ruolo < 2) {
                 $pratica = PraticaFactory::getPraticaById($idUpdate);
-                if($pratica->getIncaricato()!=$operatore->getId()){
+                if ($pratica->getIncaricato() != $operatore->getId()) {
                     unset($pratica);
                     unset($idUpdate);
                 }
-        }
+            }
         }
 
         if (!isset($idUpdate)) {
@@ -290,7 +290,6 @@ class OperatoreController {
         $pagina->setJsFile("./js/ricerca.js");
         $operatore = $_SESSION["op"];
         $ruolo = $operatore->getFunzione();
-        $pratica = new Pratica();
         $pagina->setHeaderFile("./view/header.php");
         $pagina->setTitle("Elenco pratiche");
         OperatoreController::setruolo($pagina);
@@ -305,52 +304,50 @@ class OperatoreController {
      * Restituisce un testo html , contenente le pratiche cercate, che si integra nella tabella di ricerca attrverso js
      */
     public function cercaP() {
-        $operatore=$_SESSION["op"];
-        $ruolo=$operatore->getFunzione();
-        
-        $ricerca=array();
-        
+        $operatore = $_SESSION["op"];
+        $ruolo = $operatore->getFunzione();
+
+        $ricerca = array();
+
         $ricerca["numeroPratica"] = isset($_REQUEST["numeroPratica"]) ? $_REQUEST["numeroPratica"] : null;
         $ricerca["statoPratica"] = isset($_REQUEST["statoPratica"]) ? $_REQUEST["statoPratica"] : null;
         $ricerca["tipoPratica"] = isset($_REQUEST["tipoPratica"]) ? $_REQUEST["tipoPratica"] : null;
-        $ricerca["incaricato"] = isset($_REQUEST["tipoPratica"]) ? $_REQUEST["tipoPratica"] : null;
+        $ricerca["incaricato"] = isset($_REQUEST["incaricato"]) ? $_REQUEST["incaricato"] : null;
         $ricerca["flagAllaFirma"] = isset($_REQUEST["flagAllaFirma"]) ? $_REQUEST["flagAllaFirma"] : null;
         $ricerca["flagFirmata"] = isset($_REQUEST["flagFirmata"]) ? $_REQUEST["flagFirmata"] : null;
         $ricerca["flagInAttesa"] = isset($_REQUEST["flagInAttesa"]) ? $_REQUEST["flagInAttesa"] : null;
         $ricerca["flagSoprintendenza"] = isset($_REQUEST["flagSoprintendenza"]) ? $_REQUEST["flagSoprintendenza"] : null;
-        $offset= isset($_REQUEST["offset"]) ? $_REQUEST["offset"] : 0;
+        $offset = isset($_REQUEST["offset"]) ? $_REQUEST["offset"] : 0;
         $numero = isset($_REQUEST["numero"]) ? $_REQUEST["numero"] : 15;
-        
-        
-        if($ruolo<2){
-            $ricerca["incaricato"]=$operatore->getId();
+
+
+        if ($ruolo < 2) {
+            $ricerca["incaricato"] = $operatore->getId();
         }
-        
-        
-        $pratiche=  PraticaFactory::elencoP($ricerca, $offset, $numero);
-        $x=  count($pratiche);
-        $data=array();
-        for($i=0;$i<$x;$i++){
-            $data[$i] = "<tr class=". ($i%2==0?"a":"b")."\"><td><a href=\"index.php?page=operatore&cmd=aggiornaP&numeroP="
-                    .$pratiche[$i]->getNumeroPratica()."\">".$pratiche[$i]->getNumeroPratica()."</a></td>"
-                    . "<td>".$pratiche[$i]->getDataCaricamento(true)."</td>"
-                    . "<td>".$pratiche[$i]->getRichiedente()."</td>"
-                    . "<td>".  PraticaFactory::tipoPratica($pratiche[$i]->getTipoPratica()) ."</td>"
-                    . "<td>".  PraticaFactory::statoPratica($pratiche[$i]->getStatoPratica()) ."</td>"
-                    . "<td>". OperatoreFactory::getOperatore($pratiche[$i]->getIncaricato())->getNominativo() ."</td>"
+
+
+        $pratiche = PraticaFactory::elencoP($ricerca, $offset, $numero);
+        $x = count($pratiche);
+        $data = "";
+        for ($i = 0; $i < $x; $i++) {
+            $data.= "<tr class=\"" . ($i % 2 == 1 ? "a" : "b") . "\"><td><a href=\"index.php?page=operatore&cmd=aggiornaP&numeroP="
+                    . $pratiche[$i]->getNumeroPratica() . "\">" . $pratiche[$i]->getNumeroPratica() . "</a></td>"
+                    . "<td>" . $pratiche[$i]->getDataCaricamento(true) . "</td>"
+                    . "<td>" . $pratiche[$i]->getRichiedente() . "</td>"
+                    . "<td>" . PraticaFactory::tipoPratica($pratiche[$i]->getTipoPratica()) . "</td>"
+                    . "<td>" . PraticaFactory::statoPratica($pratiche[$i]->getStatoPratica()) . "</td>"
+                    . "<td>" . OperatoreFactory::getOperatore($pratiche[$i]->getIncaricato())->getNominativo() . "</td>"
                     . "</tr>";
         }
-        var_dump($data);
-//        header('Cache-Control: no-cache, must-revalidate');
-//        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-//        header('Content-type: application/json');
-//        $json = array();
-//        $json["testo"] = $data;
-//        echo json_encode($json);
+
+        header('Cache-Control: no-cache, must-revalidate');
+        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+        header('Content-type: application/json');
+        $json = array();
+        $json["testo"] = $data;
+        echo json_encode($json);
         
         
     }
-        
+
 }
-
-

@@ -191,7 +191,7 @@ class PraticaFactory {
             $param[4] = ">?";
             $flagAllaFirma = -1;
         } else {
-            $param[4] = "=? ";
+            $param[4] = "=(?) ";
         }
         if ($flagFirmata == null || $flagFirmata < 0 || $flagFirmata > 1) {
             $param[5] = ">?";
