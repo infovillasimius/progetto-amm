@@ -22,7 +22,7 @@ class OperatoreFactory {
         $result = $mysqli->query($query);
 
         if ($mysqli->errno > 0) {
-            // errore nella esecuzione della query (es. sintassi)
+            // errore nella esecuzione della query
             error_log("Errore nella esecuzione della query
             $mysqli->errno : $mysqli->error", 0);
             $mysqli->close();
@@ -280,16 +280,16 @@ class OperatoreFactory {
         }
 
         // Start transaction
-        $mysqli->autocommit(false);
+        //$mysqli->autocommit(false);
+//        $anagrafica = AnagraficaFactory::updateAnagrafica($idAn, $nomeOp, $cognomeOp, $contattoOp, $mysqli);
+        $anagrafica = AnagraficaFactory::updateAnagrafica2($idAn, $nomeOp, $cognomeOp, $contattoOp);
 
-        $anagrafica = AnagraficaFactory::updateAnagrafica($idAn, $nomeOp, $cognomeOp, $contattoOp, $mysqli);
-
-        if ($anagrafica < 1) {         
-            $mysqli->autocommit(true);
+        if ($anagrafica !== 1) {
+//            $mysqli->autocommit(true);
             $mysqli->close();
             return false;
         }
-      
+
         $stmt = $mysqli->stmt_init();
 
         $query = "UPDATE operatore SET funzione=?, username=?,password=? where id=?";
@@ -302,14 +302,14 @@ class OperatoreFactory {
             error_log("Errore nella esecuzione della query
             $mysqli->errno : $mysqli->error", 0);
             $errore = $mysqli->errno;
-            $mysqli->rollback();
-            $mysqli->autocommit(true);
+            //$mysqli->rollback();
+            //$mysqli->autocommit(true);
             $stmt->close();
             $mysqli->close();
             return $errore;
         } else {
-            $mysqli->commit();
-            $mysqli->autocommit(true);
+            //$mysqli->commit();
+            //$mysqli->autocommit(true);
             $stmt->close();
             $mysqli->close();
             return 0;

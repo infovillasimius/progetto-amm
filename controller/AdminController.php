@@ -92,21 +92,22 @@ class AdminController {
             } else if (!$update) {
                 $setNewOp = OperatoreFactory::setNewOp($nuovoOp);
 
-                if ($setNewOp == 0) {
+                if ($setNewOp === 0) {
                     $pagina->setContentFile("./view/amministratore/okNuovoOp.php");
                     $pagina->setTitle("Inserimento nuovo operatore");
-                } elseif ($setNewOp == 1062) {
+                } elseif ($setNewOp === 1062) {
                     $pagina->setMsg('<div class="erroreInput"><p>Errore, Operatore già presente</p></div>');
                 }
             } else {
                 $updateOp = OperatoreFactory::updateOp($nuovoOp);
 
-                if ($updateOp == 0) {
+                if ($updateOp === 0) {
                     $pagina->setContentFile("./view/amministratore/okNuovoOp.php");
                     $pagina->setTitle("Modifica operatore");
-                } elseif ($updateOp == 1062) {
+                } elseif ($updateOp === 1062) {
                     $pagina->setMsg('<div class="erroreInput"><p>Errore, Operatore già presente</p></div>');
                 } else {
+                    echo $updateOp;
                     $pagina->setMsg('<div class="erroreInput"><p>Errore, non è possibile aggiornare</p></div>');
                 }
             }
@@ -116,17 +117,17 @@ class AdminController {
     }
 
     public function mostraModificaOp($pagina) {
-        $pagina->setTitle("Modifica operatore");
+        
         $pagina->setHeaderFile("./view/header.php");
         $pagina->setLeftBarFile("./view/amministratore/menuAmministratore.php");
         if (isset($_REQUEST['id'])) {
             $id = $_REQUEST['id'];
             $nuovoOp = OperatoreFactory::getOperatore($id);
-
+            $pagina->setTitle("Modifica operatore");
             $pagina->setContentFile("./view/amministratore/nuovoOp.php");
             $update = true;
         } else {
-
+            $pagina->setTitle("Lista operatori");
             $pagina->setContentFile("./view/amministratore/modificaOp.php");
             $operatori = OperatoreFactory::getListaOp();
             $rows = count($operatori);

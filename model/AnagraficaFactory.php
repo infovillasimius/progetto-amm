@@ -122,10 +122,34 @@ class AnagraficaFactory {
             return -1;
         } else {
             $stmt->close();
-            if ($flag == 1) {
+            if ($flag === 1) {
                 $mysqli->close();
             }
-            return $id;
+            return 1;
+        }
+    }
+
+    public static function updateAnagrafica2($id, $nome, $cognome, $contatto) {
+        $mysqli = ConnectionFactory::connetti();
+
+        if (!isset($mysqli)) {
+            return null;
+        }
+        $query = "UPDATE anagrafica SET nome=?, cognome=?, contatto=? where id=?";
+        $stmt = $mysqli->stmt_init();
+        $stmt->prepare($query);
+        $stmt->bind_param("sssi", $nome, $cognome, $contatto, $id);
+        $result = $stmt->execute();
+
+        if (!$result) {
+            // errore nella esecuzione della query 
+            error_log("Errore nella esecuzione della query
+            $mysqli->errno : $mysqli->error", 0);
+            return -1;
+        } else {
+            $stmt->close();
+            $mysqli->close();
+            return 1;
         }
     }
 
