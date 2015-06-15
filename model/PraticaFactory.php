@@ -166,9 +166,15 @@ class PraticaFactory {
             $param[0] = "=? ";
         }
 
-        if ($statoPratica == null || $statoPratica < 1 || $statoPratica > 15) {
+        if ($statoPratica == null || $statoPratica < -2 || $statoPratica > 15 || $statoPratica==0) {
             $param[1] = ">?";
             $statoPratica = 0;
+        } elseif ($statoPratica==-1){
+            $param[1] = "<?";
+            $statoPratica = 14;
+        } elseif ($statoPratica==-2){
+            $param[1] = ">?";
+            $statoPratica = 13;
         } else {
             $param[1] = "=? ";
         }
@@ -179,14 +185,14 @@ class PraticaFactory {
         } else {
             $param[2] = "=? ";
         }
-        
-        if ($incaricato == null || $incaricato < 1 ) {
+
+        if ($incaricato == null || $incaricato < 1) {
             $param[3] = ">?";
             $incaricato = 0;
         } else {
             $param[3] = "=? ";
         }
-        
+
         if ($flagAllaFirma == null || $flagAllaFirma < 0 || $flagAllaFirma > 1) {
             $param[4] = ">?";
             $flagAllaFirma = -1;
@@ -211,8 +217,8 @@ class PraticaFactory {
         } else {
             $param[7] = "=? ";
         }
-        
-        
+
+
 
 
         $stmt = $mysqli->stmt_init();
@@ -371,53 +377,53 @@ class PraticaFactory {
             return $id;
         }
     }
-    
+
     public static function statoPratica($statoPratica) {
         switch ($statoPratica) {
             case 1:
-                $statoPratica= "Caricata su Sardegna Suap";
+                $statoPratica = "Caricata su Sardegna Suap";
                 break;
             case 2:
-                $statoPratica= "Protocollata";
+                $statoPratica = "Protocollata";
                 break;
             case 3:
-                $statoPratica= "Assegnata a operatore";
+                $statoPratica = "Assegnata a operatore";
                 break;
             case 4:
-                $statoPratica= "In attesa di Verifica formale";
+                $statoPratica = "In attesa di Verifica formale";
                 break;
             case 5:
-                $statoPratica= "In attesa di Avvio procedimento";
+                $statoPratica = "In attesa di Avvio procedimento";
                 break;
             case 6:
-                $statoPratica= "In attesa di Rilascio ricevuta";
+                $statoPratica = "In attesa di Rilascio ricevuta";
                 break;
             case 7:
-                $statoPratica= "In attesa di Invio per verifiche ad enti terzi";
+                $statoPratica = "In attesa di Invio per verifiche ad enti terzi";
                 break;
             case 8:
-                $statoPratica= "In attesa di integrazioni rich. da enti terzi";
+                $statoPratica = "In attesa di integrazioni rich. da enti terzi";
                 break;
             case 9:
-                $statoPratica= "Conferenza servizi -> Attesa pareri";
+                $statoPratica = "Conferenza servizi -> Attesa pareri";
                 break;
             case 10:
-                $statoPratica= "Conferenza servizi -> Convocata";
+                $statoPratica = "Conferenza servizi -> Convocata";
                 break;
             case 11:
-                $statoPratica= "Conferenza servizi -> Aperta";
+                $statoPratica = "Conferenza servizi -> Aperta";
                 break;
             case 12:
-                $statoPratica= "Conferenza servizi -> Verbalizzata";
+                $statoPratica = "Conferenza servizi -> Verbalizzata";
                 break;
             case 13:
-                $statoPratica= "Conferenza servizi -> Provvedimento unico";
+                $statoPratica = "Conferenza servizi -> Provvedimento unico";
                 break;
             case 14:
-                $statoPratica= "Chiusa -> Esito Positivo";
+                $statoPratica = "Chiusa -> Esito Positivo";
                 break;
             case 15:
-                $statoPratica= "Chiusa -> Archiviata";
+                $statoPratica = "Chiusa -> Archiviata";
                 break;
 
             default:
@@ -425,17 +431,17 @@ class PraticaFactory {
         }
         return $statoPratica;
     }
-    
+
     public static function tipoPratica($tipoPratica) {
         switch ($tipoPratica) {
             case 1:
-                $tipoPratica= "Immediato avvio - 0 gg";
+                $tipoPratica = "Immediato avvio - 0 gg";
                 break;
             case 2:
-                $tipoPratica= "Immediato avvio - 20 gg";
+                $tipoPratica = "Immediato avvio - 20 gg";
                 break;
             case 3:
-                $tipoPratica= "Conferenza di Servizi";
+                $tipoPratica = "Conferenza di Servizi";
                 break;
 
             default:
@@ -443,6 +449,34 @@ class PraticaFactory {
         }
         return $tipoPratica;
     }
-    
+
+    public static function numeroTotalePratiche() {
+        $mysqli = ConnectionFactory::connetti();
+        if (!isset($mysqli)) {
+            return null;
+        }
+
+        $stmt = $mysqli->stmt_init();
+        $query = "SELECT COUNT(*) FROM pratica";
+        $stmt->prepare($query);
+
+        $result = $stmt->execute();
+        $stmt->bind_result($numeroPratiche);
+
+        if ($mysqli->errno > 0) {
+            // errore nella esecuzione della query
+            error_log("Errore nella esecuzione della query
+            $mysqli->errno : $mysqli->error", 0);
+            $errore = $mysqli->errno;
+            $stmt->close();
+            $mysqli->close();
+            return null;
+        } else {
+            $stmt->fetch();
+            $stmt->close();
+            $mysqli->close();
+            return $numeroPratiche;
+        }
+    }
 
 }

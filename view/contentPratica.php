@@ -85,11 +85,11 @@
             <label for="dataAvvioProcedimento">Data avvio procedimento</label>
             <input type="text" id="dataAvvioProcedimento" name="dataAvvioProcedimento" value="<?= $pratica->getDataAvvioProcedimento(true); ?>"/>
             <br/>
-            <label for="dataInvioRicevuta">Data invio ricevuta</label>
-            <input type="text" id="dataInvioRicevuta" name="dataInvioRicevuta" value="<?= $pratica->getDataInvioRicevuta(true); ?>"/>
-            <br/>
             <label for="dataInvioVerifiche">Data invio verifiche</label>
             <input type="text" id="dataInvioVerifiche" name="dataInvioVerifiche" value="<?= $pratica->getDataInvioVerifiche(true); ?>"/>
+            <br/>
+            <label for="dataInvioRicevuta">Data invio ricevuta</label>
+            <input type="text" id="dataInvioRicevuta" name="dataInvioRicevuta" value="<?= $pratica->getDataInvioRicevuta(true); ?>"/>
             <br/>
             <label for="dataConferenzaServizi">Data Conferenza Servizi</label>
             <input type="text" id="dataConferenzaServizi" name="dataConferenzaServizi" value="<?= $pratica->getDataConferenzaServizi(true); ?>"/>

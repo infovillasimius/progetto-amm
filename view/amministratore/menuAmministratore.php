@@ -16,7 +16,7 @@
         <a href="index.php?page=protocollo&amp;cmd=nuovaP">Nuova</a><br/>
         <a href="index.php?page=operatore&amp;cmd=elencoP">Elenco</a><br/>
         <a href="index.php?page=operatore&amp;cmd=aggiornaP">Aggiorna</a><br/>
-        <a href="index.php?page=admin&amp;cmd=firmaP">Firma</a><br/>
+        <a href="index.php?page=responsabile&amp;cmd=firmaP">Firma</a><br/>
     </p>
     <br/>
     <p><a href="index.php?page=logout">Logout</a></p>

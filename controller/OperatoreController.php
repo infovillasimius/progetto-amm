@@ -318,13 +318,21 @@ class OperatoreController {
         $ricerca["flagInAttesa"] = isset($_REQUEST["flagInAttesa"]) ? $_REQUEST["flagInAttesa"] : null;
         $ricerca["flagSoprintendenza"] = isset($_REQUEST["flagSoprintendenza"]) ? $_REQUEST["flagSoprintendenza"] : null;
         $offset = isset($_REQUEST["offset"]) ? $_REQUEST["offset"] : 0;
-        $numero = isset($_REQUEST["numero"]) ? $_REQUEST["numero"] : 15;
+        $numero = isset($_REQUEST["numero"]) ? $_REQUEST["numero"] : 13;
 
 
         if ($ruolo < 2) {
             $ricerca["incaricato"] = $operatore->getId();
         }
 
+        $numeroPratiche = PraticaFactory::numeroTotalePratiche();
+        
+        if($offset>=$numeroPratiche){
+            $offset=0;
+        }
+        if ($offset<1){
+            $offset=0;
+        }
 
         $pratiche = PraticaFactory::elencoP($ricerca, $offset, $numero);
         $x = count($pratiche);
@@ -345,9 +353,9 @@ class OperatoreController {
         header('Content-type: application/json');
         $json = array();
         $json["testo"] = $data;
+        $json["numeroPratiche"]=$numeroPratiche;
+        $json["numRow"]=$x;
         echo json_encode($json);
-        
-        
     }
 
 }

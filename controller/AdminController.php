@@ -85,12 +85,6 @@ class AdminController {
                 $errori++;
             }
 
-            if (!($nuovoOp->setid($id))) {
-                //$messaggio .= '<li>ciao</li>';
-            }
-            if (!($nuovoOp->setidAn($idAn))) {
-               // $messaggio .= '<li>ciao2</li>';
-            }
             $messaggio .='</ul></div>';
             
             if ($errori > 0) {

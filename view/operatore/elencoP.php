@@ -20,6 +20,8 @@
             <td>
                 <select id="statoPratica" name="statoPratica">
                     <option value="0">Tutti</option>
+                    <option value="-1">Tutti - attivi</option>
+                    <option value="-2">Tutti - chiusi</option>
                     <option value="1">Caricata su Sardegna Suap</option>
                     <option value="2">Protocollata</option>
                     <option value="3">Assegnata a operatore</option>
@@ -88,8 +90,8 @@
     <button type="reset" id="reset">Reset</button>
     <button type="submit" id="change">Modo 1</button>
     <button type="submit" id="change2">Modo 2</button>
-    <button type="submit" id="avanti">Avanti</button>
     <button type="submit" id="indietro">Indietro</button>
+    <button type="submit" id="avanti">Avanti</button>
     </form>
 </div>
 
