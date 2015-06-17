@@ -44,7 +44,7 @@ $(document).ready(function () {
         var contattoAn = $("#contattoAn:text").val();
         var tipo = $('select#tipo option:selected').attr('value');
         var id = $("#idAn").val();
-        alert(id);
+        
 
         if ((nomeAn !== "" && cognomeAn !== "" && tipo == 0) || (cognomeAn !== "" && tipo == 1)) {
             $.ajax({
