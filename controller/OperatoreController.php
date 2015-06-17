@@ -46,6 +46,14 @@ class OperatoreController {
                     self::cercaAn();
                     break;
 
+                case "getAn":
+                    self::getAn();
+                    break;
+
+                case "ricercaAn":
+                    self::ricercaAn();
+                    break;
+
                 case "cercaP":
                     self::cercaP();
                     break;
@@ -255,18 +263,26 @@ class OperatoreController {
      * archivio automaticamente
      */
     public function cercaAn() {
-
+        $id = isset($_REQUEST["id"]) ? $_REQUEST["id"] : null;
         $nome = isset($_REQUEST["nome"]) ? $_REQUEST["nome"] : null;
         $cognome = isset($_REQUEST["cognome"]) ? $_REQUEST["cognome"] : null;
         $contatto = isset($_REQUEST["contatto"]) ? $_REQUEST["contatto"] : "";
+        $tipo = isset($_REQUEST["tipo"]) ? $_REQUEST["tipo"] : false;
 
-        $idAnagrafica = AnagraficaFactory::getAnagraficaByName($nome, $cognome, null);
-        if ($idAnagrafica < 1) {
-            $idAnagrafica = AnagraficaFactory::setAnagrafica($nome, $cognome, $contatto, null);
-        }
-        if ($idAnagrafica < 1) {
-            echo 'Errore';
-            exit();
+        $idAn = filter_var($id, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
+        $tipo = filter_var($tipo, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+        if (!isset($idAn)) {
+            $idAnagrafica = AnagraficaFactory::getAnagraficaByName($nome, $cognome, null);
+            if ($idAnagrafica < 1) {
+                $idAnagrafica = AnagraficaFactory::setAnagrafica($tipo, $nome, $cognome, $contatto, null);
+            }
+            if ($idAnagrafica < 1) {
+                echo 'Errore';
+                exit();
+            }
+        } else {
+            AnagraficaFactory::updateAnagrafica($idAn, $tipo, $nome, $cognome, $contatto, null);
+            $idAnagrafica=$idAn;
         }
 
         $anag = AnagraficaFactory::getAnagrafica($idAnagrafica);
@@ -279,6 +295,7 @@ class OperatoreController {
         $json["nomeAn"] = $anag->getNome();
         $json["cognomeAn"] = $anag->getCognome();
         $json["contattoAn"] = $anag->getContatto();
+        $json["tipo"] = $anag->getTipol();
         echo json_encode($json);
     }
 
@@ -308,7 +325,6 @@ class OperatoreController {
         $ruolo = $operatore->getFunzione();
 
         $ricerca = array();
-
         $ricerca["numeroPratica"] = isset($_REQUEST["numeroPratica"]) ? $_REQUEST["numeroPratica"] : null;
         $ricerca["statoPratica"] = isset($_REQUEST["statoPratica"]) ? $_REQUEST["statoPratica"] : null;
         $ricerca["tipoPratica"] = isset($_REQUEST["tipoPratica"]) ? $_REQUEST["tipoPratica"] : null;
@@ -318,7 +334,7 @@ class OperatoreController {
         $ricerca["flagInAttesa"] = isset($_REQUEST["flagInAttesa"]) ? $_REQUEST["flagInAttesa"] : null;
         $ricerca["flagSoprintendenza"] = isset($_REQUEST["flagSoprintendenza"]) ? $_REQUEST["flagSoprintendenza"] : null;
         $offset = isset($_REQUEST["offset"]) ? $_REQUEST["offset"] : 0;
-        $numero = isset($_REQUEST["numero"]) ? $_REQUEST["numero"] : 13;
+        $numero = isset($_REQUEST["numero"]) ? $_REQUEST["numero"] : 15;
 
 
         if ($ruolo < 2) {
@@ -326,12 +342,12 @@ class OperatoreController {
         }
 
         $numeroPratiche = PraticaFactory::numeroTotalePratiche();
-        
-        if($offset>=$numeroPratiche){
-            $offset=0;
+
+        if ($offset >= $numeroPratiche) {
+            $offset = 0;
         }
-        if ($offset<1){
-            $offset=0;
+        if ($offset < 1) {
+            $offset = 0;
         }
 
         $pratiche = PraticaFactory::elencoP($ricerca, $offset, $numero);
@@ -353,8 +369,62 @@ class OperatoreController {
         header('Content-type: application/json');
         $json = array();
         $json["testo"] = $data;
-        $json["numeroPratiche"]=$numeroPratiche;
-        $json["numRow"]=$x;
+        $json["numeroPratiche"] = $numeroPratiche;
+        $json["numRow"] = $x;
+        echo json_encode($json);
+    }
+
+    public function ricercaAn() {
+
+        $nome = isset($_REQUEST["nome"]) ? $_REQUEST["nome"] : null;
+        $cognome = isset($_REQUEST["cognome"]) ? $_REQUEST["cognome"] : null;
+
+        $anagrafiche = AnagraficaFactory::getListaAnagraficaByName($nome, $cognome);
+
+        if (!isset($anagrafiche)) {
+            echo 'Errore';
+//            exit();
+        }
+
+
+        $x = count($anagrafiche) - 1;
+        $anagraficheTrovate = $anagrafiche[0];
+
+        $data = "";
+        for ($i = 1; $i <= $x; $i++) {
+            $data.='<option value="' . $anagrafiche[$i]->getId() . '">' . $anagrafiche[$i]->getNominativo() . '</option>';
+        }
+
+        header('Cache-Control: no-cache, must-revalidate');
+        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+        header('Content-type: application/json');
+        $json = array();
+        $json["testo"] = $data;
+        $json["trovate"] = $anagraficheTrovate;
+        $json["numRow"] = $x;
+        echo json_encode($json);
+    }
+
+    public function getAn() {
+        $id = isset($_REQUEST["id"]) ? $_REQUEST["id"] : null;
+
+        if (!isset($id)) {
+            return null;
+        }
+        $anagrafica = AnagraficaFactory::getAnagrafica($id);
+        if (!isset($anagrafica)) {
+            echo 'Errore';
+            return null;
+        }
+        header('Cache-Control: no-cache, must-revalidate');
+        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+        header('Content-type: application/json');
+        $json = array();
+        $json["id"] = $id;
+        $json["nome"] = $anagrafica->getNome();
+        $json["cognome"] = $anagrafica->getCognome();
+        $json["tipo"] = $anagrafica->getTipol();
+        $json["contatto"] = $anagrafica->getContatto();
         echo json_encode($json);
     }
 

@@ -122,9 +122,9 @@ class PraticaFactory {
             $pratica->setNumeroProtocollo($numeroProtocollo);
             $pratica->setNumeroProtocolloProvvedimento($numeroProtocolloProvvedimento);
             $pratica->setOggetto($oggetto);
-            $pratica->setProcuratore($nomeProcuratore . " " . $cognomeProcuratore);
+            $pratica->setProcuratore(AnagraficaFactory::getAnagrafica($procuratoreId)->getNominativo());
             $pratica->setProcuratoreId($procuratoreId);
-            $pratica->setRichiedente($nomeRichiedente . " " . $cognomeRichiedente);
+            $pratica->setRichiedente(AnagraficaFactory::getAnagrafica($richiedenteId)->getNominativo());
             $pratica->setRichiedenteId($richiedenteId);
             $pratica->setStatoPratica($statoPratica);
             $pratica->setTipoPratica($tipoPratica);
@@ -166,13 +166,13 @@ class PraticaFactory {
             $param[0] = "=? ";
         }
 
-        if ($statoPratica == null || $statoPratica < -2 || $statoPratica > 15 || $statoPratica==0) {
+        if ($statoPratica == null || $statoPratica < -2 || $statoPratica > 15 || $statoPratica == 0) {
             $param[1] = ">?";
             $statoPratica = 0;
-        } elseif ($statoPratica==-1){
+        } elseif ($statoPratica == -1) {
             $param[1] = "<?";
             $statoPratica = 14;
-        } elseif ($statoPratica==-2){
+        } elseif ($statoPratica == -2) {
             $param[1] = ">?";
             $statoPratica = 13;
         } else {
@@ -217,9 +217,6 @@ class PraticaFactory {
         } else {
             $param[7] = "=? ";
         }
-
-
-
 
         $stmt = $mysqli->stmt_init();
 
@@ -274,9 +271,9 @@ class PraticaFactory {
                 $pratica->setNumeroProtocollo($numeroProtocollo);
                 $pratica->setNumeroProtocolloProvvedimento($numeroProtocolloProvvedimento);
                 $pratica->setOggetto($oggetto);
-                $pratica->setProcuratore($nomeProcuratore . " " . $cognomeProcuratore);
+                $pratica->setProcuratore(AnagraficaFactory::getAnagrafica($procuratoreId)->getNominativo());
                 $pratica->setProcuratoreId($procuratoreId);
-                $pratica->setRichiedente($nomeRichiedente . " " . $cognomeRichiedente);
+                $pratica->setRichiedente(AnagraficaFactory::getAnagrafica($richiedenteId)->getNominativo());
                 $pratica->setRichiedenteId($richiedenteId);
                 $pratica->setStatoPratica($statoPratica);
                 $pratica->setTipoPratica($tipoPratica);

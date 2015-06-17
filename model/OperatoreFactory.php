@@ -18,13 +18,13 @@ class OperatoreFactory {
             return null;
         }
         $operatore = new Operatore();
-        $query = "SELECT operatore.id, anagrafica.nome, anagrafica.cognome, anagrafica.contatto, operatore.funzione, operatore.username, operatore.password, operatore.id_anagrafica FROM anagrafica join operatore on anagrafica.id=operatore.id_anagrafica where operatore.id=$id";
+        $query = "SELECT operatore.id, anagrafica.tipo, anagrafica.nome, anagrafica.cognome, anagrafica.contatto, operatore.funzione, operatore.username, operatore.password, operatore.id_anagrafica FROM anagrafica join operatore on anagrafica.id=operatore.id_anagrafica where operatore.id=$id";
         $result = $mysqli->query($query);
 
         if ($mysqli->errno > 0) {
             // errore nella esecuzione della query
             error_log("Errore nella esecuzione della query
-            $mysqli->errno : $mysqli->error", 0);
+            $mysqli->errno : $mysqli->error", 0);           
             $mysqli->close();
         } else {
             $row = $result->fetch_object();
@@ -35,7 +35,6 @@ class OperatoreFactory {
             $operatore->setPassword($row->password);
             $operatore->setId($row->id);
             $operatore->setIdAn($row->id_anagrafica);
-
             $mysqli->close();
 
             return $operatore;
@@ -165,6 +164,7 @@ class OperatoreFactory {
         $funzioneOp = $nuovoOp->getFunzione();
         $usernameOp = $nuovoOp->getUsername();
         $passwordOp = $nuovoOp->getPassword();
+        $tipo=0;
 
         $mysqli = ConnectionFactory::connetti();
 
@@ -178,7 +178,7 @@ class OperatoreFactory {
         $mysqli->autocommit(false);
 
         if ($anagrafica < 1) {
-            $anagrafica = AnagraficaFactory::setAnagrafica($nomeOp, $cognomeOp, $contattoOp, $mysqli);
+            $anagrafica = AnagraficaFactory::setAnagrafica($tipo, $nomeOp, $cognomeOp, $contattoOp, $mysqli);
         }
 
         if ($anagrafica < 1) {
@@ -273,6 +273,7 @@ class OperatoreFactory {
         $funzioneOp = $nuovoOp->getFunzione();
         $usernameOp = $nuovoOp->getUsername();
         $passwordOp = $nuovoOp->getPassword();
+        $tipo=0;
 
         $mysqli = ConnectionFactory::connetti();
         if (!isset($mysqli)) {
@@ -281,7 +282,7 @@ class OperatoreFactory {
 
         // Start transaction
         $mysqli->autocommit(false);
-        $anagrafica = AnagraficaFactory::updateAnagrafica($idAn, $nomeOp, $cognomeOp, $contattoOp, $mysqli);
+        $anagrafica = AnagraficaFactory::updateAnagrafica($idAn, $tipo, $nomeOp, $cognomeOp, $contattoOp, $mysqli);
        
         
         if ($anagrafica !== 1) {

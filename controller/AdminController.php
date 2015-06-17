@@ -57,12 +57,14 @@ class AdminController {
             $update = isset($_REQUEST["update"]) && $_REQUEST["update"] == true ? true : false;
             $id = isset($_REQUEST["id"]) ? $_REQUEST["id"] : null;
             $idAn = isset($_REQUEST["idAn"]) ? $_REQUEST["idAn"] : null;
+            $tipo=false;
 
             $messaggio = '<div class="erroreInput"><p>Errore, per proseguire occorre: </p><ul>';
             $errori = 0;
 
             $setFunzione = $nuovoOp->setFunzione($funzioneOp);
-
+            $setTipo=$nuovoOp->setTipol($tipo);
+            
             if (!($nuovoOp->setNome($nomeOp))) {
                 $messaggio .= '<li>Specificare il nome</li>';
                 $errori++;
@@ -143,6 +145,4 @@ class AdminController {
         include "./view/masterPage.php";
     }
     
-      
-
 }

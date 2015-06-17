@@ -30,15 +30,21 @@ select{
     font-size: 12px;
 }
 
+select#statoPratica, select#tipoPratica{
+    width: 200px;
+}
+
 div.input-form {
     position: relative;
 }
 
 div.right{
     float: right;
+    width: 49%;
 }
 div.left{
     float: left;
+    width: 49%;
 }
 
 
@@ -64,9 +70,6 @@ p.msg{
     font-size: 12px;
     font-weight: bold;
     border: 1px;
-/*    padding: 5px;*/
-/*    border-color: #95100C;
-    border-style: solid;*/
     background-color: #ccffcc;
 }
 
@@ -174,8 +177,16 @@ div.header h2, div.header h4{
 }
 
 div.none{
+    position: absolute;
+    top: 20px;
+    right: 0px;
     display: none;
+    float: right;
+    margin-right: auto;
+    margin-left: auto;
+    width: 50%  
 }
+
 
 div.headerLeft{
     background-image: url('../images/suap.png');
@@ -382,15 +393,18 @@ table.result th{
 
 #buttons{
     position: absolute;
-    top: 380px;
+    top: 385px;
     font-family: "calibri", sans-serif;
     font-size: 12px;
 }
 
 #pagine{
     position: absolute;
-    top: 380px;
+    top: 390px;
     right: 0px;
     font-family: "calibri", sans-serif;
     font-size: 12px;
+}
+#lista{
+    width: 210px;
 }

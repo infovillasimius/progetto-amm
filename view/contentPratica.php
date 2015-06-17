@@ -1,6 +1,6 @@
 <div class="input-form">
     <h3>Dati della pratica</h3>
-    <form method="post" action="index.php?page=operatore&amp;cmd=salvaP">
+    <form id="input" method="post" action="index.php?page=operatore&amp;cmd=salvaP">
 
         <div class="left">
             <label for="statoPratica">Stato pratica</label>
@@ -47,11 +47,11 @@
             <br/>
             <label for="richiedente">Richiedente</label>
             <input type="hidden" id="richiedenteId" name="richiedenteId" value="<?= $pratica->getRichiedenteId(); ?>" />
-            <input type="text" id="richiedente" name="richiedente" value="<?= $pratica->getRichiedente(); ?>" <?= $ruolo<2? "readonly":"" ?> />
+            <input type="text" id="richiedente" name="richiedente" value="<?= $pratica->getRichiedente(); ?>" <?= $ruolo < 2 ? "readonly" : "" ?> />
             <br/>
             <label for="procuratore">Procuratore</label>
             <input type="hidden" id="procuratoreId" name="procuratoreId" value="<?= $pratica->getProcuratoreId(); ?>"/>
-            <input type="text" id="procuratore" name="procuratore" value="<?= $pratica->getProcuratore(); ?>" <?= $ruolo<2? "readonly":"" ?> />
+            <input type="text" id="procuratore" name="procuratore" value="<?= $pratica->getProcuratore(); ?>" <?= $ruolo < 2 ? "readonly" : "" ?> />
             <br/>
             <label for="contatto">Contatto</label>
             <input type="text" id="contatto" name="contatto" value="<?= $pratica->getContatto(); ?>"/>
@@ -104,7 +104,7 @@
             <input type="checkbox" id="flagAllaFirma" name="flagAllaFirma" <?= $pratica->getFlagAllaFirma() ? 'checked="checked"' : "" ?> />
             <br/>
             <label for="flagFirmata">Firmata</label>
-            <input type="checkbox" id="flagFirmata" name="flagFirmata" <?= $pratica->getFlagFirmata() ? 'checked="checked"' : "" ?> <?= $ruolo<2? "disabled":"" ?> />
+            <input type="checkbox" id="flagFirmata" name="flagFirmata" <?= $pratica->getFlagFirmata() ? 'checked="checked"' : "" ?> <?= $ruolo < 2 ? "disabled" : "" ?> />
             <br/>
             <label for="flagSoprintendenza">Coinvolge Soprintendenza</label>
             <input type="checkbox" id="flagSoprintendenza" name="flagSoprintendenza" <?= $pratica->getFlagSoprintendenza() ? 'checked="checked"' : "" ?> />
@@ -117,31 +117,48 @@
             <br/>
         </div>
         <input type="hidden" id="idPratica" name="idPratica" value="<?= $pratica->getId() ?>" />
-        <input type="hidden" id="id" name="id" value="<?= $idUpdate ?>" />
+        <input type="hidden" id="id" name="id" value="<?= isset($idUpdate) ? $idUpdate : null ?>" />
         <button type="submit" id="salva" value="pratica">Salva</button>
         <br/>
     </form>
 
     <div class="none">
-        <h3>Scelta/Inserimento anagrafica</h3>
+        <h3>Ricerca anagrafica</h3>
+        <label for="ricerca">Ricerca (Cognome/Rag.Sociale)</label>
+        <input type="text" id="ricerca" name="ricerca" />
+        <br/><br/>
+        <label for="lista">Seleziona</label>
+        <select id="lista" name="lista" size="5">   
+        </select>
+        <h3>Inserimento anagrafica</h3>
         <form id="anagrafica" method="post" action="index.php">
-            <label for="nomeAn">Nome</label>
-            <input type="text" id="nomeAn" name="nomeAn" value=""/>
+            <label for="tipo">Tipo anagrafica</label>
+            <select id="tipo" name="tipo">
+                <option value="0">Persona Fisica</option>
+                <option value="1">Persona Giuridica</option>               
+            </select>
             <br/>
-            <label for="cognomeAn">Cognome</label>
+            <label class="nomeAn" for="nomeAn">Nome</label>
+            <input class="nomeAn" type="text" id="nomeAn" name="nomeAn" value=""/>
+            <br/>
+            <label id="lcognome" for="cognomeAn">Cognome</label>
             <input type="text" id="cognomeAn" name="cognomeAn" value=""/>
             <br/>
             <label for="contattoAn">Contatto</label>
             <input type="text" id="contattoAn" name="contattoAn" value=""/>
-            <br/><br/>
+            <br/>
             <input type="hidden" id="idAn" name="idAn" value=""/>
             <p class="buttons">
-                <button type="submit" id="cerca" >Cerca</button>
                 <button type="submit" id="salvaAn" >Salva</button>
+                <button type="submit" id="assegna" >Assegna</button>
                 <button type="submit" id="chiudi" >Chiudi</button>   
             </p>
             <p id="result"></p> 
         </form>
+        
+
+
+
 
     </div>
     <p id="msg" class="msg"><?php echo $pagina->getMsg(); ?></p>
