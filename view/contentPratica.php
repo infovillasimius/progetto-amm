@@ -149,8 +149,8 @@
             <br/>
             <input type="hidden" id="idAn" name="idAn" value=""/>
             <p class="buttons">
-                <button type="submit" id="salvaAn" >Salva</button>
                 <button type="submit" id="assegna" >Assegna</button>
+                <button type="submit" id="salvaAn" >Salva</button>
                 <button type="submit" id="chiudi" >Chiudi</button>   
             </p>
             <p id="result"></p> 

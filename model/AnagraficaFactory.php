@@ -45,7 +45,7 @@ class AnagraficaFactory {
             $mysqli = ConnectionFactory::connetti();
             $flag = 1;
             if (!isset($mysqli)) {
-                return null;
+                return null;  
             }
         } else {
             $flag = 0;

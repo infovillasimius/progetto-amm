@@ -3,7 +3,7 @@
     <form>
     <table class="elencoP">
         <tr>
-            <th><label for="numeroP">Numero Pratica</label></th>
+            <th><label for="numeroP">N. Pratica</label></th>
             <th><label for="statoPratica">Stato pratica</label></th>
             <th><label for="tipoPratica">Tipo pratica</label></th>
             <th><label for="incaricato">Incaricato</label></th>

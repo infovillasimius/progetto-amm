@@ -44,43 +44,48 @@ $(document).ready(function () {
         var contattoAn = $("#contattoAn:text").val();
         var tipo = $('select#tipo option:selected').attr('value');
         var id = $("#idAn").val();
-        
-
-        if ((nomeAn !== "" && cognomeAn !== "" && tipo == 0) || (cognomeAn !== "" && tipo == 1)) {
-            $.ajax({
-                url: "index.php",
-                data: {
-                    page: "operatore",
-                    cmd: "cercaAn",
-                    tipo: tipo,
-                    nome: nomeAn,
-                    cognome: cognomeAn,
-                    contatto: contattoAn,
-                    id: id
-                },
-                type: "POST",
-                dataType: 'json',
-                success: function (data, state) {
-                    $("#result").text("Trovato: " + data.nomeAn + " " + data.cognomeAn + "\n " + data.contattoAn)
-                    $("#result").show("slow");
-                    $("#idAn").val(data.idAn);
-                    contatto = data.contattoAn;
-                    idAn = data.idAn;
-
-                },
-                error: function (data, status, errorThrown) {
-                    alert("Errore di ricezione dati dal server");
-                }
-            });
-        } else {
-            if (tipo == 0) {
-                alert("Compilare i campi [nome] e [cognome]");
-            } else {
-                alert("Compilare il campo [ragione sociale]");
-            }
-
+        var scelta = true;
+        if (id != "") {
+            scelta = confirm("Vuoi davvero modificare l'anagrafica?");
         }
-        $("#lista").html("");
+        if (scelta === true) {
+
+            if ((nomeAn !== "" && cognomeAn !== "" && tipo == 0) || (cognomeAn !== "" && tipo == 1)) {
+                $.ajax({
+                    url: "index.php",
+                    data: {
+                        page: "operatore",
+                        cmd: "cercaAn",
+                        tipo: tipo,
+                        nome: nomeAn,
+                        cognome: cognomeAn,
+                        contatto: contattoAn,
+                        id: id
+                    },
+                    type: "POST",
+                    dataType: 'json',
+                    success: function (data, state) {
+                        $("#result").text("Trovato: " + data.nomeAn + " " + data.cognomeAn + "\n " + data.contattoAn)
+                        $("#result").show("slow");
+                        $("#idAn").val(data.idAn);
+                        contatto = data.contattoAn;
+                        idAn = data.idAn;
+
+                    },
+                    error: function (data, status, errorThrown) {
+                        alert("Errore di ricezione dati dal server");
+                    }
+                });
+            } else {
+                if (tipo == 0) {
+                    alert("Compilare i campi [nome] e [cognome]");
+                } else {
+                    alert("Compilare il campo [ragione sociale]");
+                }
+
+            }
+            $("#lista").html("");
+        }
     });
 
     function changeRich() {
@@ -97,7 +102,12 @@ $(document).ready(function () {
 
     $("#chiudi").click(function (event) {
         event.preventDefault();
-
+        $("#nomeAn").val("");
+        $("#cognomeAn").val("");
+        $("#contattoAn").val("");
+        $("#ricerca").val("");
+        $("#idAn").val("");
+        $("#result").hide("slow");
         $("div.none").hide("slow");
         $("div.right").show("slow");
 
@@ -163,7 +173,6 @@ $(document).ready(function () {
 
 
     $("#ricerca").keyup(function (event) {
-//        var nomeAn = $("#nomeAn:text").val();
         var cognomeAn = $("#ricerca:text").val();
 
         if (cognomeAn !== "") {
@@ -205,10 +214,19 @@ $(document).ready(function () {
                 $("#cognomeAn:text").val(data.cognome);
                 $("#contattoAn:text").val(data.contatto);
                 $('select#tipo option').each(function () {
-                    if ($(this).val() == data.tipo) {
-                        $(this).attr("selected", "selected")
-                    }
+                    (this).remove();
                 });
+                if (data.tipo == 0) {
+                    $('select#tipo').html('<option value="0" selected="selected">Persona Fisica</option><option value="1">Persona Giuridica</option>')
+                    $(".nomeAn").show("slow");
+                    $("#lcognome").text("Cognome");
+                } else {
+                    $('select#tipo').html('<option value="0">Persona Fisica</option><option value="1" selected="selected">Persona Giuridica</option>')
+                    $(".nomeAn").hide("slow");
+                    $(".nomeAn").val("");
+                    $("#lcognome").text("Ragione sociale");
+                }
+
             },
             error: function (data, status, errorThrown) {
                 alert("Errore di ricezione dati dal server");
