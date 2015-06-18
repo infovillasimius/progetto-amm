@@ -188,7 +188,6 @@ class OperatoreController {
             $ubicazione = isset($_REQUEST["ubicazione"]) ? ($_REQUEST["ubicazione"]) : null;
 
             $err = 0;
-
             $pratica->setContatto($contatto);
             $pratica->setDataAvvioProcedimento($dataAvvioProcedimento);
             $pratica->setDataCaricamento($dataCaricamento);
@@ -300,7 +299,7 @@ class OperatoreController {
     }
 
     /**
-     * 
+     * Mostra la pagina base per la schermata di ricerca
      * @param \Struttura $pagina
      */
     public function mostraElencoP($pagina) {
@@ -335,7 +334,7 @@ class OperatoreController {
         $ricerca["flagSoprintendenza"] = isset($_REQUEST["flagSoprintendenza"]) ? $_REQUEST["flagSoprintendenza"] : null;
         $offset = isset($_REQUEST["offset"]) ? $_REQUEST["offset"] : 0;
         $numero = isset($_REQUEST["numero"]) ? $_REQUEST["numero"] : 15;
-
+        $richiestaFirmate= isset($_REQUEST["richiestaFirmate"]) ? $_REQUEST["richiestaFirmate"] : 0;
 
         if ($ruolo < 2) {
             $ricerca["incaricato"] = $operatore->getId();
@@ -349,12 +348,18 @@ class OperatoreController {
         if ($offset < 1) {
             $offset = 0;
         }
+        
+        if($richiestaFirmate===0){
+            $href='<a href="index.php?page=operatore&cmd=aggiornaP&numeroP=';
+        } elseif($ruolo>2){
+            $href='<a href="index.php?page=responsabile&cmd=firmaP&numeroP=';
+        }
 
         $pratiche = PraticaFactory::elencoP($ricerca, $offset, $numero);
         $x = count($pratiche);
         $data = "";
         for ($i = 0; $i < $x; $i++) {
-            $data.= "<tr class=\"" . ($i % 2 == 1 ? "a" : "b") . "\"><td><a href=\"index.php?page=operatore&cmd=aggiornaP&numeroP="
+            $data.= "<tr class=\"" . ($i % 2 == 1 ? "a" : "b") . "\"><td>".$href
                     . $pratiche[$i]->getNumeroPratica() . "\">" . $pratiche[$i]->getNumeroPratica() . "</a></td>"
                     . "<td>" . $pratiche[$i]->getDataCaricamento(true) . "</td>"
                     . "<td>" . $pratiche[$i]->getRichiedente() . "</td>"
@@ -383,9 +388,7 @@ class OperatoreController {
 
         if (!isset($anagrafiche)) {
             echo 'Errore';
-//            exit();
         }
-
 
         $x = count($anagrafiche) - 1;
         $anagraficheTrovate = $anagrafiche[0];

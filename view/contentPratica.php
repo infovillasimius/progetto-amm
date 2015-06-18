@@ -121,6 +121,7 @@
         <button type="submit" id="salva" value="pratica">Salva</button>
         <br/>
     </form>
+    
 
     <div class="none">
         <h3>Ricerca anagrafica</h3>
@@ -156,10 +157,6 @@
             <p id="result"></p> 
         </form>
         
-
-
-
-
     </div>
     <p id="msg" class="msg"><?php echo $pagina->getMsg(); ?></p>
 </div>
