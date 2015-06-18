@@ -71,37 +71,26 @@ class BaseController {
         session_destroy();
         
     }
-    
+    /**
+     * Mostra la pagina di login
+     * @param Struttura $pagina
+     */
     protected function mostraLogin($pagina) {
         $pagina->setHeaderFile("./view/header.php");
         $pagina->setContentFile("./view/login/login.php");
         $pagina->setTitle("Pagina di login");
     }
     
+    /**
+     * Mostra la pagina di benvenuto
+     * @param Struttura $pagina
+     */
     protected function mostraBenvenuto($pagina) {
         $pagina->setHeaderFile("./view/header.php");
         $pagina->setContentFile("./view/benvenuto.php");
         $pagina->setTitle("Benvenuto");
         $operatore=$_SESSION["op"];
-        $ruolo=$operatore->getFunzione();
-        
-        switch ($ruolo){
-        case OperatoreFactory::admin():
-            $pagina->setLeftBarFile("./view/amministratore/menuAmministratore.php");
-            break;
-        case OperatoreFactory::operatore():
-            $pagina->setLeftBarFile("./view/operatore/menuOperatore.php");
-            break;
-        case OperatoreFactory::protocollo():
-            $pagina->setLeftBarFile("./view/protocollo/menuProtocollo.php");
-            break;
-         case OperatoreFactory::responsabile():
-            $pagina->setLeftBarFile("./view/responsabile/menuResponsabile.php");
-            break;
-        default :
-            $pagina->setLeftBarFile("./view/errorMenu.php");
-        }
-        
+        OperatoreController::setRuolo($pagina);      
     }
 
 
