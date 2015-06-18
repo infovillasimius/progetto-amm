@@ -39,7 +39,7 @@ class OperatoreController {
                     break;
 
                 case "firmaP":
-                    self::mostraFirmaP($pagina);
+                    self::firmaP($pagina);
                     break;
 
                 case "cercaAn":
@@ -281,7 +281,7 @@ class OperatoreController {
             }
         } else {
             AnagraficaFactory::updateAnagrafica($idAn, $tipo, $nome, $cognome, $contatto, null);
-            $idAnagrafica=$idAn;
+            $idAnagrafica = $idAn;
         }
 
         $anag = AnagraficaFactory::getAnagrafica($idAnagrafica);
@@ -334,7 +334,7 @@ class OperatoreController {
         $ricerca["flagSoprintendenza"] = isset($_REQUEST["flagSoprintendenza"]) ? $_REQUEST["flagSoprintendenza"] : null;
         $offset = isset($_REQUEST["offset"]) ? $_REQUEST["offset"] : 0;
         $numero = isset($_REQUEST["numero"]) ? $_REQUEST["numero"] : 15;
-        $richiestaFirmate= isset($_REQUEST["richiestaFirmate"]) ? $_REQUEST["richiestaFirmate"] : 0;
+        $richiestaFirmate = isset($_REQUEST["richiestaFirmate"]) ? $_REQUEST["richiestaFirmate"] : 0;
 
         if ($ruolo < 2) {
             $ricerca["incaricato"] = $operatore->getId();
@@ -348,18 +348,18 @@ class OperatoreController {
         if ($offset < 1) {
             $offset = 0;
         }
-        
-        if($richiestaFirmate===0){
-            $href='<a href="index.php?page=operatore&cmd=aggiornaP&numeroP=';
-        } elseif($ruolo>2){
-            $href='<a href="index.php?page=responsabile&cmd=firmaP&numeroP=';
+
+        if ($richiestaFirmate === 0) {
+            $href = '<a href="index.php?page=operatore&cmd=aggiornaP&numeroP=';
+        } elseif ($ruolo > 2) {
+            $href = '<a href="index.php?page=responsabile&cmd=firmaP&numeroP=';
         }
 
         $pratiche = PraticaFactory::elencoP($ricerca, $offset, $numero);
         $x = count($pratiche);
         $data = "";
         for ($i = 0; $i < $x; $i++) {
-            $data.= "<tr class=\"" . ($i % 2 == 1 ? "a" : "b") . "\"><td>".$href
+            $data.= "<tr class=\"" . ($i % 2 == 1 ? "a" : "b") . "\"><td>" . $href
                     . $pratiche[$i]->getNumeroPratica() . "\">" . $pratiche[$i]->getNumeroPratica() . "</a></td>"
                     . "<td>" . $pratiche[$i]->getDataCaricamento(true) . "</td>"
                     . "<td>" . $pratiche[$i]->getRichiedente() . "</td>"
@@ -429,6 +429,96 @@ class OperatoreController {
         $json["tipo"] = $anagrafica->getTipol();
         $json["contatto"] = $anagrafica->getContatto();
         echo json_encode($json);
+    }
+
+    public function firmaP($pagina) {
+        $operatore = $_SESSION["op"];
+        $ruolo = $operatore->getFunzione();
+        $pagina->setTitle("Firma documenti");
+        $pagina->setHeaderFile("./view/header.php");
+
+        $pagina->setJsFile("");
+        OperatoreController::setruolo($pagina);
+        $numeroP = isset($_REQUEST["numeroP"]) ? filter_var($_REQUEST["numeroP"], FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE) : null;
+        if (isset($numeroP)) {
+            
+            $pratica = PraticaFactory::getPraticaById(PraticaFactory::ricercaPerNumeroPratica($numeroP));
+            $opPratica = $pratica->getIncaricato();
+        } else {
+            $pagina->setMsg('<div class="erroreInput"><p>Errore, nessuna pratica selezionata!!! </p></div>');
+            self::mostraErrore($pagina);
+            exit();
+        }
+        if ($operatore->getId() != $opPratica && $ruolo<2) {
+            
+            $pagina->setMsg('<div class="erroreInput"><p>Cerca di non fare il furbo!!! </p></div>');
+            self::mostraErrore($pagina);
+            exit();
+        }
+        if (!is_dir('./files/uploads/' . $numeroP)) {
+            if (!mkdir('./files/uploads/' . $numeroP, 0777)) {
+                die('Failed to create folders...');
+            }
+            chmod('./files/uploads/' . $numeroP, 0777);
+        }
+        $pagina->setContentFile("./view/responsabile/carica.php");
+        include "./view/masterPage.php";
+    }
+
+    public function uploadF($pagina) {
+        $operatore = $_SESSION["op"];
+        $ruolo = $operatore->getFunzione();
+        $pagina->setTitle("Salvataggio documenti");
+        $pagina->setHeaderFile("./view/header.php");
+
+        $pagina->setJsFile("");
+        OperatoreController::setruolo($pagina);
+
+        if (!isset($_REQUEST["numeroP"])) {
+            $pagina->setMsg('<div class="erroreInput"><p>Errore, nessuna pratica selezionata!!! </p></div>');
+            self::mostraErrore($pagina);
+            exit();
+        } else {
+            $numeroP = isset($_REQUEST["numeroP"]) ? $_REQUEST["numeroP"] : null;
+            $target_dir = './files/uploads/' . $numeroP . '/';
+            $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+            $uploadOk = 1;
+            $fileType = pathinfo($target_file, PATHINFO_EXTENSION);
+            $msg = "";
+            // Check file size
+            if ($_FILES["fileToUpload"]["size"] > 500000) {
+                $msg.="Il file è troppo grande. ";
+                $uploadOk = 0;
+            }
+            // Allow certain file formats
+            if ($fileType != "pdf" && $fileType != "p7m") {
+                $msg.= "Sono ammessi solo PDF e P7M. ";
+                $uploadOk = 0;
+            }
+            // Check if $uploadOk is set to 0 by an error
+            if ($uploadOk == 0) {
+                $msg.= " Il file non è stato caricato. ";
+                // if everything is ok, try to upload file
+            } else {
+                if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+                    $msg.= " Il File " . basename($_FILES["fileToUpload"]["name"]) . " è stato caricato. ";
+                } else {
+                    $msg.= " Spiacenti, si è verificato un errore. ";
+                }
+            }
+            $pagina->setMsg($msg);
+            $pagina->setContentFile("./view/responsabile/carica.php");
+        }
+
+        include "./view/masterPage.php";
+    }
+
+    protected function mostraErrore($pagina) {
+        $operatore = $_SESSION["op"];
+        $pagina->setContentFile("./view/benvenuto.php");
+        $pagina->setTitle("Errore");
+        OperatoreController::setruolo($pagina);
+        include "./view/masterPage.php";
     }
 
 }

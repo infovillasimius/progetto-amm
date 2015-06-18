@@ -47,11 +47,11 @@
             <br/>
             <label for="richiedente">Richiedente</label>
             <input type="hidden" id="richiedenteId" name="richiedenteId" value="<?= $pratica->getRichiedenteId(); ?>" />
-            <input type="text" id="richiedente" name="richiedente" value="<?= $pratica->getRichiedente(); ?>" <?= $ruolo < 2 ? "readonly" : "" ?> />
+            <input type="text" id="richiedente" name="richiedente" value="<?= $pratica->getRichiedente(); ?>" <?= $ruolo < 4 ? "readonly" : "" ?> />
             <br/>
             <label for="procuratore">Procuratore</label>
             <input type="hidden" id="procuratoreId" name="procuratoreId" value="<?= $pratica->getProcuratoreId(); ?>"/>
-            <input type="text" id="procuratore" name="procuratore" value="<?= $pratica->getProcuratore(); ?>" <?= $ruolo < 2 ? "readonly" : "" ?> />
+            <input type="text" id="procuratore" name="procuratore" value="<?= $pratica->getProcuratore(); ?>" <?= $ruolo < 4 ? "readonly" : "" ?> />
             <br/>
             <label for="contatto">Contatto</label>
             <input type="text" id="contatto" name="contatto" value="<?= $pratica->getContatto(); ?>"/>
@@ -121,7 +121,10 @@
         <button type="submit" id="salva" value="pratica">Salva</button>
         <br/>
     </form>
-    
+    <form method="post" action="index.php?page=operatore&amp;cmd=firmaP" >
+        <input type="hidden" id="numeroP" name="numeroP" value="<?= $pratica->getNumeroPratica()?>"/>
+        <button id="allaFirma" type="submit">Alla firma</button>
+    </form>
 
     <div class="none">
         <h3>Ricerca anagrafica</h3>

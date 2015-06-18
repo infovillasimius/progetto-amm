@@ -61,11 +61,18 @@ div.input-form #salva {
     right: 400px;
     width: 100px;
 }
+#allaFirma{
+    color: blueviolet;
+    position: absolute;
+    top: 385px;
+    right: 50px;
+    width: 100px;
+}
 
 p.msg{
     position: absolute;
     top: 375px;
-    left: 50px;
+    left: 58px;
     font-family: "calibri", sans-serif;
     font-size: 12px;
     font-weight: bold;
