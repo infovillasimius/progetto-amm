@@ -65,7 +65,7 @@ $(document).ready(function () {
                     type: "POST",
                     dataType: 'json',
                     success: function (data, state) {
-                        $("#result").text("Trovato: " + data.nomeAn + " " + data.cognomeAn + "\n " + data.contattoAn)
+                        $("#result").text("Salvato/aggiornato: " + data.nomeAn + " " + data.cognomeAn + "\n " + data.contattoAn)
                         $("#result").show("slow");
                         $("#idAn").val(data.idAn);
                         contatto = data.contattoAn;
