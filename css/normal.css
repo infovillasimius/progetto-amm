@@ -447,3 +447,47 @@ p.uploadMsg{
     border: 1px;
     background-color: #ccffcc;
 }
+div.presentazione{
+    width: 850px;
+    font-family: "calibri", sans-serif;
+    font-size: 14px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+div.headerPresentazione h2{
+    color: white;
+    background-image: url('../images/logoUnica.png');
+    background-repeat: no-repeat;
+    background-position: top right;
+    background-color: #95100C;
+    width: 845px;
+    height: 70px;
+    border: 10px;
+    border-color: #95100C;
+    border-style: solid;
+}
+
+div.footer2{
+    width: 845px;
+
+    text-align: center;
+    font-family: "calibri", sans-serif;
+    font-size: 10px;
+    color: white;
+    border: 10px;
+    border-color: #95100C;
+    border-style: solid;
+    background-color: #95100C;
+
+}
+
+div.centro{
+    width: 850px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div.centro p, div.centro li{
+    text-align: justify;
+}

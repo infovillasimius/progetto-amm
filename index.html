@@ -4,58 +4,74 @@
     <head>
         <title>Progetto Amm 2015</title>
         <meta charset="UTF-8">
-        
+        <link rel="stylesheet" type="text/css" media="screen" href="./css/normal.css"/>
     </head>
     <body>
-        <div>
-            <h2>Progetto AMM 2015</h2>
-            <p>L'applicazione nasce dall'esigenza, reale, di tenere sotto controllo le pratiche presentate 
-            allo Sportello Unico per le Attività Produttive dell'Unione dei Comuni del Sarrabus, che comprende i Comuni di Castiadas,
-            Muravera, San Vito, Villaputzu e Villasimius.</p>
-            <p>Con circa seicentocinquanta pratiche all'anno e cinque sedi, distanti tra loro diversi chilometri, è fondamentale
-            riuscire a coordinare le attività in modo da rispettare i tempi strettissimi di lavorazione imposti dalla
-            normativa.</p>
-            <p>In questo scenario l'applicazione realizzata permette di gestire gli operatori del S.U.A.P. definendo i seguenti ruoli:
-            </p>
-            <ul>
-                <li>Amministratore -> Amministra l'applicativo e gestisce gli operatori e i ruoli</li>
-                <li>Responsabile -> Il responsabile dello Sportello Unico, che si occupa principalmente del controllo della
-                lavorazione delle pratiche e firma digitalmente i documenti da inviare agli utenti ed agli Enti terzi</li>
-                <li>Protocollo -> Personale addetto all'inserimento delle nuove pratiche ed all'assegnamento delle stesse agli operatori
-                    (compresi se stessi) in base a criteri territoriali o di opportunità</li>
-                <li>Operatore -> Aggiorna le pratiche assegnategli e carica i file per le comunicazioni, che verranno firmati digitalmente
-                dal responsabile</li>
-            </ul>
-            <p>I requisiti di progetto soddisfatti sono i seguenti:</p>
-            <ol>
-                <li>Utilizzo HTML e CSS -> La struttura delle pagine è scritta in HTML e le impostazioni di visualizzazione ottenute 
-                    mediante l'utilizzo del CSS (file: ./css/normal.css)</li>
-                <li>Utilizzo di PHP e MYSQL -> Il linguaggio server-side utilizzato è il PHP ed il database è stato realizzato su MYSQL</li>
-                <li>E' stato utilizzato il pattern MVC -> Le entita' e le classi che permettono la loro connessione al database sono state posizionate
-                nella cartella [./model]; le viste nella cartella [./view] e il codice di controllo ed elaborazione dell'Input/Output nella
-                cartella [./controller]</li>
-                <li>I ruoli sono quattro: Amministratore, Responsabile, Protocollo e Operatore. Nell'applicativo sono stati associati ai numeri naturali
-                da 1 a 4, con valori decrescenti da Amministratore a Operatore. Questo espediente ha reso possibile l'abilitazione alle 
-                varie attivita' in base a confronti tra numeri</li>
-                <li>Sono state implementate due transazioni, entrambe nella classe OperatoreFactory, nelle funzioni di impostazione di un nuovo 
-                operatore e nell'aggiornamento dello stesso; le transazioni sono state necessarie in quanto le anagrafiche degli operatori stanno 
-                sulla tabella delle anagrafiche, mentre username e password su quella degli operatori e l'inserimento o l'aggiornamento di una
-                anagrafica puo' essere inutile se l'inserimento o l'aggiornamento dell'operatore non va a buon fine. La commit viene infatti eseguita
-                dopo la verifica delloperazione sulla tabella operatore</li>
-                <li>Nell'applicazione sono state utilizzate diverse volte funzioni Ajax mediante JQuery, precisamente negli script 
-                [./js/contentPratica.js], [./js/ricerca.js] e [./js/allaFirma.js]. Nel primo e' stata implementata una funzionalità di completamento
-                automatico di una select per effetuare una ricerca in tempo reale nelle anagrafiche e per l'inserimento o l'aggiornamento delle stesse, in caso 
-                di ricerca infruttuosa. Nel secondo si interroga il server per ottenere l'elenco delle pratiche che soddisfano diversi criteri di ricerca 
-                contemporaneamente: anche in questo caso per la selezione dei dati nella query sono state utilizzate combinazioni di confronti 
-                tra dati numerici. Nel terzo, una versione semplificata del secondo, viene generato un elenco di pratiche che necessitano della firma 
-                di qualche allegato, in modo da velocizzare le operazioni di firma</li>
-            </ol>
-            <p>L'applicazione permette di inserire e modificare operatori, inserire e aggiornare pratiche SUAP, tenere sotto controllo la situazione 
-            generale degli assegnamenti e delle lavorazioni mediante un elenco con funzioni di ricerca multipla, caricare e scaricare file pdf e p7m,
-            che vengono posizionati all'interno della cartella [./files/uploads] sempre all'interno di una cartella con nome uguale al numero
-            della pratica, essendo quest'ultimo un identificativo univoco.</p>
-            <p>Ogni operatore ha un menu' sulla parte sinistra dello schermo, personalizzato in base al ruolo, che include tutte le funzionalita'
-            Si e' sempre cercato, quando possibile, di riutilizzare il codice e le viste</p>
+        <div class="centro">
+
+            <div class="headerPresentazione">
+                <h2>Progetto AMM 2015</h2>
+            </div>
+            <div class="presentazione">
+
+                <p>L'applicazione nasce dall'esigenza, reale, di tenere sotto controllo le pratiche presentate 
+                    allo Sportello Unico per le Attività Produttive dell'Unione dei Comuni del Sarrabus, che comprende i Comuni di Castiadas,
+                    Muravera, San Vito, Villaputzu e Villasimius.</p>
+                <p>Con circa seicentocinquanta pratiche all'anno e cinque sedi, distanti tra loro diversi chilometri, è fondamentale
+                    riuscire a coordinare le attività in modo da rispettare i tempi strettissimi di lavorazione imposti dalla
+                    normativa.</p>
+                <p>In questo scenario l'applicazione realizzata permette di gestire gli operatori del S.U.A.P. definendo i seguenti ruoli:
+                </p>
+                <ul>
+                    <li>Amministratore -> Amministra l'applicativo e gestisce gli operatori e i ruoli</li>
+                    <li>Responsabile -> Il responsabile dello Sportello Unico, che si occupa principalmente del controllo della
+                        lavorazione delle pratiche e firma digitalmente i documenti da inviare agli utenti ed agli Enti terzi</li>
+                    <li>Protocollo -> Personale addetto all'inserimento delle nuove pratiche ed all'assegnamento delle stesse agli operatori
+                        (compresi se stessi) in base a criteri territoriali o di opportunità</li>
+                    <li>Operatore -> Aggiorna le pratiche assegnategli e carica i file per le comunicazioni, che verranno firmati digitalmente
+                        dal responsabile</li>
+                </ul>
+                <p>I requisiti di progetto soddisfatti sono i seguenti:</p>
+                <ol>
+                    <li>Utilizzo HTML e CSS -> La struttura delle pagine è scritta in HTML e le impostazioni di visualizzazione ottenute 
+                        mediante l'utilizzo del CSS (file: ./css/normal.css)</li>
+                    <li>Utilizzo di PHP e MYSQL -> Il linguaggio server-side utilizzato è il PHP ed il database è stato realizzato su MYSQL</li>
+                    <li>E' stato utilizzato il pattern MVC -> Le entita' e le classi che permettono la loro connessione al database sono state posizionate
+                        nella cartella [./model]; le viste nella cartella [./view] e il codice di controllo ed elaborazione dell'Input/Output nella
+                        cartella [./controller]</li>
+                    <li>I ruoli sono quattro: Amministratore, Responsabile, Protocollo e Operatore. Nell'applicativo sono stati associati ai numeri naturali
+                        da 1 a 4, con valori decrescenti da Amministratore a Operatore. Questo espediente ha reso possibile l'abilitazione alle 
+                        varie attivita' in base a confronti tra numeri</li>
+                    <li>Sono state implementate due transazioni, entrambe nella classe OperatoreFactory, nelle funzioni di impostazione di un nuovo 
+                        operatore e nell'aggiornamento dello stesso; le transazioni sono state necessarie in quanto le anagrafiche degli operatori stanno 
+                        sulla tabella delle anagrafiche, mentre username e password su quella degli operatori e l'inserimento o l'aggiornamento di una
+                        anagrafica puo' essere inutile se l'inserimento o l'aggiornamento dell'operatore non va a buon fine. La commit viene infatti eseguita
+                        dopo la verifica delloperazione sulla tabella operatore</li>
+                    <li>Nell'applicazione sono state utilizzate diverse volte funzioni Ajax mediante JQuery, precisamente negli script 
+                        [./js/contentPratica.js], [./js/ricerca.js] e [./js/allaFirma.js]. Nel primo e' stata implementata una funzionalità di completamento
+                        automatico di una select per effetuare una ricerca in tempo reale nelle anagrafiche e per l'inserimento o l'aggiornamento delle stesse, in caso 
+                        di ricerca infruttuosa. Nel secondo si interroga il server per ottenere l'elenco delle pratiche che soddisfano diversi criteri di ricerca 
+                        contemporaneamente: anche in questo caso per la selezione dei dati nella query sono state utilizzate combinazioni di confronti 
+                        tra dati numerici. Nel terzo, una versione semplificata del secondo, viene generato un elenco di pratiche che necessitano della firma 
+                        di qualche allegato, in modo da velocizzare le operazioni di firma</li>
+                </ol>
+                <p>L'applicazione permette di inserire e modificare operatori, inserire e aggiornare pratiche SUAP, tenere sotto controllo la situazione 
+                    generale degli assegnamenti e delle lavorazioni mediante un elenco con funzioni di ricerca multipla, caricare e scaricare file pdf e p7m,
+                    che vengono posizionati all'interno della cartella [./files/uploads] sempre all'interno di una cartella con nome uguale al numero
+                    della pratica, essendo quest'ultimo un identificativo univoco.</p>
+                <p>Ogni operatore ha un menu' sulla parte sinistra dello schermo, personalizzato in base al ruolo, che include tutte le funzionalita'.
+                    Si e' sempre cercato, quando possibile, di riutilizzare il codice e le viste</p>
+                <p>I codici d'accesso sono le seguenti coppie: amministratore, amministratore - responsabile, responsabile - protocollo, protocollo - 
+                    operatore, operatore</p>
+                <p>Il link alla homepage è: <a href="http://spano.sc.unica.it/amm2015/meloniAntonello/index.php">http://spano.sc.unica.it/amm2015/meloniAntonello/index.php</a></p>
+            </div>
+            <div class="footer2">
+                <p>
+                    A.A. 2014/2015 - Progetto finale del  Corso di Amministrazione di Sistema - 
+                    Laurea in Informatica - Università di Cagliari <br/>
+                    Utilizza esclusivamente software open source.
+                </p>
+            </div>
         </div>
     </body>
 </html>
