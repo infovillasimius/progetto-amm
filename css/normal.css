@@ -71,7 +71,7 @@ div.input-form #salva {
 
 p.msg{
     position: absolute;
-    top: 375px;
+    bottom: 5px;
     left: 58px;
     font-family: "calibri", sans-serif;
     font-size: 12px;
