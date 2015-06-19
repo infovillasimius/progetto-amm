@@ -1,12 +1,22 @@
 $(document).ready(function () {
 
+    /**
+     * Visualizza parte pagina relativa alla gestione dell'anagrafica
+     * relativa al richiedente, utilizzando una flag per memorizzare
+     * che si tratta del richiedente e non del procuratore
+     */
     $("#richiedente").focusin(function (event) {
         rich = true;
         event.preventDefault();
         $("div.right").hide("slow");
         $("div.none").show("slow");
     });
-
+    
+    /**
+     * Visualizza parte pagina relativa alla gestione dell'anagrafica
+     * relativa al procuratore, utilizzando una flag per memorizzare
+     * che si tratta del procuratore e non del richiedente
+     */
     $("#procuratore").focusin(function (event) {
         rich = false;
         event.preventDefault();
@@ -14,6 +24,12 @@ $(document).ready(function () {
         $("div.none").show("slow");
     });
 
+    /**
+     * Memorizza alla pressione del pulsante [assegna], il nominativo trovato
+     * mediante l'interrogazione del server, sulla casella del nominativo del 
+     * richiedente o del procuratore ed il valore dell'id dello stesso, nella 
+     * apposta input di tipo hidden
+     */
     $("#assegna").click(function (event) {
         event.preventDefault();
         idAn = $("#idAn").val();
@@ -37,6 +53,10 @@ $(document).ready(function () {
         }
     });
 
+    /**
+     * Effettua il salvataggio o l'aggiornamento
+     * dell'anagrafica inserita
+     */
     $("#salvaAn").click(function (event) {
         event.preventDefault();
         var nomeAn = $("#nomeAn:text").val();
@@ -88,11 +108,20 @@ $(document).ready(function () {
         }
     });
 
+    /**
+     * Effettua l'inserimento del nominativo nella casella del richiedente
+     * @returns {undefined}
+     */
     function changeRich() {
         $("#richiedente").val($("#nomeAn").val() + " " + $("#cognomeAn").val());
         $("#richiedenteId").attr("value", idAn);
     }
 
+    /**
+     * Effettua l'inserimento del nominativo e del contatto nella casella del 
+     * procuratore e del contatto
+     * @returns {undefined}
+     */
     function changeProc() {
         $("#procuratore").val($("#nomeAn").val() + " " + $("#cognomeAn").val());
         $("#procuratoreId").attr("value", idAn);
@@ -100,6 +129,10 @@ $(document).ready(function () {
         $("#contatto").val(contatto);
     }
 
+    /**
+     * Nasconde la div relativa alla gestione dell'anagrafica
+     * e mostra la seconda parte della pagina della gestione pratica
+     */
     $("#chiudi").click(function (event) {
         event.preventDefault();
         $("#nomeAn").val("");
@@ -113,6 +146,10 @@ $(document).ready(function () {
 
     });
 
+    /**
+     * Salva pratica dopo verifica dell'inserimento dei
+     * dati obbligatori
+     */
     $("#salva").click(function (event) {
         incaricato = $("#incaricato").val();
         numeroPratica = $("#numeroPratica").val();
@@ -151,6 +188,12 @@ $(document).ready(function () {
         }
     });
 
+    /**
+     * Modifica i campi della gestione anagrafica affinchè 
+     * si adattino alle persone fisiche e a quelle giuridiche
+     * nel momento che viene cambiato il valore mostrato dalla
+     * select
+     */
     $("select#tipo").change(function (event) {
         tipo = $('select#tipo option:selected').attr('value');
 
@@ -165,13 +208,18 @@ $(document).ready(function () {
         }
     });
 
+    /**
+     * Previene il comportamento di default del tasto invio
+     */
     $('#input').keypress(function (event) {
         if (event.which == 13) {
             event.preventDefault();
         }
     });
 
-
+    /**
+     * Popola la select con le anagrafiche trovate
+     */
     $("#ricerca").keyup(function (event) {
         var cognomeAn = $("#ricerca:text").val();
 
@@ -181,8 +229,7 @@ $(document).ready(function () {
                 data: {
                     page: "operatore",
                     cmd: "ricercaAn",
-//                    nome: nomeAn,
-                    cognome: cognomeAn,
+                    cognome: cognomeAn
                 },
                 type: "POST",
                 dataType: 'json',
@@ -196,6 +243,11 @@ $(document).ready(function () {
         }
     });
 
+    /**
+     * Recupera il valore dell'id associato all'anagrafica scelta
+     * e lo utilizza per ottenere i dati necessari per compilare 
+     * tutti i campi della gestione anagrafica
+     */
     $("#lista").click(function (event) {
         var id = $('select#lista option:selected').attr('value');
 

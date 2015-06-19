@@ -4,6 +4,11 @@ include_once './model/Pratica.php';
 
 class PraticaFactory {
 
+    /**
+     * Salva pratica sul database
+     * @param \Pratica $pratica
+     * @return boolean|int
+     */
     public static function salvaP($pratica) {
         $mysqli = ConnectionFactory::connetti();
         if (!isset($mysqli)) {
@@ -65,6 +70,11 @@ class PraticaFactory {
         }
     }
 
+    /**
+     * Restituisce una pratica in base all'id
+     * @param int $idPratica
+     * @return \Pratica
+     */
     public static function getPraticaById($idPratica) {
         $mysqli = ConnectionFactory::connetti();
         if (!isset($mysqli)) {
@@ -285,6 +295,11 @@ class PraticaFactory {
         }
     }
 
+    /**
+     * Aggiorna una pratica nel database
+     * @param \Pratica $pratica
+     * @return boolean|int
+     */
     public static function aggiornaP($pratica) {
         $mysqli = ConnectionFactory::connetti();
         if (!isset($mysqli)) {
@@ -344,7 +359,12 @@ class PraticaFactory {
             return 0;
         }
     }
-
+    
+    /**
+     * Restituisce id pratica in base al numero (codice univoco) della stessa
+     * @param int $numeroP
+     * @return int
+     */
     public static function ricercaPerNumeroPratica($numeroP) {
         $mysqli = ConnectionFactory::connetti();
         if (!isset($mysqli)) {
@@ -374,7 +394,11 @@ class PraticaFactory {
             return $id;
         }
     }
-
+    /**
+     * Restituisce la stringa corrispondente al valore numero dello stato pratica
+     * @param int $statoPratica
+     * @return string
+     */
     public static function statoPratica($statoPratica) {
         switch ($statoPratica) {
             case 1:
@@ -429,6 +453,11 @@ class PraticaFactory {
         return $statoPratica;
     }
 
+    /**
+     * Restituisce il nome corrispondente al tipo pratica numerico
+     * @param int $tipoPratica
+     * @return string
+     */
     public static function tipoPratica($tipoPratica) {
         switch ($tipoPratica) {
             case 1:
@@ -447,6 +476,10 @@ class PraticaFactory {
         return $tipoPratica;
     }
 
+    /**
+     * Restituisce il numero totale delle pratiche in archivio
+     * @return int
+     */
     public static function numeroTotalePratiche() {
         $mysqli = ConnectionFactory::connetti();
         if (!isset($mysqli)) {

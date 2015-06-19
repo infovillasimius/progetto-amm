@@ -15,13 +15,15 @@ $(document).ready(function (event) {
     numRow = 0;
 
     interroga();
-    
-//    $('table.result').click(function(event){
-//       event.preventDefault(); 
-//    });
         
 });
-    
+
+/**
+ * Interroga il server e restituisce elenco pratiche con flag "alla firma" impostato
+ * riutilizza il codice scritto per la pagina delle ricerche, fissando i parametri allo scopo
+ * attuale
+ * @returns {undefined}
+ */    
 function interroga() {
 
     $('table.result tr.a').each(function () {

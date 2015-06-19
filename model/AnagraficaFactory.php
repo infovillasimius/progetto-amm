@@ -40,6 +40,14 @@ class AnagraficaFactory {
         }
     }
 
+    /**
+     * Restituisce l'id dell'anagrafica trovata in seguito a ricerca esatta 
+     * case insensitive per nome e cognome 
+     * @param string $nomeOp
+     * @param string $cognomeOp
+     * @param $mysqli $mysqli
+     * @return int 
+     */
     public static function getAnagraficaByName($nomeOp, $cognomeOp, $mysqli) {
         if (!isset($mysqli)) {
             $mysqli = ConnectionFactory::connetti();
@@ -71,7 +79,15 @@ class AnagraficaFactory {
             return $id;
         }
     }
-
+    /**
+     * Inserimento anagrafica
+     * @param boolean $tipo
+     * @param string $nome
+     * @param string $cognome
+     * @param string $contatto
+     * @param $mysqli $mysqli
+     * @return int
+     */
     public static function setAnagrafica($tipo, $nome, $cognome, $contatto, $mysqli) {
         if (!isset($mysqli)) {
             $mysqli = ConnectionFactory::connetti();
@@ -105,6 +121,16 @@ class AnagraficaFactory {
         }
     }
 
+    /**
+     * Update anagrafica
+     * @param int $id
+     * @param boolean $tipo
+     * @param string $nome
+     * @param string $cognome
+     * @param string $contatto
+     * @param $mysqli $mysqli
+     * @return int
+     */
     public static function updateAnagrafica($id, $tipo, $nome, $cognome, $contatto, $mysqli) {
         if (!isset($mysqli)) {
             $mysqli = ConnectionFactory::connetti();
@@ -136,7 +162,12 @@ class AnagraficaFactory {
             return 1;
         }
     }
-
+    /**
+     * Restituisce un array di anagrafiche in base alla ricerca effettuata
+     * @param string $nomeAn
+     * @param string $cognomeAn
+     * @return \Anagrafica
+     */
     public static function getListaAnagraficaByName($nomeAn, $cognomeAn) {
 
         $mysqli = ConnectionFactory::connetti();
@@ -178,7 +209,6 @@ class AnagraficaFactory {
             }
             $stmt->close();
             $mysqli->close();
-//            var_dump($anagrafiche);
             return $anagrafiche;
         }
     }

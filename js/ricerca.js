@@ -16,18 +16,27 @@ $(document).ready(function (event) {
 
     interroga();
 
+    /**
+     * Previene il comportamento normale del tasto invio
+     */
     $('.elencoP').keypress(function (event) {
         if (event.which == 13) {
             event.preventDefault();
         }
     });
 
+    /**
+     * controlla se sono stati modificati i parametri della ricerca
+     */
     $("table.elencoP").change(function (event) {
         offset = 0;
         interroga();
 
     });
 
+    /**
+     * Effettua il reset dei parametri di ricerca
+     */
     $("#reset").click(function (event) {
 
         numeroPratica = 0;
@@ -43,18 +52,31 @@ $(document).ready(function (event) {
         interroga2();
     });
 
+    /**
+     * Imposta il metodo di ricerca che permette di visualizzare le pratiche che
+     * hanno i flag attivati o disattivati esattamente come impostato nei parametri
+     * di ricerca, come specificato a video
+     */
     $("#change").click(function (event) {
         event.preventDefault();
         tipocomportamento = 0;
         interroga();
     });
-
+    
+    /**
+     * Imposta il metodo di ricerca meno restrittivo, che comporta la visualizzazione 
+     * di tutte le pratiche se il flag nella tabella di ricerca non è impostato e delle
+     * sole pratiche flaggate se impostato
+     */
     $("#change2").click(function (event) {
         event.preventDefault();
         tipocomportamento = -1;
         interroga();
     });
 
+    /**
+     * Scorre la tabella delle pratiche in avanti
+     */
     $("#avanti").click(function (event) {
         event.preventDefault();
         if (numRow > numero - 1) {
@@ -67,6 +89,9 @@ $(document).ready(function (event) {
 
     });
 
+    /**
+     * Scorre la tabella delle pratiche all'indietro
+     */
     $("#indietro").click(function (event) {
         event.preventDefault();
         offset -= numero;
@@ -79,7 +104,11 @@ $(document).ready(function (event) {
 
 });
 
-
+/**
+ * Imposta i parametri della ricerca leggendo le impostazioni contenute nella tabella
+ * e lancia la interrogazione
+ * @returns {undefined}
+ */
 function interroga() {
 
     numeroPratica = $("#numeroP:text").val();
@@ -115,7 +144,10 @@ function interroga() {
 
 }
 
-
+/**
+ * Interroga il server in base alle impostazioni di ricerca memorizzate 
+ * @returns {undefined}
+ */
 function interroga2() {
 
     $('table.result tr.a').each(function () {

@@ -38,6 +38,10 @@ class AdminController {
         }
     }
 
+    /**
+     * Mostra pagina per l'inserimento ed il salvataggio di un operatore
+     * @param Struttura $pagina
+     */
     public function mostraNuovoOp($pagina) {
         
         $pagina->setHeaderFile("./view/header.php");
@@ -118,6 +122,10 @@ class AdminController {
         include "./view/masterPage.php";
     }
 
+    /**
+     * Mostra pagina con elenco operatori su cui effettuare scelta per editing
+     * @param Struttura $pagina
+     */
     public function mostraModificaOp($pagina) {
         
         $pagina->setHeaderFile("./view/header.php");
@@ -135,14 +143,5 @@ class AdminController {
             $rows = count($operatori);
         }
         include "./view/masterPage.php";
-    }
-
-    public function mostraFirmaP($pagina) {
-        $pagina->setTitle("Mostra pratiche alla firma");
-        $pagina->setHeaderFile("./view/header.php");
-        $pagina->setLeftBarFile("./view/amministratore/menuAmministratore.php");
-        $pagina->setContentFile("./view/amministratore/firmaP.php");
-        include "./view/masterPage.php";
-    }
-    
+    }    
 }

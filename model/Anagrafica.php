@@ -115,11 +115,19 @@ class Anagrafica {
         return $this->tipo;
     }
 
+    /**
+     * Imposta id anagrafica
+     * @param int $id
+     * @return boolean
+     */
     public function setId($id) {
         $this->id = $id;
         return $this->id != null;
     }
-
+    /**
+     * Restituisce id anagrafica
+     * @return int
+     */
     public function getId() {
         return $this->id;
     }

@@ -57,6 +57,10 @@ class OperatoreController {
                 case "cercaP":
                     self::cercaP();
                     break;
+                
+                case "uploadF":
+                    self::uploadF($pagina);
+                    break;
 
                 default :
                     OperatoreController::mostraBenvenuto($pagina);
@@ -75,7 +79,7 @@ class OperatoreController {
         $pagina->setContentFile("./view/benvenuto.php");
         $pagina->setTitle("Benvenuto");
         OperatoreController::setruolo($pagina);
-        $pagina->setMsg('<div class="erroreInput"><p>Errore, cmd non esistente... faresti meglio a usare i menu!!! </p></div>');
+        $pagina->setMsg('<div class="erroreInput"><p>Errore, pagina non esistente...</p></div>');
         include "./view/masterPage.php";
     }
 
@@ -232,8 +236,6 @@ class OperatoreController {
             $pratica->setOggetto($oggetto);
             $pratica->setUbicazione($ubicazione);
 
-            //var_dump($pratica);
-
             if ($idPratica == "" && $err == 0) {
                 $pagina->setTitle("Salvataggio pratica");
                 $errore = PraticaFactory::salvaP($pratica);
@@ -379,6 +381,9 @@ class OperatoreController {
         echo json_encode($json);
     }
 
+    /**
+     * Restituisce una serie di <option> per select in formato json contenenti anagrafiche
+     */
     public function ricercaAn() {
 
         $nome = isset($_REQUEST["nome"]) ? $_REQUEST["nome"] : null;
@@ -408,6 +413,10 @@ class OperatoreController {
         echo json_encode($json);
     }
 
+    /**
+     * Restituisce una anagrafica in formato json
+     * @return type
+     */
     public function getAn() {
         $id = isset($_REQUEST["id"]) ? $_REQUEST["id"] : null;
 
@@ -417,7 +426,7 @@ class OperatoreController {
         $anagrafica = AnagraficaFactory::getAnagrafica($id);
         if (!isset($anagrafica)) {
             echo 'Errore';
-            return null;
+            exit("Errore nella generazione dell'anagrafica");
         }
         header('Cache-Control: no-cache, must-revalidate');
         header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
@@ -431,6 +440,10 @@ class OperatoreController {
         echo json_encode($json);
     }
 
+    /**
+     * Gestisce la procedura di caricamento dei files associati alle pratiche
+     * @param Struttura $pagina
+     */
     public function firmaP($pagina) {
         $operatore = $_SESSION["op"];
         $ruolo = $operatore->getFunzione();
@@ -449,9 +462,9 @@ class OperatoreController {
             self::mostraErrore($pagina);
             exit();
         }
-        if ($operatore->getId() != $opPratica && $ruolo<2) {
+        if ($operatore->getId() != $opPratica && $ruolo<3) {
             
-            $pagina->setMsg('<div class="erroreInput"><p>Cerca di non fare il furbo!!! </p></div>');
+            $pagina->setMsg('<div class="erroreInput"><p>La pratica è assegnata ad altro operatore!!! </p></div>');
             self::mostraErrore($pagina);
             exit();
         }
@@ -465,6 +478,10 @@ class OperatoreController {
         include "./view/masterPage.php";
     }
 
+    /**
+     * Carica un file sul server e visualizza contenuto cartella associata alla pratica
+     * @param Struttura $pagina
+     */
     public function uploadF($pagina) {
         $operatore = $_SESSION["op"];
         $ruolo = $operatore->getFunzione();
@@ -513,6 +530,10 @@ class OperatoreController {
         include "./view/masterPage.php";
     }
 
+    /**
+     * Mostra la pagina relativa all'errore occorso
+     * @param Struttura $pagina
+     */
     protected function mostraErrore($pagina) {
         $operatore = $_SESSION["op"];
         $pagina->setContentFile("./view/benvenuto.php");

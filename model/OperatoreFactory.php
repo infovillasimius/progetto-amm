@@ -41,6 +41,13 @@ class OperatoreFactory {
         }
     }
 
+    /**
+     * Restituisce un oggetto di tipo operatore "logged" se username e password 
+     * corrispondono a quelle in ingresso
+     * @param string $username
+     * @param string $password
+     * @return \Operatore
+     */
     public static function getLoggedOP($username, $password) {
 
         $mysqli = ConnectionFactory::connetti();
@@ -68,6 +75,10 @@ class OperatoreFactory {
         }
     }
 
+    /**
+     * Restituisce id del ruolo in base al nome
+     * @return int
+     */
     public static function admin() {
 
         $mysqli = ConnectionFactory::connetti();
@@ -90,6 +101,10 @@ class OperatoreFactory {
         }
     }
 
+    /**
+     * Restituisce id del ruolo in base al nome
+     * @return int
+     */
     public static function operatore() {
 
         $mysqli = ConnectionFactory::connetti();
@@ -112,6 +127,10 @@ class OperatoreFactory {
         }
     }
 
+    /**
+     * Restituisce id del ruolo in base al nome
+     * @return int
+     */
     public static function protocollo() {
 
         $mysqli = ConnectionFactory::connetti();
@@ -134,6 +153,10 @@ class OperatoreFactory {
         }
     }
 
+    /**
+     * Restituisce id del ruolo in base al nome
+     * @return int
+     */
     public static function responsabile() {
 
         $mysqli = ConnectionFactory::connetti();
@@ -156,6 +179,12 @@ class OperatoreFactory {
         }
     }
 
+    /**
+     * Salva nel database un nuovo operatore
+     * implementa una transazione
+     * @param \Operatore $nuovoOp
+     * @return boolean|int
+     */
     public static function setNewOp($nuovoOp) {
 
         $nomeOp = $nuovoOp->getNome();
@@ -211,7 +240,11 @@ class OperatoreFactory {
             return 0;
         }
     }
-
+    
+    /**
+     * Restituisce un array con tutti gli operatori
+     * @return \Operatore
+     */
     public static function getListaOp() {
         $mysqli = ConnectionFactory::connetti();
         if (!isset($mysqli)) {
@@ -245,6 +278,11 @@ class OperatoreFactory {
         }
     }
 
+    /**
+     * Restituisce il ruolo dell'operatore
+     * @param int $funzione
+     * @return string
+     */
     public static function ruolo($funzione) {
         switch ($funzione) {
             case OperatoreFactory::operatore():
@@ -262,7 +300,12 @@ class OperatoreFactory {
         }
         return $ruolo;
     }
-
+    /**
+     * Aggiorna operatore sul database
+     * implementa transazione
+     * @param \Operatore $nuovoOp
+     * @return boolean|int
+     */
     public static function updateOp($nuovoOp) {
 
         $id = $nuovoOp->getId();

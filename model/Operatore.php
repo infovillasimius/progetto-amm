@@ -8,31 +8,12 @@
 
 class Operatore extends Anagrafica {
 
-    private $id;
     private $idAn;
     private $funzione;
     private $username;
     private $password;
-
-    /**
-     * Imposta id operatore
-     * @param int $id
-     * @return boolean
-     */
-    public function setId($id) {
-        $this->id = $id;
-        return $this->id != null;
-    }
     
     /**
-     * Restituisce id operatore
-     * @return int
-     */
-    public function getId() {
-        return $this->id;
-    }
-    
-        /**
      * Imposta id anagrafica
      * @param int $id
      * @return boolean
@@ -96,6 +77,10 @@ class Operatore extends Anagrafica {
         return $this->password != null;
     }
 
+    /**
+     * Restituisce la password
+     * @return string
+     */
     public function getPassword() {
         return $this->password;
     }

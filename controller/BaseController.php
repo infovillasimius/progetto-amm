@@ -57,9 +57,9 @@ class BaseController {
     
     /**
      * Procedura di logout dal sistema 
-     * @param type $vd il descrittore della pagina
+     * @param Struttura $pagina il descrittore della pagina
      */
-    protected function logout($vd) {
+    protected function logout($pagina) {
         // reset array $_SESSION
         $_SESSION = array();
         // termino la validita' del cookie di sessione

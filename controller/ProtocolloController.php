@@ -33,7 +33,10 @@ class ProtocolloController {
     }
     
    
-    
+    /**
+     * Mostra la pagina per l'inserimento di una nuova pratica
+     * @param Struttura $pagina
+     */
     protected function mostraNuovaP($pagina) {
         $operatore=$_SESSION["op"];
         $ruolo=$operatore->getFunzione();

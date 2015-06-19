@@ -1,5 +1,9 @@
 $(document).ready(function () {
 
+    /**
+     * Salva pratica dopo verifica dell'inserimento dei
+     * dati obbligatori
+     */
     $("#salva").click(function (event) {
         incaricato = $("#incaricato").val();
         numeroPratica = $("#numeroPratica").val();

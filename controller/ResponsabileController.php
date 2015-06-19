@@ -36,6 +36,11 @@ class ResponsabileController {
         }
     }
 
+    /**
+     * Gestisce la scelta della pratica su cui operare
+     * per eseguire la firma digitale dei files allegati
+     * @param Struttura $pagina
+     */
     public function firmaP($pagina) {
         $operatore = $_SESSION["op"];
         $ruolo = $operatore->getFunzione();
@@ -63,6 +68,10 @@ class ResponsabileController {
         include "./view/masterPage.php";
     }
 
+    /**
+     * Carica un file e visualizza contenuto cartella associata alla pratica
+     * @param Struttura $pagina
+     */
     public function uploadF($pagina) {
         $operatore = $_SESSION["op"];
         $ruolo = $operatore->getFunzione();
@@ -109,6 +118,10 @@ class ResponsabileController {
         include "./view/masterPage.php";
     }
 
+    /**
+     * Effettua la scansione di una cartella e genera elenco navigabile delle entry
+     * @param string $Directory
+     */
     public static function ScanDirectory($Directory) {
 
         $MyDirectory = opendir($Directory) or die('Error');
