@@ -351,7 +351,6 @@ class PraticaFactory {
             $errore = $mysqli->errno;
             $stmt->close();
             $mysqli->close();
-            echo $errore;
             return $errore;
         } else {
             $stmt->close();
