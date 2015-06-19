@@ -11,7 +11,7 @@ $(document).ready(function () {
         $("div.right").hide("slow");
         $("div.none").show("slow");
     });
-    
+
     /**
      * Visualizza parte pagina relativa alla gestione dell'anagrafica
      * relativa al procuratore, utilizzando una flag per memorizzare
@@ -251,39 +251,41 @@ $(document).ready(function () {
     $("#lista").click(function (event) {
         var id = $('select#lista option:selected').attr('value');
 
-        $.ajax({
-            url: "index.php",
-            data: {
-                page: "operatore",
-                cmd: "getAn",
-                id: id,
-            },
-            type: "POST",
-            dataType: 'json',
-            success: function (data, state) {
-                $("#idAn").val(data.id);
-                $("#nomeAn:text").val(data.nome);
-                $("#cognomeAn:text").val(data.cognome);
-                $("#contattoAn:text").val(data.contatto);
-                $('select#tipo option').each(function () {
-                    (this).remove();
-                });
-                if (data.tipo == 0) {
-                    $('select#tipo').html('<option value="0" selected="selected">Persona Fisica</option><option value="1">Persona Giuridica</option>')
-                    $(".nomeAn").show("slow");
-                    $("#lcognome").text("Cognome");
-                } else {
-                    $('select#tipo').html('<option value="0">Persona Fisica</option><option value="1" selected="selected">Persona Giuridica</option>')
-                    $(".nomeAn").hide("slow");
-                    $(".nomeAn").val("");
-                    $("#lcognome").text("Ragione sociale");
-                }
+        if (id !== undefined) {
+            $.ajax({
+                url: "index.php",
+                data: {
+                    page: "operatore",
+                    cmd: "getAn",
+                    id: id,
+                },
+                type: "POST",
+                dataType: 'json',
+                success: function (data, state) {
+                    $("#idAn").val(data.id);
+                    $("#nomeAn:text").val(data.nome);
+                    $("#cognomeAn:text").val(data.cognome);
+                    $("#contattoAn:text").val(data.contatto);
+                    $('select#tipo option').each(function () {
+                        (this).remove();
+                    });
+                    if (data.tipo == 0) {
+                        $('select#tipo').html('<option value="0" selected="selected">Persona Fisica</option><option value="1">Persona Giuridica</option>')
+                        $(".nomeAn").show("slow");
+                        $("#lcognome").text("Cognome");
+                    } else {
+                        $('select#tipo').html('<option value="0">Persona Fisica</option><option value="1" selected="selected">Persona Giuridica</option>')
+                        $(".nomeAn").hide("slow");
+                        $(".nomeAn").val("");
+                        $("#lcognome").text("Ragione sociale");
+                    }
 
-            },
-            error: function (data, status, errorThrown) {
-                alert("Errore di ricezione dati dal server");
-            }
-        });
+                },
+                error: function (data, status, errorThrown) {
+                    alert("Errore di ricezione dati dal server");
+                }
+            });
+        }
 
     });
 
