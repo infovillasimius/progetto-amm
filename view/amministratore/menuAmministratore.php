@@ -19,6 +19,14 @@
         <a href="index.php?page=responsabile&amp;cmd=firmaP">Firma</a><br/>
     </p>
     <br/>
+    <h5>Provvedimenti:</h5>
+    
+    <br/>
+    <p>
+        <a href="index.php?page=operatore&amp;cmd=elencoProvvedimenti">Elenco</a><br/>   
+        <a href="index.php?page=operatore&amp;cmd=nuovoProvvedimento">Nuovo</a><br/>
+    </p>
+    <br/>
     <p><a href="index.php?page=logout">Logout</a></p>
     
 </div>

@@ -162,6 +162,7 @@ class AnagraficaFactory {
             return 1;
         }
     }
+    
     /**
      * Restituisce un array di anagrafiche in base alla ricerca effettuata
      * @param string $nomeAn

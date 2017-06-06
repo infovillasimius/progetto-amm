@@ -1,0 +1,29 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 26-giu-2015, 13.56.47
+    Author     : antonello.meloni
+*/
+
+table {
+    border-collapse: collapse;
+    border: 1px solid #95100C;
+    width:1000px;
+    margin-left: auto;
+    margin-right: auto;    
+    font-family: "calibri", sans-serif;
+    font-size: 12px;
+}
+
+td.oggetto{
+    width:700px
+}
+
+td{
+    border-collapse: collapse;
+    border: 1px solid #95100C;
+}
+

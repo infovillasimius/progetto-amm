@@ -27,6 +27,10 @@ class ResponsabileController {
                     self::uploadF($pagina);
                     break;
 
+                case "setFirmata":
+                    self::setFirmata($pagina);
+                    break;
+
 
                 default :
                     OperatoreController::mostraBenvenuto($pagina);
@@ -89,26 +93,26 @@ class ResponsabileController {
             $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
             $uploadOk = 1;
             $fileType = pathinfo($target_file, PATHINFO_EXTENSION);
-            $msg="";
+            $msg = "";
             // Check file size
             if ($_FILES["fileToUpload"]["size"] > 500000) {
-                $msg.="Il file è troppo grande. ";
+                $msg .= "Il file è troppo grande. ";
                 $uploadOk = 0;
             }
             // Allow certain file formats
             if ($fileType != "pdf" && $fileType != "p7m") {
-                $msg.= "Sono ammessi solo PDF e P7M. ";
+                $msg .= "Sono ammessi solo PDF e P7M. ";
                 $uploadOk = 0;
             }
             // Check if $uploadOk is set to 0 by an error
             if ($uploadOk == 0) {
-                $msg.= " Il file non è stato caricato. ";
+                $msg .= " Il file non è stato caricato. ";
                 // if everything is ok, try to upload file
             } else {
                 if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-                    $msg.= " Il File " . basename($_FILES["fileToUpload"]["name"]) . " è stato caricato. ";
+                    $msg .= " Il File " . basename($_FILES["fileToUpload"]["name"]) . " è stato caricato. ";
                 } else {
-                    $msg.= " Spiacenti, si è verificato un errore. ";
+                    $msg .= " Spiacenti, si è verificato un errore. ";
                 }
             }
             $pagina->setMsg($msg);
@@ -138,6 +142,51 @@ class ResponsabileController {
             }
         }
         closedir($MyDirectory);
+    }
+
+    /**
+     * Gestisce la scelta della pratica su cui operare
+     * per eseguire la firma digitale dei files allegati
+     * @param Struttura $pagina
+     */
+    public function setFirmata($pagina) {
+        $operatore = $_SESSION["op"];
+        $ruolo = $operatore->getFunzione();
+        $pagina->setTitle("Firma documenti");
+        $pagina->setHeaderFile("./view/header.php");
+
+        $pagina->setJsFile("./js/allaFirma.js");
+        OperatoreController::setruolo($pagina);
+
+        if (!isset($_REQUEST["numeroP"])) {
+            $pagina->setContentFile("./view/responsabile/sceltaP.php");
+        } else {
+            $numeroP = isset($_REQUEST["numeroP"]) ? $_REQUEST["numeroP"] : null;
+
+            if (!is_dir('./files/uploads/' . $numeroP)) {
+                if (!mkdir('./files/uploads/' . $numeroP, 0777)) {
+                    die('Failed to create folders...');
+                }
+                chmod('./files/uploads/' . $numeroP, 0777);
+            }
+
+            $pagina->setContentFile("./view/responsabile/carica.php");
+
+            $idPratica = PraticaFactory::ricercaPerNumeroPratica($numeroP);
+            $pratica= PraticaFactory::getPraticaById($idPratica);
+            $pratica->setFlagFirmata("true"); 
+            $pratica->setFlagAllaFirma("false");
+
+            if ( PraticaFactory::aggiornaP($pratica)===0) {
+                $msg .= " Flag [firmata] settato - flag [Alla firma] disattivato ";
+            } else {
+                $msg .= " Non è stato possibile aggiornare i flag!! della pratica ".$pratica->getNumeroPratica().$pratica->getFlagAllaFirma();
+            }
+            $pagina->setMsg($msg);
+        }
+
+        include "./view/masterPage.php";
+      
     }
 
 }

@@ -31,6 +31,7 @@ class Pratica {
     private $procuratoreId;
     private $richiedente;
     private $richiedenteId;
+    private $suap;
     private $statoPratica;
     private $tipoPratica;
     private $ubicazione;
@@ -96,7 +97,7 @@ class Pratica {
      */
     public function setFlagAllaFirma($flag) {
         $this->flagAllaFirma = filter_var($flag, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
-        return $this->flagAllaFirma != null;
+        return $this->flagAllaFirma != NULL;
     }
 
     /**
@@ -114,7 +115,7 @@ class Pratica {
      */
     public function setFlagFirmata($flag) {
         $this->flagFirmata = filter_var($flag, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
-        return $this->flagFirmata != null;
+        return $this->flagFirmata != NULL;
     }
 
     /**
@@ -295,7 +296,7 @@ class Pratica {
 
     /**
      * Restituisce data di avvio procedimento 
-     * @param boolean $r se true in formato gg.mm.aaaa altrimenti aaa.mm.gg
+     * @param boolean $r se true in formato gg.mm.aaaa altrimenti aaaa.mm.gg
      * @return string 
      */
     public function getDataAvvioProcedimento($r) {
@@ -317,12 +318,12 @@ class Pratica {
 
     /**
      * Restituisce data di caricamento del procedimento 
-     * @param boolean $r se true in formato gg.mm.aaaa altrimenti aaa.mm.gg
+     * @param boolean $r se true in formato gg.mm.aaaa altrimenti aaaa.mm.gg
      * @return string 
      */
     public function getDataCaricamento($r) {
         if (isset($this->dataCaricamento)) {
-            return self::dataToString($this->dataCaricamento,$r);
+            return self::dataToString($this->dataCaricamento, $r);
         }
         return "";
     }
@@ -339,12 +340,12 @@ class Pratica {
 
     /**
      * Restituisce data Conferenza Servizi 
-     * @param boolean $r se true in formato gg.mm.aaaa altrimenti aaa.mm.gg
+     * @param boolean $r se true in formato gg.mm.aaaa altrimenti aaaa.mm.gg
      * @return string 
      */
     public function getDataConferenzaServizi($r) {
         if (isset($this->dataConferenzaServizi)) {
-            return self::dataToString($this->dataConferenzaServizi,$r);
+            return self::dataToString($this->dataConferenzaServizi, $r);
         }
         return "";
     }
@@ -361,12 +362,12 @@ class Pratica {
 
     /**
      * Restituisce data Invio Ricevuta 
-     * @param boolean $r se true in formato gg.mm.aaaa altrimenti aaa.mm.gg
+     * @param boolean $r se true in formato gg.mm.aaaa altrimenti aaaa.mm.gg
      * @return string 
      */
     public function getDataInvioRicevuta($r) {
         if (isset($this->dataInvioRicevuta)) {
-            return self::dataToString($this->dataInvioRicevuta,$r);
+            return self::dataToString($this->dataInvioRicevuta, $r);
         }
         return "";
     }
@@ -383,12 +384,12 @@ class Pratica {
 
     /**
      * Restituisce data Invio Verifiche
-     * @param boolean $r se true in formato gg.mm.aaaa altrimenti aaa.mm.gg
+     * @param boolean $r se true in formato gg.mm.aaaa altrimenti aaaa.mm.gg
      * @return string 
      */
     public function getDataInvioVerifiche($r) {
         if (isset($this->dataInvioVerifiche)) {
-            return self::dataToString($this->dataInvioVerifiche,$r);
+            return self::dataToString($this->dataInvioVerifiche, $r);
         }
         return "";
     }
@@ -405,12 +406,12 @@ class Pratica {
 
     /**
      * Restituisce data Protocollo
-     * @param boolean $r se true in formato gg.mm.aaaa altrimenti aaa.mm.gg
+     * @param boolean $r se true in formato gg.mm.aaaa altrimenti aaaa.mm.gg
      * @return string 
      */
     public function getDataProtocollo($r) {
         if (isset($this->dataProtocollo)) {
-            return self::dataToString($this->dataProtocollo,$r);
+            return self::dataToString($this->dataProtocollo, $r);
         }
         return "";
     }
@@ -427,12 +428,12 @@ class Pratica {
 
     /**
      * Restituisce data Provvedimento 
-     * @param boolean $r se true in formato gg.mm.aaaa altrimenti aaa.mm.gg
+     * @param boolean $r se true in formato gg.mm.aaaa altrimenti aaaa.mm.gg
      * @return string 
      */
     public function getDataProvvedimento($r) {
         if (isset($this->dataProvvedimento)) {
-            return self::dataToString($this->dataProvvedimento,$r);
+            return self::dataToString($this->dataProvvedimento, $r);
         }
         return "";
     }
@@ -579,6 +580,24 @@ class Pratica {
     public function setProcuratore($nominativo) {
         $this->procuratore = $nominativo;
         return $this->richiedente != null;
+    }
+
+    /**
+     * Restituisce l'ufficio Suap al quale è stata presentata la pratica
+     * @return int
+     */
+    public function getSuap() {
+        return $this->suap;
+    }
+
+    /**
+     * Imposta ufficio sual al quale e stata presentata la pratica
+     * @param int $suap
+     * @return boolean
+     */
+    public function setSuap($suap) {
+        $this->suap = $suap;
+        return $this->suap != null;
     }
 
 }

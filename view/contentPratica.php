@@ -32,6 +32,15 @@
                 <option value="3" <?= $pratica->getTipoPratica() == "3" ? 'selected="selected"' : "" ?> >Conferenza di Servizi</option>
             </select>
             <br/>
+            <label for="suap">Ufficio SUAP</label>
+            <select id="suap" name="suap">
+                <option value="0">Seleziona Ufficio SUAP</option>
+                <option value="1" <?= $pratica->getSuap() == "1" ? 'selected="selected"' : "" ?> >Castiadas</option>
+                <option value="2" <?= $pratica->getSuap() == "2" ? 'selected="selected"' : "" ?> >Muravera</option>
+                <option value="3" <?= $pratica->getSuap() == "3" ? 'selected="selected"' : "" ?> >San Vito</option>
+                <option value="4" <?= $pratica->getSuap() == "4" ? 'selected="selected"' : "" ?> >Villaputzu</option>
+                <option value="5" <?= $pratica->getSuap() == "5" ? 'selected="selected"' : "" ?> >Villasimius</option>
+            </select>
             <br/>
             <label for="numeroPratica">Numero pratica</label>
             <input type="text" id="numeroPratica" name="numeroPratica" value="<?= $pratica->getNumeroPratica(); ?>" <?= $ruolo < 2 ? "readonly" : "" ?> />

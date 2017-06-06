@@ -9,6 +9,10 @@
         <input type="hidden" name="numeroP" value="<?php echo $numeroP ?>" />
     </form>
     
+    <?php if($ruolo>2)  include 'setFirma.php'; ?>
+   
+          
+    
         <h3>Elenco files allegati alla pratica n. <?= $numeroP ?></h3>
     
     <?php ResponsabileController::ScanDirectory('./files/uploads/' . $numeroP); ?>

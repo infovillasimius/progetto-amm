@@ -7,6 +7,8 @@ include_once './model/Operatore.php';
 include_once './model/OperatoreFactory.php';
 include_once './model/AnagraficaFactory.php';
 include_once './model/PraticaFactory.php';
+include_once './model/Provvedimento.php';
+include_once './model/ProvvedimentoFactory.php';
 
 class OperatoreController {
 
@@ -28,6 +30,21 @@ class OperatoreController {
 
                 case "elencoP":
                     self::mostraElencoP($pagina);
+                    break;
+                
+                case "elencoProvvedimenti":
+                    self::mostraElencoProvvedimenti($pagina);
+                    break;
+                
+                case "cercaProvvedimenti":
+                    self::cercaProvvedimenti();
+                    break;
+                
+                case "nuovoProvvedimento":
+                    self::nuovoProvvedimento($pagina);
+                    break;
+                case "salvaProvvedimento":
+                    self::nuovoProvvedimento($pagina);
                     break;
 
                 case "aggiornaP":
@@ -188,6 +205,7 @@ class OperatoreController {
             $richiedente = isset($_REQUEST["richiedente"]) ? ($_REQUEST["richiedente"]) : null;
             $richiedenteId = isset($_REQUEST["richiedenteId"]) ? ($_REQUEST["richiedenteId"]) : null;
             $statoPratica = isset($_REQUEST["statoPratica"]) ? ($_REQUEST["statoPratica"]) : null;
+            $suap = isset($_REQUEST["suap"]) ? ($_REQUEST["suap"]) : null;
             $tipoPratica = isset($_REQUEST["tipoPratica"]) ? ($_REQUEST["tipoPratica"]) : null;
             $ubicazione = isset($_REQUEST["ubicazione"]) ? ($_REQUEST["ubicazione"]) : null;
 
@@ -224,6 +242,9 @@ class OperatoreController {
                 if (!$pratica->setTipoPratica($tipoPratica)) {
                     $err++;
                 }
+                if (!$pratica->setSuap($suap)) {
+                    $err++;
+                }
             }
 
             $pratica->setDataProvvedimento($dataProvvedimento);
@@ -236,7 +257,7 @@ class OperatoreController {
             $pratica->setOggetto($oggetto);
             $pratica->setUbicazione($ubicazione);
 
-            if ($idPratica == "" && $err == 0) {
+            if ($idPratica == "" && $err === 0) {
                 $pagina->setTitle("Salvataggio pratica");
                 $errore = PraticaFactory::salvaP($pratica);
             } elseif ($err === 0) {
@@ -342,8 +363,9 @@ class OperatoreController {
             $ricerca["incaricato"] = $operatore->getId();
         }
 
-        $numeroPratiche = PraticaFactory::numeroTotalePratiche();
-
+        //$numeroPratiche = PraticaFactory::numeroTotalePratiche();
+        $numeroPratiche=  PraticaFactory::elencoNumeroP($ricerca);
+        
         if ($offset >= $numeroPratiche) {
             $offset = 0;
         }
@@ -358,6 +380,7 @@ class OperatoreController {
         }
 
         $pratiche = PraticaFactory::elencoP($ricerca, $offset, $numero);
+        
         $x = count($pratiche);
         $data = "";
         for ($i = 0; $i < $x; $i++) {
@@ -541,5 +564,162 @@ class OperatoreController {
         OperatoreController::setruolo($pagina);
         include "./view/masterPage.php";
     }
+       
+     /**
+     * Restituisce un testo html , contenente i provvedimenti unici rilasciati, che si integra nella tabella di ricerca attrverso js
+     */
+    public function cercaProvvedimenti() {
+        $operatore = $_SESSION["op"];
+        $ruolo = $operatore->getFunzione();
+      
+        $offset = isset($_REQUEST["offset"]) ? $_REQUEST["offset"] : 0;
+        $numero = isset($_REQUEST["numero"]) ? $_REQUEST["numero"] : 15;
+        
 
+        $numeroProvvedimenti = ProvvedimentoFactory::numeroTotaleProvvedimenti();
+
+        if ($offset >= $numeroProvvedimenti) {
+            $offset = 0;
+        }
+        if ($offset < 1) {
+            $offset = 0;
+        }
+
+        $href = '<a href="index.php?page=operatore&cmd=elencoProvvedimenti&id=';
+        $href2 = '<a href="index.php?page=operatore&cmd=firmaP&numeroP=';
+
+        $provvedimenti = ProvvedimentoFactory::elencoP($offset, $numero);
+        $x = count($provvedimenti);
+        $data = "";
+        for ($i = 0; $i < $x; $i++) {
+            $data.= "<tr class=\"" . ($i % 2 == 1 ? "a" : "b") . "\"><td>" . $href
+                    . $provvedimenti[$i]->getId() . "\">" . $provvedimenti[$i]->getNumeroProvvedimento() . "</a></td>"
+                    . "<td>" . $provvedimenti[$i]->getDataProvvedimento(true) . "</td>"
+                    . "<td>" . $provvedimenti[$i]->getNumeroProtocollo() . "</td>"
+                    . "<td>" . $provvedimenti[$i]->getDataProtocollo(true) . "</td>"
+                    . "<td>". $href2 . $provvedimenti[$i]->getPraticaCollegata() . "\">" . $provvedimenti[$i]->getPraticaCollegata() . "</a></td>";
+        }
+
+        header('Cache-Control: no-cache, must-revalidate');
+        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+        header('Content-type: application/json');
+        $json = array();
+        $json["testo"] = $data;
+        $json["numeroProvvedimenti"] = $numeroProvvedimenti;
+        $json["numRow"] = $x;
+        echo json_encode($json);
+    }
+    
+    /**
+     * Mostra pagina per l'inserimento ed il salvataggio di un provvedimento unico
+     * @param Struttura $pagina
+     */
+    public function nuovoProvvedimento($pagina) {
+        
+        $nuovoProvvedimento = new Provvedimento();
+        
+        $pagina->setJsFile("");
+        $operatore = $_SESSION["op"];
+        $ruolo = $operatore->getFunzione();
+        $pagina->setHeaderFile("./view/header.php");
+        $pagina->setTitle("Nuovo provvedimento");
+        OperatoreController::setruolo($pagina);
+        $pagina->setMsg('');
+        $pagina->setContentFile("./view/operatore/nuovoProvvedimento.php");
+        $operatori = OperatoreFactory::getListaOp();
+        $rows = count($operatori);
+                       
+        if ($_REQUEST["cmd"] == "salvaProvvedimento") {
+            $pagina->setTitle("Salvataggio Provvedimento");
+            $numeroProvvedimento = isset($_REQUEST["numeroProvvedimento"]) ? $_REQUEST["numeroProvvedimento"] : null;
+            $dataProvvedimento = isset($_REQUEST["dataProvvedimento"]) ? $_REQUEST["dataProvvedimento"] : null;
+            $numeroProtocollo = isset($_REQUEST["numeroProtocollo"]) ? $_REQUEST["numeroProtocollo"] : null;
+            $dataProtocollo = isset($_REQUEST["dataProtocollo"]) ? $_REQUEST["dataProtocollo"] : null;
+            $praticaCollegata = isset($_REQUEST["praticaCollegata"]) ? $_REQUEST["praticaCollegata"] : null;
+            $update = isset($_REQUEST["update"]) && $_REQUEST["update"] == true ? true : false;
+            $id = isset($_REQUEST["id"]) ? $_REQUEST["id"] : null;
+            
+            $messaggio = '<div class="erroreInput"><p>Errore, per proseguire occorre: </p><ul>';
+            $errori = 0;
+            
+            if (!($nuovoProvvedimento->setNumeroProvvedimento($numeroProvvedimento))) {
+                $messaggio .= '<li>Specificare il numero del provvedimento</li>';
+                $errori++;
+            }
+            if (!($nuovoProvvedimento->setDataProvvedimento($dataProvvedimento))) {
+                $messaggio .= '<li>Specificare la data del provvedimento</li>';
+                $errori++;
+            }
+            if (!($nuovoProvvedimento->setNumeroProtocollo($numeroProtocollo))) {
+                $messaggio .= '<li>Specificare il protocollo</li>';
+                
+            }
+            if (!($nuovoProvvedimento->setDataProtocollo($dataProtocollo))) {
+                $messaggio .= '<li>Specificare la data del protocollo</li>';
+                
+            }
+            if (!($nuovoProvvedimento->setPraticaCollegata($praticaCollegata))) {
+                $messaggio .= '<li>Specificare la pratica collegata/li>';
+                $errori++;
+            }
+
+            $messaggio .='</ul></div>';
+            
+            if ($errori > 0) {
+                $pagina->setMsg($messaggio);
+            } else if (!$update) {
+                $setNewProvvedimento = ProvvedimentoFactory::salvaProvvedimento($nuovoProvvedimento);
+
+                if ($setNewProvvedimento === 0) {
+                    $pagina->setContentFile("./view/operatore/okNuovoProvvedimento.php");
+                    $pagina->setTitle("Inserimento nuovo Provvedimento Unico");
+                } elseif ($setNewProvvedimento === 1062) {
+                    $pagina->setMsg('<div class="erroreInput"><p>Errore, dati ripetuti</p></div>');
+                }
+            } else {
+                $nuovoProvvedimento->setId($id);
+                echo $id;
+                $updateProvvedimento = ProvvedimentoFactory::updateProvvedimento($nuovoProvvedimento);
+
+                if ($updateProvvedimento === 0) {
+                    $pagina->setContentFile("./view/operatore/okNuovoProvvedimento.php");
+                    $pagina->setTitle("Modifica operatore");
+                } elseif ($updateProvvedimento === 1062) {
+                    $pagina->setMsg('<div class="erroreInput"><p>Errore, dati ripetuti</p></div>');
+                } else {
+                    $pagina->setMsg('<div class="erroreInput"><p>Errore, non è possibile aggiornare</p></div>');
+                }
+            }
+        }
+
+        include "./view/masterPage.php";
+    }
+    
+    /**
+    * Mostra pagina per modifica provvedimento unico
+    * @param Struttura $pagina
+    */
+    public function mostraElencoProvvedimenti($pagina) {
+                
+        $pagina->setJsFile("");
+        $operatore = $_SESSION["op"];
+        $ruolo = $operatore->getFunzione();
+        $pagina->setHeaderFile("./view/header.php");        
+        OperatoreController::setruolo($pagina);
+        $pagina->setMsg('');
+                      
+        if (isset($_REQUEST['id'])) {
+            $id = $_REQUEST['id'];
+            $nuovoProvvedimento = ProvvedimentoFactory::getProvvedimento($id);
+            $pagina->setTitle("Modifica operatore");
+            $pagina->setContentFile("./view/operatore/nuovoProvvedimento.php");
+            $update = true;
+        } else {
+            $pagina->setJsFile("./js/provvedimenti.js");
+            $pagina->setTitle("Elenco provvedimenti Unici");
+            $pagina->setContentFile("./view/operatore/elencoProvvedimenti.php");           
+        }
+        include "./view/masterPage.php";
+    }    
+    
 }

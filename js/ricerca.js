@@ -81,7 +81,7 @@ $(document).ready(function (event) {
         event.preventDefault();
         if (numRow > numero - 1) {
             offset += numero;
-            if (offset > numeroPratiche) {
+            if (offset >= numeroPratiche) {
                 offset = numeroPratiche - numero;
             }
         }
@@ -182,7 +182,7 @@ function interroga2() {
             numRow = data.numRow;
             var tipoRic = (1 + tipocomportamento * (-1));
             var descTipoRic = tipoRic == 1 ? " - Flag disattivo=solo senza" : " - Flag disattivo=tutte";
-            $("#pagine").text("Tipo ricerca: " + tipoRic + descTipoRic + " - Pratiche visualizzate: " + numRow + " di " + numeroPratiche + " totali");
+            $("#pagine").text("Tipo ricerca: " + tipoRic + descTipoRic + " - Pratiche visualizzate: da " + (offset+1) + " a " + (offset+numRow) + " di " + numeroPratiche);
 
         },
         error: function (data, status, errorThrown) {
