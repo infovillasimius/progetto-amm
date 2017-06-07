@@ -129,6 +129,9 @@ class ResponsabileController {
     public static function ScanDirectory($Directory) {
 
         $MyDirectory = opendir($Directory) or die('Error');
+        
+        $dataMax=0;
+        
         while ($Entry = readdir($MyDirectory)) {
             if (is_dir($Directory . '/' . $Entry) && $Entry != '.' && $Entry != '..') {
                 echo '<ul>' . $Directory;
@@ -138,7 +141,34 @@ class ResponsabileController {
                 
             } else {
                 $file = glob($Directory . '/' . $Entry);
-                echo '<li><a href="' . $file[0] . '">' . $Entry . '</a></li>';
+                
+                if (substr($Entry,-1,1)==='m' and $dataMax<filemtime($file[0])){
+                    $dataMax=filemtime($file[0]);
+                }
+                
+                
+                
+                
+            }
+        }
+        
+        //echo $dataMax;
+        
+        rewinddir();
+        
+      
+        while ($Entry = readdir($MyDirectory)) {
+            if (is_dir($Directory . '/' . $Entry) && $Entry != '.' && $Entry != '..') {
+                echo '<ul>' . $Directory;
+                ScanDirectory($Directory . '/' . $Entry);
+                echo '</ul>';
+            } elseif ($Entry == '.' || $Entry == '..') {
+                
+            } else {
+                $file = glob($Directory . '/' . $Entry);
+                
+                echo filemtime($file[0])>$dataMax ? '<li> <a class="puntoEvidenziato" href="' : '<li> <a class="puntoNormale" href="';
+                echo $file[0] . '">' . $Entry . '</a></li>';
             }
         }
         closedir($MyDirectory);
