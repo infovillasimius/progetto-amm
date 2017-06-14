@@ -53,11 +53,12 @@ class ResponsabileController {
 
         $pagina->setJsFile("./js/allaFirma.js");
         OperatoreController::setruolo($pagina);
-
-        if (!isset($_REQUEST["numeroP"])) {
+        $numeroP = (isset($_REQUEST["numeroP"])) ? $_REQUEST["numeroP"] : null;
+        
+        if ($numeroP==NULL or $numeroP<1) {
+            
             $pagina->setContentFile("./view/responsabile/sceltaP.php");
         } else {
-            $numeroP = isset($_REQUEST["numeroP"]) ? $_REQUEST["numeroP"] : null;
 
             if (!is_dir('./files/uploads/' . $numeroP)) {
                 if (!mkdir('./files/uploads/' . $numeroP, 0777)) {
@@ -144,18 +145,11 @@ class ResponsabileController {
                 
                 if (substr($Entry,-1,1)==='m' and $dataMax<filemtime($file[0])){
                     $dataMax=filemtime($file[0]);
-                }
-                
-                
-                
-                
+                }               
             }
         }
         
-        //echo $dataMax;
-        
         rewinddir();
-        
       
         while ($Entry = readdir($MyDirectory)) {
             if (is_dir($Directory . '/' . $Entry) && $Entry != '.' && $Entry != '..') {
